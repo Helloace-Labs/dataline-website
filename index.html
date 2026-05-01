@@ -685,7 +685,7 @@
     .header-inner { padding: 1rem var(--pad); }
     .hero {
       height: auto;
-      min-height: 86vh;
+      min-height: 72vh;
       cursor: default;
       display: flex;
       align-items: flex-end;
@@ -711,20 +711,20 @@
       max-width: 100%;
       width: 100%;
       min-width: 0;
-      padding: 5rem 1.25rem 3rem;
+      padding: 3.5rem 1.25rem 2.25rem;
       z-index: 3;
     }
     .hero-h1 {
-      font-size: clamp(1.85rem, 7vw, 2.3rem);
-      line-height: 1.15;
+      font-size: clamp(1.7rem, 6.4vw, 2.1rem);
+      line-height: 1.18;
       letter-spacing: -0.02em;
       max-width: 100%;
-      overflow-wrap: anywhere;
-      word-break: break-word;
+      overflow-wrap: normal;
+      word-break: normal;
     }
-    /* Drop the forced break so H1 wraps naturally on small screens */
-    .hero-h1 br { display: none; }
-    .hero-h1 .accent { white-space: normal; }
+    /* Keep the designed line break so "to any AI agent." stays on one row */
+    .hero-h1 br { display: inline; }
+    .hero-h1 .accent { white-space: nowrap; }
     /* Defensive viewport clamps for mobile */
     .hero { max-width: 100vw; overflow: hidden; }
     .site-header { max-width: 100vw; }
