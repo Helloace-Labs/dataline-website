@@ -572,6 +572,13 @@
     }
   }
 
+  /* MOBILE — prompt-grid: one card per row */
+  @media (max-width: 768px) {
+    .prompt-grid { grid-template-columns: 1fr; }
+    .prompt-card { border-right: none; border-bottom: 1px solid var(--hairline); }
+    .prompt-card:last-child { border-bottom: none; }
+  }
+
 </style>
 </head>
 <body>
