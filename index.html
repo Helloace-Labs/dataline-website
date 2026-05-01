@@ -1429,8 +1429,20 @@ mcp install @tearline/server
         <div class="faq-body">Dataline returns a signed transaction; your wallet broadcasts. Funds never leave the user's custody. On Hyperliquid we use trade-only API permissions. Your agent acts; you stay in control.</div>
       </details>
       <details class="faq-item">
-        <summary>What is $TEARLINE?</summary>
-        <div class="faq-body">$TEARLINE is the native token on BNB Chain. Token utility (credit discounts, rate-limit staking, builder-code revenue share) is being finalized for v2. See /token for the latest.</div>
+        <summary>How does Dataline compare to other Web3 data providers like The Graph, Dune, or Goldsky?</summary>
+        <div class="faq-body">Those are query layers over indexed historical state — strong for analytics dashboards, slow for live agent decisions. Dataline is the runtime layer your agent hits when it needs to act now: live aggregation across exchanges, chains, and prediction markets, returned as one schema with a confidence score. We don't replace your warehouse — we sit between your agent and 22+ live sources so it can decide and execute in one round-trip.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What's the latency?</summary>
+        <div class="faq-body">P50 ~87ms for cached intent calls, ~250ms for fresh aggregation across multiple sources. Streaming endpoints (orderbook, ticks) deliver under 30ms. Hyperliquid execution adds ~120ms median for signed-tx return. Routes pre-warm against your top intents so the first call of the day isn't your slowest.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What happens if a source goes down?</summary>
+        <div class="faq-body">The router rebalances in real time. If Binance drops out, weight shifts to OKX, Coinbase, and Kalshi automatically — your call still returns. The confidence score reflects the reduced consensus so your agent sees the degradation in the response and can refuse, retry, or proceed with caution. Single-source responses always carry a flag.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is there a free tier? Do I need a credit card?</summary>
+        <div class="faq-body">Yes. 500 free calls, no credit card required to start — you can hit the resolve endpoint in under 30 seconds. Hobby tier starts at $19/mo with 50K calls and MCP access. Pro and Enterprise add execution, trace logs, and dedicated routing. See /pricing for the full breakdown.</div>
       </details>
     </div>
   </div>
