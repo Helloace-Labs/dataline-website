@@ -227,9 +227,38 @@
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
     .sub-nav-inner { grid-template-columns: 1fr; }
   }
-  @media (max-width: 640px) {
-    .endpoint-head { grid-template-columns: 56px 1fr auto; row-gap: 0.4rem; }
-    .endpoint-label { grid-column: 2 / 4; font-size: 0.78rem; }
+  @media (max-width: 768px) {
+    /* Endpoint row redesign for mobile: action row + indented label row */
+    .endpoint-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      column-gap: 0.65rem;
+      row-gap: 0.45rem;
+      padding: 0.95rem 0.4rem 0.95rem 0;
+    }
+    .endpoint-head .verb { order: 1; flex-shrink: 0; }
+    .endpoint-head .endpoint-path {
+      order: 2;
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .endpoint-head .copy-path { order: 3; flex-shrink: 0; padding: 0.4rem; }
+    .endpoint-head .endpoint-chevron { order: 4; flex-shrink: 0; }
+    .endpoint-head .endpoint-label {
+      order: 5;
+      flex-basis: 100%;
+      margin: 0 0 0 calc(56px + 0.65rem);
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: var(--ink-dim);
+    }
+    .endpoint-head .endpoint-label .confidence-pill {
+      display: inline-flex;
+      margin-top: 0.2rem;
+    }
     .endpoint-body { padding-left: 0; }
     .header-cta .signin { display: none; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
