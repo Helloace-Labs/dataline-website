@@ -458,6 +458,21 @@
   }
 
 
+  /* MOBILE — universal overflow guard so headings/text wrap instead of cutting off */
+  @media (max-width: 768px) {
+    h1, h2, h3, p,
+    .section-title, .section-lead, .block-title,
+    .stack-card-name, .stack-card-desc,
+    .step-title, .step-desc,
+    .why-title, .why-desc,
+    .use-title, .use-desc,
+    .article-title, .article-meta,
+    .group-desc, .endpoint-label, .endpoint-summary {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+  }
+
 </style>
 </head>
 <body>

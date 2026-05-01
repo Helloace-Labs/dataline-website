@@ -787,11 +787,25 @@
 
   /* MOBILE — install terminal section (avoid horizontal cutoff) */
   @media (max-width: 768px) {
+    /* Prevent grid cells from expanding beyond viewport when child has wide pre content */
+    .ip-grid > * { min-width: 0; }
+
     .ip-block .block-title {
-      font-size: 1.25rem;
-      line-height: 1.3;
-      flex-wrap: wrap;
+      font-size: 1.15rem;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
+    /* Stack npm/pip/MCP title segments on their own rows */
+    .ip-block .block-title:has(.block-title-tab) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+    .ip-block .block-title .sep { display: none; }
+    .ip-block .block-title-tab { display: block; }
+
     .code-frame { margin-top: 1.25rem; }
     .code-tabs { font-size: 0.72rem; flex-wrap: wrap; }
     .code-tabs .tab { padding: 0.55rem 0.9rem; min-height: 40px; box-sizing: border-box; }
@@ -804,6 +818,12 @@
       -webkit-overflow-scrolling: touch;
     }
     .term-line { min-height: 1.3em; }
+
+    /* Universal mobile overflow guards: long headings / text wrap instead of cutting off */
+    h1, h2, h3, p, .section-title, .section-lead, .block-title, .stack-card-name, .stack-card-desc, .step-title, .step-desc {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
   }
 
   /* delta-mark logo (canonical, ported from /logos) */
@@ -866,6 +886,21 @@
     img { max-width: 100%; height: auto; }
   }
 
+
+  /* MOBILE — universal overflow guard so headings/text wrap instead of cutting off */
+  @media (max-width: 768px) {
+    h1, h2, h3, p,
+    .section-title, .section-lead, .block-title,
+    .stack-card-name, .stack-card-desc,
+    .step-title, .step-desc,
+    .why-title, .why-desc,
+    .use-title, .use-desc,
+    .article-title, .article-meta,
+    .group-desc, .endpoint-label, .endpoint-summary {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+  }
 
 </style>
 </head>
@@ -1256,8 +1291,10 @@
     <div class="ip-grid">
       <div class="ip-block">
         <h2 class="block-title">
-          <span class="block-title-tab active" data-target="npm">npm install</span> ·
-          <span class="block-title-tab" data-target="pip">pip install</span> ·
+          <span class="block-title-tab active" data-target="npm">npm install</span>
+          <span class="sep">·</span>
+          <span class="block-title-tab" data-target="pip">pip install</span>
+          <span class="sep">·</span>
           <span class="block-title-tab" data-target="mcp">MCP add-server</span>
         </h2>
         <div class="code-frame">
