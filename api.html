@@ -190,6 +190,7 @@
   .code-tabs .tab.active { color: var(--ink); border-bottom: 1px solid var(--ink); margin-bottom: -1px; }
   .code-tabs .right { margin-left: auto; padding: 0.6rem 0.8rem; color: var(--ink-muted); font-size: 0.7rem; }
   .code-block { padding: 1.1rem 1.2rem; font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.7; color: var(--ink); white-space: pre; overflow-x: auto; background: var(--bg); }
+  .code-block:not(.active) { display: none; }
   .code-comment { color: var(--ink-muted); }
   .code-string { color: var(--green); }
   .code-key { color: var(--ink-dim); }
@@ -623,12 +624,12 @@
 
           <div class="code-frame">
             <div class="code-tabs">
-              <span class="tab active">cURL</span>
-              <span class="tab">TypeScript</span>
-              <span class="tab">Python</span>
+              <span class="tab active" data-target="curl">cURL</span>
+              <span class="tab" data-target="typescript">TypeScript</span>
+              <span class="tab" data-target="python">Python</span>
               <span class="right">200 · 87 ms</span>
             </div>
-            <pre class="code-block"><span class="code-comment"># resolve a natural-language intent</span>
+            <pre class="code-block active" data-block="curl"><span class="code-comment"># resolve a natural-language intent</span>
 curl -X POST https://api.tearline.io/v1/intent/resolve \
   -H "Authorization: Bearer $TEARLINE_KEY" \
   -d '{
@@ -636,6 +637,31 @@ curl -X POST https://api.tearline.io/v1/intent/resolve \
     <span class="code-key">"min_confidence"</span>: 0.9,
     <span class="code-key">"trace"</span>: true
   }'</pre>
+            <pre class="code-block" data-block="typescript"><span class="code-comment">// resolve a natural-language intent</span>
+<span class="code-key">import</span> { Tearline } <span class="code-key">from</span> <span class="code-string">"@tearline/sdk"</span>;
+
+<span class="code-key">const</span> tl = <span class="code-key">new</span> Tearline({ apiKey: process.env.<span class="code-string">TEARLINE_KEY</span> });
+
+<span class="code-key">const</span> result = <span class="code-key">await</span> tl.intent.resolve({
+  intent: <span class="code-string">"BTC price"</span>,
+  min_confidence: 0.9,
+  trace: <span class="code-key">true</span>,
+});
+
+console.log(result.data, result.confidence);</pre>
+            <pre class="code-block" data-block="python"><span class="code-comment"># resolve a natural-language intent</span>
+<span class="code-key">from</span> tearline <span class="code-key">import</span> Tearline
+<span class="code-key">import</span> os
+
+tl = Tearline(api_key=os.environ[<span class="code-string">"TEARLINE_KEY"</span>])
+
+result = tl.intent.resolve(
+    intent=<span class="code-string">"BTC price"</span>,
+    min_confidence=0.9,
+    trace=<span class="code-key">True</span>,
+)
+
+print(result.data, result.confidence)</pre>
           </div>
         </div>
       </div>
@@ -1481,6 +1507,20 @@ curl -X POST https://api.tearline.io/v1/intent/resolve \
     window.addEventListener('resize', () => { if (window.innerWidth > 768 && document.body.classList.contains('mobile-menu-open')) setOpen(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
   })();
+
+  /* ─── code-frame tab switcher (cURL / TypeScript / Python) ─── */
+  document.querySelectorAll('.code-frame').forEach(frame => {
+    const tabs = frame.querySelectorAll('.code-tabs .tab[data-target]');
+    const blocks = frame.querySelectorAll('.code-block[data-block]');
+    if (!tabs.length || !blocks.length) return;
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.target;
+        tabs.forEach(t => t.classList.toggle('active', t === tab));
+        blocks.forEach(b => b.classList.toggle('active', b.dataset.block === target));
+      });
+    });
+  });
 </script>
 </body>
 </html>
