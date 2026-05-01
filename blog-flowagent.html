@@ -280,6 +280,41 @@ footer { padding: 4rem var(--pad) 2rem; }
     color: transparent;
   }
 
+  /* ─── Article accordion (collapsible sections) ─── */
+  .article-inner .accordion-section {
+    border-top: 1px solid var(--hairline);
+    transition: padding 0.2s;
+  }
+  .article-inner .accordion-section + .accordion-section { margin-top: 0; }
+  .article-inner .accordion-heading {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 !important;
+    padding: 1.25rem 0.25rem 1.25rem 0;
+    transition: color 0.15s;
+  }
+  .article-inner .accordion-heading:hover { color: var(--green); }
+  .article-inner .accordion-heading::after {
+    content: '+';
+    font-family: var(--font-mono);
+    font-weight: 300;
+    color: var(--ink-muted);
+    font-size: 1.3rem;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+  .article-inner .accordion-section.open > .accordion-heading::after {
+    content: '−';
+    color: var(--green);
+  }
+  .article-inner .accordion-section:not(.open) > *:not(.accordion-heading) { display: none; }
+  .article-inner .accordion-section.open { padding-bottom: 1.25rem; }
+
 </style>
 </head>
 <body>
@@ -387,17 +422,8 @@ footer { padding: 4rem var(--pad) 2rem; }
 <section class="article-hero">
   <div class="article-hero-inner">
     <a href="/blog" class="back-link"><span class="arrow">←</span><span>All posts</span></a>
-    <div class="crumb"><a href="/">Dataline</a><span class="sep">/</span><a href="/blog">Blog</a><span class="sep">/</span><span style="color:var(--ink);">product</span></div>
     <div class="article-eyebrow">/ product</div>
     <h1 class="article-title">Inside Dataline’s FlowAgent: A Modular AI Agent Bridging the Execution Trust Gap</h1>
-    <div class="article-meta">
-      <span><span class="dot">●</span> Jul 7, 2025</span>
-      <span>· Dataline</span>
-      <span>· originally on <a href="https://medium.com/tearline/inside-tearlines-flowagent-a-modular-ai-agent-bridging-the-execution-trust-gap-5d8df7ea6824" target="_blank" rel="noopener" style="color:var(--green);">Medium ↗</a></span>
-    </div>
-    <div class="article-tags">
-        
-    </div>
   </div>
 </section>
 
@@ -674,6 +700,40 @@ footer { padding: 4rem var(--pad) 2rem; }
     nav.addEventListener('click', (e) => { if (e.target.tagName === 'A') setOpen(false); });
     window.addEventListener('resize', () => { if (window.innerWidth > 768 && document.body.classList.contains('mobile-menu-open')) setOpen(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  })();
+
+  /* ─── Article accordion: collapse sections by default, click heading to expand ─── */
+  (function () {
+    const inner = document.querySelector('.article-inner');
+    if (!inner) return;
+    const hasH2 = Array.from(inner.children).some(c => c.tagName === 'H2');
+    const tag = hasH2 ? 'H2' : 'H3';
+    const headings = Array.from(inner.children).filter(c => c.tagName === tag);
+    if (!headings.length) return;
+    headings.forEach(h => {
+      const section = document.createElement('section');
+      section.className = 'accordion-section';
+      const group = [h];
+      let next = h.nextElementSibling;
+      while (next && next.tagName !== tag) {
+        group.push(next);
+        next = next.nextElementSibling;
+      }
+      inner.insertBefore(section, h);
+      group.forEach(el => section.appendChild(el));
+      h.classList.add('accordion-heading');
+      h.setAttribute('role', 'button');
+      h.setAttribute('tabindex', '0');
+      h.setAttribute('aria-expanded', 'false');
+      const toggle = () => {
+        const open = section.classList.toggle('open');
+        h.setAttribute('aria-expanded', String(open));
+      };
+      h.addEventListener('click', toggle);
+      h.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    });
   })();
 </script>
 </body>
