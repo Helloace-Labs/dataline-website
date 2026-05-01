@@ -481,6 +481,19 @@
     }
   }
 
+  /* MOBILE — coverage / pipeline / act cards: one per row */
+  @media (max-width: 768px) {
+    .coverage-grid, .pipeline-grid, .act-grid { grid-template-columns: 1fr; }
+    .coverage-cell, .pipeline-step, .act-cell {
+      border-right: none;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .coverage-cell:last-child, .pipeline-step:last-child, .act-cell:last-child {
+      border-bottom: none;
+    }
+    .coverage-cell:nth-child(2n), .act-cell:nth-child(2n) { border-right: none; }
+  }
+
 </style>
 </head>
 <body>
