@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Dataline">
+  <rect width="32" height="32" rx="6" fill="#0A0A0A"/>
+  <!-- sideways triangle: 2 green dots + 1 red, tilted right -->
+  <g stroke="#34d399" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M 7 9 L 7 23 L 25 16 Z" opacity="0.85"/>
+  </g>
+  <!-- dots at vertices: 2 green (left side) + 1 red (right tip) -->
+  <circle cx="7" cy="9" r="3" fill="#34d399"/>
+  <circle cx="7" cy="23" r="3" fill="#34d399"/>
+  <circle cx="25" cy="16" r="3.2" fill="#ef4444"/>
+</svg>

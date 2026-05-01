@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dataline — Stream clean Web3 data to any AI agent</title>
+<meta name="description" content="Dataline turns natural-language intent into structured, confidence-scored data across every crypto market. Built for AI agents."
+<!-- ─── Favicons ─── -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A0A0A">
+
+<!-- ─── Open Graph ─── -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dataline">
+<meta property="og:title" content="Dataline — Stream clean Web3 data to any AI agent">
+<meta property="og:description" content="Dataline turns natural-language intent into structured, confidence-scored data across every crypto market. Built for AI agents.">
+<meta property="og:url" content="https://dataline.xyz/">
+<meta property="og:image" content="https://dataline.xyz/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- ─── Twitter ─── -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@TearlineAI">
+<meta name="twitter:title" content="Dataline — Stream clean Web3 data to any AI agent">
+<meta name="twitter:description" content="Dataline turns natural-language intent into structured, confidence-scored data across every crypto market. Built for AI agents.">
+<meta name="twitter:image" content="https://dataline.xyz/og-image.png">
+
+<link rel="canonical" href="https://dataline.xyz/">
+>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=Fragment+Mono&display=swap');
+
+  :root {
+    --bg: #0A0A0A;
+    --bg-elev: #111111;
+    --ink: #E8E6E0;
+    --ink-dim: #888880;
+    --ink-muted: #555550;
+    --hairline: rgba(232, 230, 224, 0.10);
+    --hairline-strong: rgba(232, 230, 224, 0.22);
+    --green: #34d399;
+    --green-dim: rgba(52, 211, 153, 0.55);
+    --font-main: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Fragment Mono', ui-monospace, monospace;
+    --pad: 2.5rem;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-main);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.005em;
+    overflow-x: hidden;
+  }
+  .mono { font-family: var(--font-mono); }
+  a { color: inherit; text-decoration: none; }
+  ul, ol { list-style: none; padding: 0; }
+  img, svg { display: block; max-width: 100%; }
+
+  /* ────────────── HEADER ────────────── */
+  .site-header {
+    position: sticky; top: 0; z-index: 80;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .header-inner {
+    max-width: 1440px; margin: 0 auto;
+    padding: 1.25rem var(--pad);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-weight: 500; font-size: 1.05rem; letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    width: 22px; height: 22px; border: 1px solid var(--hairline-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 0.7rem;
+  }
+  .nav { display: flex; align-items: center; font-size: 0.92rem; font-weight: 400; }
+  .nav-item-wrap { position: relative; }
+  .nav-trigger {
+    background: none; border: 0; color: var(--ink); padding: 0.5rem 0.85rem;
+    font-family: var(--font-main); font-size: 0.92rem; font-weight: 400;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem;
+    letter-spacing: -0.005em;
+    transition: opacity 0.2s;
+  }
+  .nav-trigger:hover { opacity: 0.6; }
+  .nav-caret { width: 8px; height: 8px; opacity: 0.5; transition: transform 0.2s; }
+  .nav-item-wrap:hover .nav-caret { transform: rotate(180deg); }
+  .nav-panel {
+    position: absolute; top: 100%; left: 0; padding-top: 0.5rem;
+    visibility: hidden; opacity: 0; transform: translateY(4px);
+    transition: opacity 0.18s, transform 0.18s;
+    z-index: 100;
+  }
+  .nav-panel.right { left: auto; right: 0; }
+  .nav-item-wrap:hover .nav-panel,
+  .nav-item-wrap.open .nav-panel { visibility: visible; opacity: 1; transform: translateY(0); }
+  .nav-item-wrap.open .nav-caret { transform: rotate(180deg); }
+  .nav-link { cursor: pointer; }
+  .nav-panel-inner {
+    background: var(--bg-elev);
+    border: 1px solid var(--hairline-strong);
+    padding: 0.5rem;
+    min-width: 240px;
+  }
+  .nav-panel-inner.mega { min-width: 600px; }
+  .nav-link {
+    display: block; padding: 0.7rem 0.9rem;
+    transition: background 0.15s;
+  }
+  .nav-link:hover { background: rgba(232,230,224,0.04); }
+  .nav-link-title { font-weight: 500; font-size: 0.92rem; }
+  .nav-link-sub { color: var(--ink-dim); font-size: 0.78rem; margin-top: 0.15rem; letter-spacing: -0.005em; }
+  .nav-link-flag {
+    font-family: var(--font-mono); font-size: 0.62rem; color: var(--green);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-left: 0.4rem;
+  }
+  .mega-flag-row { padding: 0.7rem 0.9rem 0.5rem; border-bottom: 1px solid var(--hairline); margin-bottom: 0.35rem; }
+  .mega-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.25rem; }
+  .header-cta {
+    display: flex; align-items: center; gap: 1rem; font-size: 0.9rem;
+  }
+  .header-cta .signin { opacity: 0.7; transition: opacity 0.2s; }
+  .header-cta .signin:hover { opacity: 1; }
+  .btn-pill {
+    border: 1px solid var(--ink); padding: 0.55rem 1.1rem;
+    font-family: var(--font-main); font-size: 0.85rem; font-weight: 500;
+    letter-spacing: -0.005em; transition: all 0.2s; cursor: pointer;
+    background: transparent; color: var(--ink);
+  }
+  .btn-pill:hover { background: var(--ink); color: var(--bg); }
+  .btn-pill.primary { background: var(--ink); color: var(--bg); }
+  .btn-pill.primary:hover { background: var(--green); border-color: var(--green); color: #06140e; }
+
+  /* ────────────── HERO ────────────── */
+  .hero {
+    position: relative; height: 88vh; min-height: 560px;
+    border-bottom: 1px solid var(--hairline);
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hero-text {
+    position: absolute; left: var(--pad); bottom: 4rem;
+    max-width: 75vw; z-index: 5;
+  }
+  .hero-h1 {
+    font-family: var(--font-main); font-weight: 300;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    line-height: 1.05; letter-spacing: -0.025em;
+    color: var(--ink);
+    transition: filter 0.4s;
+  }
+  .hero-h1 .accent { color: var(--green); white-space: nowrap; font-weight: 300; }
+  .hero-h1 { cursor: default; }
+  .hero-sub {
+    position: relative;
+    max-width: 60ch;
+    font-size: 1.85rem; color: rgba(232, 230, 224, 0.62); font-weight: 400;
+    letter-spacing: -0.01em; line-height: 1.35;
+    background: rgba(0, 0, 0, 0.32);
+    border: 1px solid rgba(52, 211, 153, 0.10);
+    box-shadow: 0 0 28px rgba(52, 211, 153, 0.10), inset 0 0 18px rgba(52, 211, 153, 0.04);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow: hidden;
+    max-height: 0; opacity: 0;
+    padding: 0 1.5rem; margin-top: 0;
+    transition: max-height 0.32s ease, opacity 0.22s ease, padding 0.22s ease, margin-top 0.22s ease;
+    pointer-events: none;
+  }
+  @property --hero-glow-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  .hero-sub::before {
+    content: '';
+    position: absolute; inset: 0;
+    padding: 1.5px;
+    background: conic-gradient(from var(--hero-glow-angle, 0deg),
+      rgba(52, 211, 153, 0) 0deg,
+      rgba(52, 211, 153, 0) 60deg,
+      rgba(52, 211, 153, 0.95) 92deg,
+      rgba(52, 211, 153, 0) 130deg,
+      rgba(52, 211, 153, 0) 360deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    filter: drop-shadow(0 0 6px rgba(52, 211, 153, 0.55));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.32s ease 0.18s;
+  }
+  .hero-hover-zone:hover .hero-sub,
+  .hero-sub:hover {
+    max-height: 360px; opacity: 1;
+    padding: 1.25rem 1.5rem; margin-top: 1.5rem;
+    pointer-events: auto;
+  }
+  .hero-hover-zone:hover .hero-sub::before,
+  .hero-sub:hover::before {
+    opacity: 1;
+    animation: heroGlowSpin 3.6s linear infinite;
+  }
+  @keyframes heroGlowSpin {
+    to { --hero-glow-angle: 360deg; }
+  }
+  .hero-cta-row { margin-top: 1.5rem; display: flex; gap: 0.85rem; flex-wrap: wrap; }
+  .hero-cta-row .btn-pill {
+    padding: 1rem 2.1rem; font-size: 1.05rem; font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .hero-meta {
+    position: absolute; right: var(--pad); top: 2rem; z-index: 5;
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-muted);
+    text-align: right; line-height: 1.7;
+  }
+  .hero-meta .live { color: var(--green); }
+  .hero-meta .live::before {
+    content: '●'; margin-right: 0.4rem; animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .hero-corner {
+    position: absolute; bottom: 2rem; right: var(--pad); z-index: 5;
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-muted);
+    text-align: right; line-height: 1.7;
+  }
+  /* ────────────── SECTION SCAFFOLD ────────────── */
+  .section {
+    border-bottom: 1px solid var(--hairline);
+  }
+  .section-inner {
+    max-width: 1440px; margin: 0 auto;
+    padding: 5rem var(--pad);
+  }
+  .section-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap;
+  }
+  .section-eyebrow {
+    font-family: var(--font-mono); font-size: 0.7rem;
+    color: var(--ink-dim); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-main); font-weight: 300;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    letter-spacing: -0.025em; line-height: 1.15; max-width: 22ch;
+  }
+  .section-lead {
+    color: var(--ink-dim); font-size: 1rem; max-width: 50ch;
+    margin-top: 1rem;
+  }
+  .section-num {
+    font-family: var(--font-mono); font-size: 0.7rem;
+    color: var(--ink-muted); letter-spacing: 0.08em;
+  }
+
+  /* ────────────── TRUST STRIP — BIG NUMBERS ────────────── */
+  .trust { padding: 4rem var(--pad); border-bottom: 1px solid var(--hairline); }
+  .trust-inner { max-width: 1440px; margin: 0 auto; }
+  .trust-head {
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-dim);
+    letter-spacing: 0.08em; text-align: center; margin-bottom: 2.5rem; text-transform: uppercase;
+  }
+  .trust-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--hairline);
+    border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+  }
+  .trust-cell {
+    background: var(--bg);
+    padding: 2.5rem 1.5rem;
+    text-align: left;
+  }
+  .trust-num {
+    font-family: var(--font-main); font-weight: 300;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1; letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .trust-label {
+    font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-top: 1rem;
+  }
+  /* Venue buckets — Trading vs Prediction with hover dropdown */
+  .trust-venues {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--hairline);
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    margin-top: 3rem;
+  }
+  .venue-bucket {
+    background: var(--bg);
+    padding: 1.6rem 1.8rem;
+    position: relative;
+    transition: background 0.2s;
+  }
+  .venue-bucket:hover { background: rgba(52,211,153,0.04); }
+  .venue-bucket:hover .venue-name { color: var(--green); }
+  .bucket-cat {
+    font-family: var(--font-mono); font-size: 0.65rem; color: var(--green);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.85rem;
+  }
+  .venue-name {
+    font-size: 1.55rem; font-weight: 400; letter-spacing: -0.02em;
+    color: var(--ink); line-height: 1.1;
+    transition: color 0.2s;
+  }
+  .venue-tag {
+    font-family: var(--font-mono); font-size: 0.72rem;
+    color: var(--ink-dim); margin-top: 0.55rem;
+  }
+  .bucket-others {
+    position: absolute; left: -1px; right: -1px; top: 100%;
+    background: #000; border: 1px solid var(--green-dim);
+    padding: 0.95rem 1.4rem 1.05rem;
+    opacity: 0; pointer-events: none;
+    transform: translateY(-4px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    z-index: 6;
+  }
+  .venue-bucket:hover .bucket-others { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .bucket-others-label {
+    font-family: var(--font-mono); font-size: 0.62rem; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.55rem;
+  }
+  .bucket-others-list { display: flex; flex-wrap: wrap; gap: 0.5rem 1.1rem; }
+  .bucket-others-list span {
+    font-size: 0.92rem; color: #fff;
+    font-family: var(--font-main);
+  }
+
+  /* ────────────── STACK ────────────── */
+  .stack-flagship {
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding: 3.5rem 0;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 3rem; align-items: start;
+    transition: background 0.2s;
+  }
+  .stack-flagship:hover { background: rgba(232,230,224,0.02); }
+  .stack-mark {
+    font-family: var(--font-mono); font-size: 1.4rem; color: var(--green);
+    border: 1px solid var(--green-dim); padding: 0.7rem 0.9rem;
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    overflow: hidden;
+  }
+  .stack-mark .b1, .stack-mark .b2 { display: inline-block; will-change: transform; }
+  @keyframes brk-l { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(22px); } }
+  @keyframes brk-r { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-22px); } }
+  .stack-flagship:hover .stack-mark .b1 { animation: brk-l 1.4s ease-in-out infinite; }
+  .stack-flagship:hover .stack-mark .b2 { animation: brk-r 1.4s ease-in-out infinite; }
+  .stack-flag-label {
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--green);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .stack-flag-name {
+    font-size: 2.2rem; font-weight: 300; letter-spacing: -0.025em;
+    margin-top: 0.4rem; line-height: 1.1;
+  }
+  .stack-flag-desc {
+    color: var(--ink-dim); font-size: 1.05rem; margin-top: 0.8rem; max-width: 56ch;
+  }
+  .stack-flag-bullets {
+    margin-top: 1.4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem 2rem;
+    font-size: 0.88rem;
+  }
+  .stack-flag-bullets li { display: flex; gap: 0.6rem; color: var(--ink-dim); }
+  .stack-flag-bullets li::before {
+    content: '+'; color: var(--green); font-family: var(--font-mono); flex-shrink: 0;
+  }
+  .stack-flag-cta {
+    align-self: end; font-family: var(--font-mono); font-size: 0.85rem;
+    color: var(--ink); border-bottom: 1px solid transparent; padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .stack-flagship:hover .stack-flag-cta { border-bottom-color: var(--ink); }
+
+  .stack-also-label {
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-top: 3rem; margin-bottom: 1.5rem;
+  }
+  .stack-rest {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .stack-card {
+    padding: 2rem 1.75rem; border-right: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    transition: background 0.2s;
+  }
+  .stack-card:last-child { border-right: none; }
+  .stack-card:hover { background: rgba(232,230,224,0.03); }
+  .stack-card-mark {
+    color: var(--ink); margin-bottom: 1.4rem; opacity: 0.9;
+    display: inline-flex; align-items: center;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .stack-card-mark svg { display: block; overflow: visible; }
+  .stack-card-mark svg * { vector-effect: non-scaling-stroke; }
+  .stack-card-mark.fa svg { width: 70px; height: 29px; }
+  .stack-card.gd .stack-card-mark svg { width: 42px; height: 42px; }
+  .stack-card.cp .stack-card-mark svg { width: 42px; height: 42px; }
+  /* FlowAgent — dashed feed flowing into arrow */
+  .stack-card-mark.fa .feed { opacity: 0.22; transition: opacity 0.2s; }
+  .stack-card-mark.fa .arr { transition: stroke 0.2s; }
+  @keyframes fa-f1 { 0% { opacity: 0.18; } 25% { opacity: 1; } 50%, 100% { opacity: 0.18; } }
+  @keyframes fa-f2 { 0%, 25% { opacity: 0.18; } 50% { opacity: 1; } 75%, 100% { opacity: 0.18; } }
+  @keyframes fa-f3 { 0%, 50% { opacity: 0.18; } 75% { opacity: 1; } 100% { opacity: 0.18; } }
+  @keyframes fa-arr { 0%, 70% { stroke: var(--ink); } 85% { stroke: var(--green); } 100% { stroke: var(--ink); } }
+  .stack-card.fa:hover .stack-card-mark.fa .feed.f1 { animation: fa-f1 1.2s linear infinite; }
+  .stack-card.fa:hover .stack-card-mark.fa .feed.f2 { animation: fa-f2 1.2s linear infinite; }
+  .stack-card.fa:hover .stack-card-mark.fa .feed.f3 { animation: fa-f3 1.2s linear infinite; }
+  .stack-card.fa:hover .stack-card-mark.fa .arr { animation: fa-arr 1.2s linear infinite; }
+  /* GhostDriver — concentric pulse + slow rotate */
+  @keyframes gd-pulse { 0%, 100% { transform: scale(1) rotate(0); color: var(--ink); } 50% { transform: scale(1.18) rotate(180deg); color: var(--green); } }
+  .stack-card.gd:hover .stack-card-mark { animation: gd-pulse 1.6s ease-in-out infinite; transform-origin: center; }
+  /* ChatPilot — check stroke draw + green glow */
+  .stack-card-mark.cp .check { stroke-dasharray: 26; stroke-dashoffset: 0; transition: stroke 0.2s; }
+  @keyframes cp-draw { 0% { stroke-dashoffset: 26; } 50% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 26; } }
+  @keyframes cp-glow { 0%, 100% { color: var(--ink); transform: scale(1); filter: none; } 50% { color: var(--green); transform: scale(1.12); filter: drop-shadow(0 0 8px rgba(52,211,153,0.55)); } }
+  .stack-card.cp:hover .stack-card-mark { animation: cp-glow 1.4s ease-in-out infinite; transform-origin: center; }
+  .stack-card.cp:hover .stack-card-mark.cp .check { animation: cp-draw 1.4s ease-in-out infinite; }
+  .stack-card-cat {
+    font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem;
+  }
+  .stack-card-name { font-size: 1.4rem; font-weight: 300; letter-spacing: -0.02em; }
+  .stack-card-desc { color: var(--ink-dim); font-size: 0.92rem; margin-top: 0.7rem; line-height: 1.45; }
+  .stack-card-for {
+    margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.7rem;
+    color: var(--ink-muted); letter-spacing: 0;
+  }
+
+  /* ────────────── PIPELINE ────────────── */
+  .pipeline-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+    border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+    transition: border-color 0.2s ease;
+  }
+  .pipeline-grid:has(.pipeline-step:hover) {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+  }
+  .pipeline-step {
+    padding: 2rem 1.5rem;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid var(--hairline);
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative; transform-origin: center;
+  }
+  .pipeline-step:last-child { border-right: 1px solid transparent; }
+  .pipeline-step:hover {
+    background: rgba(52,211,153,0.05);
+    transform: scale(1.06);
+    z-index: 5;
+    box-shadow: 0 0 32px rgba(52,211,153,0.18);
+    border-color: var(--green-dim);
+  }
+  .step-num {
+    font-family: var(--font-main); font-weight: 300;
+    font-size: 3rem; line-height: 1; letter-spacing: -0.04em;
+    color: var(--ink-dim);
+    transition: color 0.25s ease, text-shadow 0.25s ease;
+  }
+  .pipeline-step:hover .step-num { color: var(--green); text-shadow: 0 0 14px rgba(52,211,153,0.55); }
+  .step-title { font-family: var(--font-main); font-size: 1.25rem; font-weight: 400; margin-top: 1.25rem; letter-spacing: -0.01em; }
+  .step-desc { color: var(--ink-dim); font-size: 0.86rem; margin-top: 0.5rem; line-height: 1.5; }
+  .step-extra {
+    margin-top: 1rem; font-family: var(--font-mono); font-size: 0.72rem;
+    color: var(--ink-muted); line-height: 1.7;
+  }
+  .step-extra .accent { color: var(--green); }
+
+  /* ────────────── WHY ────────────── */
+  .why-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: var(--hairline);
+    border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+  }
+  .why-cell {
+    background: var(--bg); padding: 2rem 1.5rem;
+    transition: background 0.2s;
+  }
+  .why-cell:hover { background: rgba(232,230,224,0.02); }
+  .why-cat {
+    font-family: var(--font-mono); font-size: 0.65rem; color: var(--green);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .why-title { font-size: 1.15rem; font-weight: 400; letter-spacing: -0.01em; margin-top: 0.6rem; }
+  .why-desc { color: var(--ink-dim); font-size: 0.9rem; margin-top: 0.5rem; line-height: 1.5; }
+
+  /* ────────────── USE CASES ────────────── */
+  .uses-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+  }
+  .use-card {
+    padding: 1.75rem 1.5rem;
+    border-right: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+    transition: background 0.2s;
+  }
+  .use-card:nth-child(3n) { border-right: none; }
+  .use-card:nth-last-child(-n+3) { border-bottom: none; }
+  .use-card:hover { background: rgba(232,230,224,0.03); }
+  .use-cat {
+    font-family: var(--font-mono); font-size: 0.65rem; color: var(--green);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .use-title { font-size: 1.1rem; font-weight: 400; margin-top: 0.5rem; letter-spacing: -0.01em; }
+  .use-desc { color: var(--ink-dim); font-size: 0.88rem; margin-top: 0.4rem; line-height: 1.45; }
+
+  /* ────────────── INSTALL + PRICING ────────────── */
+  .ip-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; }
+  .ip-block .block-eyebrow {
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .ip-block .block-title {
+    font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 300; letter-spacing: -0.025em;
+    margin-top: 0.6rem;
+  }
+  .code-frame {
+    margin-top: 1.5rem; border: 1px solid var(--hairline);
+  }
+  .code-tabs {
+    display: flex; border-bottom: 1px solid var(--hairline);
+    font-family: var(--font-mono); font-size: 0.78rem;
+  }
+  .code-tabs .tab { padding: 0.7rem 1.1rem; color: var(--ink-dim); cursor: pointer; transition: color 0.15s ease; }
+  .code-tabs .tab:hover { color: var(--ink); }
+  .code-tabs .tab.active { color: var(--green); border-bottom: 1px solid var(--green); margin-bottom: -1px; }
+  .code-block {
+    padding: 1.5rem; font-family: var(--font-mono); font-size: 0.82rem;
+    line-height: 1.7; color: var(--ink); white-space: pre; overflow-x: auto;
+    min-height: 300px;
+  }
+  .code-block:not(.active) { display: none; }
+  .code-comment { color: var(--ink-muted); }
+  .code-string { color: var(--green); }
+  .term-line {
+    display: block; white-space: pre;
+    opacity: 0; transform: translateY(2px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    min-height: 1.4em;
+  }
+  .term-line.visible { opacity: 1; transform: none; }
+  .term-cursor {
+    display: inline-block; width: 0.55em; height: 1em;
+    background: var(--green); vertical-align: text-bottom;
+    margin-left: 0.15em;
+    animation: termBlink 1.05s steps(1) infinite;
+  }
+  @keyframes termBlink { 50% { opacity: 0; } }
+  .block-title-tab { cursor: pointer; transition: color 0.15s ease; }
+  .block-title-tab:hover { color: var(--green); }
+  .block-title-tab.active { color: var(--green); }
+
+  .rail {
+    border-top: 1px solid var(--hairline); padding: 1.4rem 0;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: padding-left 0.2s;
+  }
+  .rail:hover { padding-left: 0.5rem; }
+  .rail:last-of-type { border-bottom: 1px solid var(--hairline); }
+  .rail-name { font-size: 1rem; font-weight: 400; letter-spacing: -0.01em; }
+  .rail-desc { color: var(--ink-dim); font-size: 0.82rem; margin-top: 0.2rem; }
+  .rail-arrow { font-family: var(--font-mono); color: var(--ink-dim); transition: color 0.2s, transform 0.2s; }
+  .rail:hover .rail-arrow { color: var(--green); transform: translateX(4px); }
+
+  /* ────────────── FAQ ────────────── */
+  .faq-list { max-width: 760px; margin: 0 auto; }
+  .faq-item { border-top: 1px solid var(--hairline); }
+  .faq-item:last-child { border-bottom: 1px solid var(--hairline); }
+  .faq-item summary {
+    list-style: none; cursor: pointer;
+    padding: 1.5rem 0;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 1.05rem; font-weight: 400; letter-spacing: -0.01em;
+    transition: opacity 0.2s;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary:hover { opacity: 0.7; }
+  .faq-item summary::after {
+    content: '+'; font-family: var(--font-mono); color: var(--ink-dim); font-size: 1.2rem;
+    transition: transform 0.25s;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); color: var(--green); }
+  .faq-body { color: var(--ink-dim); font-size: 0.95rem; padding: 0 0 1.5rem; max-width: 64ch; line-height: 1.6; }
+
+  /* ────────────── AGENT STRIP ────────────── */
+  .agent-strip {
+    padding: 3rem var(--pad); border-bottom: 1px solid var(--hairline);
+    display: flex; gap: 2rem; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    max-width: 1440px; margin: 0 auto;
+  }
+  .agent-strip-text { display: flex; gap: 1.25rem; align-items: flex-start; }
+  .agent-strip-mark {
+    font-family: var(--font-mono); border: 1px solid var(--green-dim);
+    color: var(--green); padding: 0.6rem 0.85rem; font-size: 1rem; flex-shrink: 0;
+  }
+  .agent-strip h3 { font-size: 1.1rem; font-weight: 400; letter-spacing: -0.01em; }
+  .agent-strip p { color: var(--ink-dim); font-size: 0.9rem; margin-top: 0.3rem; max-width: 60ch; }
+  .agent-strip code { font-family: var(--font-mono); color: var(--green); }
+
+  /* ────────────── BIG CTA ────────────── */
+  .big-cta {
+    padding: 8rem var(--pad); text-align: center; border-bottom: 1px solid var(--hairline);
+  }
+  .big-cta h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1.05;
+  }
+  .big-cta h2 .accent { color: var(--green); font-weight: 300; }
+  .big-cta p { margin-top: 1.5rem; color: var(--ink-dim); }
+  .big-cta-row { margin-top: 2rem; display: flex; gap: 0.75rem; justify-content: center; }
+
+  /* ────────────── FOOTER ────────────── */
+  footer { padding: var(--pad); }
+  .footer-grid {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 3rem;
+    padding-bottom: 3rem; border-bottom: 1px solid var(--hairline);
+  }
+  .footer-grid .brand { font-size: 1rem; }
+  .footer-bio { color: var(--ink); font-size: 0.95rem; max-width: 32ch; line-height: 1.55; margin-top: 1rem; }
+  .footer-bio.subline { color: var(--ink-dim); font-size: 0.85rem; margin-top: 0.4rem; }
+  .footer-col { display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; }
+  .footer-col-title {
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem;
+  }
+  .footer-col a { color: var(--ink-dim); transition: color 0.15s; }
+  .footer-col a:hover { color: var(--ink); }
+  .footer-col a.active { color: var(--green); }
+  .footer-bottom {
+    max-width: 1280px; margin: 1.5rem auto 0;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-muted); flex-wrap: wrap; gap: 0.75rem;
+  }
+  .footer-bottom .agent-callout { color: var(--ink-dim); }
+  .footer-bottom .agent-callout a { color: var(--green); border-bottom: 1px solid transparent; }
+  .footer-bottom .agent-callout a:hover { border-bottom-color: var(--green); }
+
+  /* ────────────── RESPONSIVE ────────────── */
+  @media (max-width: 1024px) {
+    .nav { display: none; }
+    .stack-flagship { grid-template-columns: 1fr; }
+    .stack-flag-bullets { grid-template-columns: 1fr; }
+    .stack-rest { grid-template-columns: 1fr; }
+    .stack-card { border-right: none; }
+    .pipeline-grid { grid-template-columns: 1fr 1fr; }
+    .pipeline-step { border-right: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+    .uses-grid { grid-template-columns: 1fr 1fr; }
+    .use-card:nth-child(3n) { border-right: 1px solid var(--hairline); }
+    .use-card:nth-child(2n) { border-right: none; }
+    .ip-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .trust-grid { grid-template-columns: 1fr 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+  }
+  /* MOBILE HERO — optimized layout (PC stays as-is) */
+  @media (max-width: 768px) {
+    :root { --pad: 1.25rem; }
+    .header-inner { padding: 1rem var(--pad); }
+    .hero {
+      height: auto;
+      min-height: 86vh;
+      cursor: default;
+      display: flex;
+      align-items: flex-end;
+    }
+    /* Canvas: bright enough to read the pattern, scrim handles text legibility below */
+    #hero-canvas {
+      opacity: 0.85;
+      filter: hue-rotate(115deg) saturate(0.6) brightness(1.1);
+    }
+    /* Bottom-up scrim only behind the H1 — keeps text crisp */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, transparent 55%, rgba(10,10,10,0.78) 78%, rgba(10,10,10,0.96) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .hero-text {
+      position: relative;
+      left: auto;
+      bottom: auto;
+      max-width: 100%;
+      width: 100%;
+      min-width: 0;
+      padding: 5rem 1.25rem 3rem;
+      z-index: 3;
+    }
+    .hero-h1 {
+      font-size: clamp(1.85rem, 7vw, 2.3rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    /* Drop the forced break so H1 wraps naturally on small screens */
+    .hero-h1 br { display: none; }
+    .hero-h1 .accent { white-space: normal; }
+    /* Defensive viewport clamps for mobile */
+    .hero { max-width: 100vw; overflow: hidden; }
+    .site-header { max-width: 100vw; }
+    .header-inner { max-width: 100vw; }
+    /* Hide the description on mobile — unreadable over the canvas */
+    .hero-sub { display: none; }
+    .hero-cta-row {
+      margin-top: 1.5rem;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.55rem;
+    }
+    .hero-cta-row .btn-pill {
+      width: 100%;
+      text-align: center;
+      padding: 0.8rem 1rem;
+      font-size: 0.92rem;
+    }
+    .hero-meta, .hero-corner { display: none; }
+    /* Trust strip — buckets stack on mobile */
+    .trust-venues { grid-template-columns: 1fr; margin-top: 2rem; }
+    .venue-bucket { padding: 1.3rem 1.4rem; }
+    .venue-name { font-size: 1.3rem; }
+  }
+
+  @media (max-width: 640px) {
+    .header-cta .signin { display: none; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .trust-grid { grid-template-columns: 1fr 1fr; }
+    .uses-grid { grid-template-columns: 1fr; }
+    .use-card { border-right: none !important; }
+  }
+
+  /* canonical header dropdown (injected for unification) */
+  .nav-item { position: relative; }
+  .nav-trigger .caret { font-size: 0.65rem; opacity: 0.6; transition: transform 0.2s; }
+  .nav-item:hover .nav-trigger .caret { transform: rotate(180deg); }
+  .nav-dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(4px); min-width: 220px; background: var(--bg-elev, #111); border: 1px solid var(--hairline-strong, rgba(232,230,224,0.22)); padding: 0.5rem; opacity: 0; visibility: hidden; transition: opacity 0.18s, visibility 0.18s, transform 0.18s; z-index: 90; }
+  .nav-item:hover .nav-dropdown,
+  .nav-item:focus-within .nav-dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .nav-dropdown a { display: grid; grid-template-columns: 1.1rem 1fr; gap: 0.7rem; align-items: center; padding: 0.7rem 0.85rem; font-size: 0.88rem; color: var(--ink); transition: background 0.15s, color 0.15s; }
+  .nav-dropdown a:hover { background: rgba(232,230,224,0.04); color: var(--green); }
+  .nav-dropdown a .arrow { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-muted); }
+  .nav-dropdown a:hover .arrow { color: var(--green); }
+  .nav-trigger[type="button"] { background: none; border: 0; font-family: inherit; }
+  /* canonical footer (injected) */
+  footer { padding: 4rem var(--pad, 2.5rem) 2rem; }
+  .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--hairline); align-items: start; }
+  .footer-grid .brand { font-size: 1rem; }
+  .footer-bio { color: var(--ink); font-size: 0.95rem; max-width: 32ch; line-height: 1.55; margin-top: 1rem; }
+  .footer-bio.subline { color: var(--ink-dim); font-size: 0.85rem; margin-top: 0.4rem; }
+  .footer-col { display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; }
+  .footer-col-title { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .footer-col a { color: var(--ink-dim); transition: color 0.15s; display: block; padding: 0; border: none; width: auto; }
+  .footer-col a:hover { color: var(--ink); border: none; opacity: 1; }
+  .footer-col a.active { color: var(--green); }
+  .footer-bottom { max-width: 1280px; margin: 1.5rem auto 0; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-muted); flex-wrap: wrap; gap: 0.75rem; padding: 0; border: none; }
+  @media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } .nav { display: none; } }
+
+  /* MOBILE — install terminal section (avoid horizontal cutoff) */
+  @media (max-width: 768px) {
+    .ip-block .block-title {
+      font-size: 1.25rem;
+      line-height: 1.3;
+      flex-wrap: wrap;
+    }
+    .code-frame { margin-top: 1.25rem; }
+    .code-tabs { font-size: 0.72rem; flex-wrap: wrap; }
+    .code-tabs .tab { padding: 0.55rem 0.9rem; min-height: 40px; box-sizing: border-box; }
+    .code-block {
+      padding: 1rem 0.85rem;
+      font-size: 0.66rem;
+      line-height: 1.6;
+      min-height: 240px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .term-line { min-height: 1.3em; }
+  }
+
+  /* delta-mark logo (canonical, ported from /logos) */
+  :root { --hairline-bright: rgba(232, 230, 224, 0.55); --red: #ef4444; }
+  .header-mark { flex-shrink: 0; overflow: visible; }
+  .delta-mark { display: block; }
+  .delta-mark .root { fill: var(--green); }
+  .delta-mark .leaf { fill: var(--ink-muted); transition: fill 0.3s; }
+  .delta-mark .leaf.active { fill: var(--green); }
+  .delta-mark .leaf.alert { fill: var(--red); }
+  .delta-mark .pulse { fill: var(--green); filter: drop-shadow(0 0 1.5px var(--green)); pointer-events: none; }
+  .delta-mark .pulse.alert { fill: var(--red); filter: drop-shadow(0 0 1.5px var(--red)); }
+  .delta-mark .path { fill: none; stroke: var(--hairline-strong); stroke-width: 0.6; stroke-dasharray: 1.4 1.6; stroke-linecap: round; animation: flowDash 14s linear infinite; }
+  .delta-mark .path.reverse { animation-direction: reverse; }
+  .delta-mark .path.bright { stroke: var(--hairline-bright); }
+  @keyframes flowDash { to { stroke-dashoffset: -40; } }
+  /* ────────────── MOBILE NAV (≤768px) ────────────── */
+  .mobile-menu-toggle { display: none; background: transparent; border: 0; cursor: pointer; padding: 0.6rem; margin-left: 0.5rem; }
+  .mobile-menu-toggle span { display: block; width: 22px; height: 1.5px; background: var(--ink); margin: 4px 0; transition: transform 0.28s ease, opacity 0.2s ease; }
+  .mobile-nav { display: none; }
+  @media (max-width: 768px) {
+    .nav { display: none; }
+    .header-cta { display: none; }
+    .mobile-menu-toggle { display: block; }
+    body.mobile-menu-open { overflow: hidden; }
+    body.mobile-menu-open .mobile-nav {
+      display: flex; flex-direction: column;
+      position: fixed; inset: 60px 0 0 0;
+      background: var(--bg);
+      padding: 1.5rem 1.25rem 3rem;
+      z-index: 90;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
+      gap: 1.25rem;
+      animation: mobileNavIn 0.22s ease-out;
+    }
+    @keyframes mobileNavIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+    .mobile-nav-section { display: flex; flex-direction: column; border-top: 1px solid var(--hairline); padding-top: 0.85rem; }
+    .mobile-nav-section:first-child { border-top: 0; padding-top: 0; }
+    .mobile-nav-title { font-family: var(--font-mono); font-size: 0.68rem; color: var(--ink-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.35rem; }
+    .mobile-nav a { display: block; padding: 0.85rem 0; color: var(--ink); text-decoration: none; font-size: 1rem; min-height: 48px; box-sizing: border-box; line-height: 1.4; }
+    .mobile-nav a.mobile-nav-direct { font-size: 1.1rem; }
+    .mobile-nav .flag { font-family: var(--font-mono); font-size: 0.6rem; color: var(--green); margin-left: 0.5rem; padding: 0.15rem 0.45rem; border: 1px solid var(--green-dim); border-radius: 999px; vertical-align: middle; }
+    .mobile-nav-cta { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--hairline); }
+    .mobile-nav-cta .btn-pill { width: 100%; min-height: 48px; display: flex; align-items: center; justify-content: center; padding: 0.95rem 1rem; font-size: 1rem; }
+    .mobile-menu-toggle.active span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+    .mobile-menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .mobile-menu-toggle.active span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+    /* Disable heavy hover animations on touch */
+    .pipeline-step:hover { transform: none; box-shadow: 0 0 24px rgba(52,211,153,0.12); }
+    .stack-card:hover { transform: none; }
+  }
+  @media (hover: none) {
+    .pipeline-step:hover { transform: none; }
+  }
+  /* ─── end mobile nav ─── */
+  /* ─── Mobile safety: no horizontal scroll, table overflow handling ─── */
+  html, body { overflow-x: hidden; }
+  @media (max-width: 768px) {
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    img { max-width: 100%; height: auto; }
+  }
+
+
+</style>
+</head>
+<body>
+
+<!-- ====================== HEADER ====================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="brand"><svg class="delta-mark header-mark" data-orient="vertical" data-roots="1" data-density="7" data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2" data-stroke="0.3" data-dash="0.7 0.9"></svg><span>Dataline</span></a>
+    <nav class="nav">
+      <!-- Products mega -->
+      <div class="nav-item-wrap">
+        <button class="nav-trigger">Products
+          <svg class="nav-caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav-panel">
+          <div class="nav-panel-inner mega">
+            <a href="/data" class="nav-link mega-flag-row">
+              <div class="nav-link-title">Dataline Data <span class="nav-link-flag">Flagship</span></div>
+              <div class="nav-link-sub">The AI-native data layer for crypto. Read with confidence.</div>
+            </a>
+            <div class="mega-grid">
+              <a href="/flowagent" class="nav-link">
+                <div class="nav-link-title">FlowAgent</div>
+                <div class="nav-link-sub">Multi-step agent orchestration on LangGraph.</div>
+              </a>
+              <a href="/ghostdriver" class="nav-link">
+                <div class="nav-link-title">GhostDriver</div>
+                <div class="nav-link-sub">Browser execution for long-tail dApps.</div>
+              </a>
+              <a href="/chatpilot" class="nav-link">
+                <div class="nav-link-title">ChatPilot</div>
+                <div class="nav-link-sub">Conversational AI on Telegram + chains.</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Developers -->
+      <div class="nav-item-wrap">
+        <button class="nav-trigger">Developers
+          <svg class="nav-caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav-panel">
+          <div class="nav-panel-inner">
+            <a href="/api" class="nav-link"><div class="nav-link-title">API Reference</div><div class="nav-link-sub">Every endpoint, JSON schemas</div></a>
+            <a href="/mcp" class="nav-link"><div class="nav-link-title">MCP Server</div><div class="nav-link-sub">Claude, Cursor, Codex</div></a>          </div>
+        </div>
+      </div>
+      <a href="/pricing" class="nav-trigger">Pricing</a>
+      <!-- Resources -->
+      <div class="nav-item-wrap">
+        <button class="nav-trigger">Resources
+          <svg class="nav-caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav-panel right">
+          <div class="nav-panel-inner">
+            <a href="/blog" class="nav-link"><div class="nav-link-title">Blog</div></a>
+            <a href="https://x.com/TearlineAI" target="_blank" rel="noopener" class="nav-link"><div class="nav-link-title">Twitter / X</div></a>
+            <a href="https://t.me/tearlinexyz" target="_blank" rel="noopener" class="nav-link"><div class="nav-link-title">Telegram</div></a>
+            <a href="https://medium.com/tearline" target="_blank" rel="noopener" class="nav-link"><div class="nav-link-title">Medium</div></a>
+            <a href="https://www.youtube.com/@Dataline" target="_blank" rel="noopener" class="nav-link"><div class="nav-link-title">YouTube</div></a>
+            <a href="https://github.com/tearline-xyz/GhostDriver?tab=readme-ov-file#installation" target="_blank" rel="noopener" class="nav-link"><div class="nav-link-title">GitHub</div></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="header-cta">
+      <a href="/waitlist" class="btn-pill primary">Join waitlist →</a>
+    </div>
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+  </div>
+</header>
+
+<!-- ====================== MOBILE NAV DRAWER ====================== -->
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+  <div class="mobile-nav-section">
+    <div class="mobile-nav-title">Products</div>
+    <a href="/flowagent">FlowAgent</a>
+    <a href="/ghostdriver">GhostDriver</a>
+    <a href="/chatpilot">ChatPilot</a>
+    <a href="/data">Data <span class="flag">Flagship</span></a>
+    <a href="/api">API Reference</a>
+    <a href="/mcp">MCP Server</a>
+  </div>
+  <div class="mobile-nav-section">
+    <a href="/pricing" class="mobile-nav-direct">Pricing</a>
+  </div>
+  <div class="mobile-nav-section">
+    <div class="mobile-nav-title">Resources</div>
+    <a href="/blog">Blog</a>
+    <a href="https://x.com/TearlineAI" target="_blank" rel="noopener">Twitter / X</a>
+    <a href="https://t.me/tearlinexyz" target="_blank" rel="noopener">Telegram</a>
+    <a href="https://www.youtube.com/@Tearline" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://github.com/tearline-xyz/GhostDriver?tab=readme-ov-file#installation" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="mobile-nav-cta">
+    <a href="/waitlist" class="btn-pill primary">Join waitlist →</a>
+  </div>
+</nav>
+
+
+<!-- ====================== HERO ====================== -->
+<section class="hero" id="hero">
+  <canvas id="hero-canvas"></canvas>
+
+  <div class="hero-meta"><div><span class="live">live</span></div></div>
+
+  <div class="hero-text">
+    <div class="hero-hover-zone">
+      <h1 class="hero-h1" id="hero-h1">
+        Stream clean Web3 data <br>to any <span class="accent">AI agent</span>.
+      </h1>
+      <p class="hero-sub">Natural-language intent in. Clean, confidence-scored data out — across Hyperliquid, Polymarket, every major DEX, and the Web2 sources agents need.</p>
+    </div>
+    <div class="hero-cta-row">
+      <a href="/waitlist" class="btn-pill primary">Join waitlist →</a>
+      <a href="/data" class="btn-pill">See how it works</a>
+    </div>
+  </div>
+
+
+  <div class="hero-corner">
+    <div>tearline / 026</div>
+    <div>04 · 29 · 2026</div>
+  </div>
+</section>
+
+<!-- ====================== TRUST STRIP — BIG NUMBERS ====================== -->
+<section class="trust">
+  <div class="trust-inner">
+    <div class="trust-head">Powered by global data sources · production-tested</div>
+    <div class="trust-grid">
+      <div class="trust-cell">
+        <div class="trust-num">19.4M</div>
+        <div class="trust-label">on-chain transactions</div>
+      </div>
+      <div class="trust-cell">
+        <div class="trust-num">96.4%</div>
+        <div class="trust-label">agent task success rate</div>
+      </div>
+      <div class="trust-cell">
+        <div class="trust-num">334.8K</div>
+        <div class="trust-label">global community</div>
+      </div>
+      <div class="trust-cell">
+        <div class="trust-num">3</div>
+        <div class="trust-label">live chains · BNB · Sui · TON</div>
+      </div>
+    </div>
+    <!-- Venues — two buckets, each with flagship + hover dropdown of others -->
+    <div class="trust-venues">
+      <div class="venue-bucket">
+        <div class="bucket-cat">Trading Markets</div>
+        <div class="venue-name">Hyperliquid</div>
+        <div class="venue-tag">L2 orderbook · perps · vault leaderboard</div>
+        <div class="bucket-others">
+          <div class="bucket-others-label">+ also reading</div>
+          <div class="bucket-others-list">
+            <span>Binance</span>
+            <span>Coinbase</span>
+            <span>dYdX</span>
+            <span>Uniswap</span>
+          </div>
+        </div>
+      </div>
+      <div class="venue-bucket">
+        <div class="bucket-cat">Prediction Markets</div>
+        <div class="venue-name">Polymarket</div>
+        <div class="venue-tag">Prediction markets · odds · resolution</div>
+        <div class="bucket-others">
+          <div class="bucket-others-label">+ also reading</div>
+          <div class="bucket-others-list">
+            <span>Kalshi</span>
+            <span>Manifold</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== STACK ====================== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Start with the data API.<br>Add the rest when you need it.</h2>
+        <p class="section-lead">Read every market with Dataline Data. Orchestrate multi-step agents with FlowAgent. Click through long-tail dApps with GhostDriver. Deploy a chatbot to Telegram with ChatPilot.</p>
+      </div>
+    </div>
+
+    <a href="/data" class="stack-flagship" style="text-decoration:none; color:inherit; display:grid;">
+      <div class="stack-mark"><span class="b1">{</span><span class="b2">}</span></div>
+      <div>
+        <div class="stack-flag-label">Flagship · Data + execution API</div>
+        <h3 class="stack-flag-name">Dataline Data</h3>
+        <p class="stack-flag-desc">Clean, confidence-scored data from every crypto market — with a non-custodial Act layer on the same surface. Read with confidence. Act on every venue.</p>
+        <ul class="stack-flag-bullets">
+          <li>Read every market with confidence scoring</li>
+          <li>Act non-custodially on any venue</li>
+          <li>MCP-native + REST + SDKs</li>
+        </ul>
+      </div>
+      <div class="stack-flag-cta">Explore Dataline Data →</div>
+    </a>
+
+    <div class="stack-also-label">/ also in the stack</div>
+    <div class="stack-rest">
+      <a href="/flowagent" class="stack-card fa" style="text-decoration:none;color:inherit;">
+        <div class="stack-card-mark fa">
+          <svg viewBox="0 0 64 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <line class="feed f1" x1="2"  y1="12" x2="8"  y2="12"/>
+            <line class="feed f2" x1="13" y1="12" x2="19" y2="12"/>
+            <line class="feed f3" x1="24" y1="12" x2="30" y2="12"/>
+            <line class="arr" x1="35" y1="12" x2="58" y2="12"/>
+            <polyline class="arr" points="51,5 58,12 51,19"/>
+          </svg>
+        </div>
+        <div class="stack-card-name">FlowAgent</div>
+        <p class="stack-card-desc">Orchestration runtime for multi-step agent workflows on hosted LangGraph + Dataline primitives.</p>
+        <div class="stack-card-for">For: devs building multi-step agents</div>
+      </a>
+      <a href="/ghostdriver" class="stack-card gd" style="text-decoration:none;color:inherit;">
+        <div class="stack-card-mark">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="16" cy="16" r="14"/>
+            <circle cx="16" cy="16" r="6"/>
+          </svg>
+        </div>
+        <div class="stack-card-name">GhostDriver</div>
+        <p class="stack-card-desc">Browser-execution fallback for long-tail dApp UIs when no API exists.</p>
+        <div class="stack-card-for">For: devs needing long-tail UI coverage</div>
+      </a>
+      <a href="/chatpilot" class="stack-card cp" style="text-decoration:none;color:inherit;">
+        <div class="stack-card-mark cp">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="26" height="26"/>
+            <polyline class="check" points="9,16 14,21 23,11"/>
+          </svg>
+        </div>
+        <div class="stack-card-name">ChatPilot</div>
+        <p class="stack-card-desc">Consumer chat UI — deploy a Telegram chatbot for crypto in one click.</p>
+        <div class="stack-card-for">For: community managers + end users</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PIPELINE ====================== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Intent in.<br>Confidence-scored data out.</h2>
+        <p class="section-lead">Five stages, one API call. Each stage is testable, observable, replaceable.</p>
+      </div>
+    </div>
+
+    <div class="pipeline-grid">
+      <div class="pipeline-step">
+        <div class="step-num">01</div>
+        <h3 class="step-title">Intent</h3>
+        <p class="step-desc">Describe what you need.</p>
+        <div class="step-extra">"BTC price"<br>"ETH funding"<br>"election odds"</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">02</div>
+        <h3 class="step-title">Route</h3>
+        <p class="step-desc">We pick the best sources.</p>
+        <div class="step-extra">smart routing<br>multi-provider fallback<br>latency optimized</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">03</div>
+        <h3 class="step-title">Normalize</h3>
+        <p class="step-desc">All data, one schema.</p>
+        <div class="step-extra">no vendor formats<br>same shape across<br>every venue</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">04</div>
+        <h3 class="step-title">Aggregate</h3>
+        <p class="step-desc">Reliable production output.</p>
+        <div class="step-extra">outlier filtering<br>median / blended<br>derived metrics</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">05</div>
+        <h3 class="step-title">Output</h3>
+        <p class="step-desc">Clean JSON with confidence.</p>
+        <div class="step-extra">{ symbol, price,<br><span class="accent">confidence,<br>source</span>, ts }</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== WHY ====================== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Built for the way agents actually consume data.</h2>
+      </div>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-cell">
+        <div class="why-cat">+ unified</div>
+        <h3 class="why-title">One unified API</h3>
+        <p class="why-desc">Every crypto data source under one schema. Switch venues without rewriting the agent.</p>
+      </div>
+      <div class="why-cell">
+        <div class="why-cat">+ confidence</div>
+        <h3 class="why-title">Confidence on every call</h3>
+        <p class="why-desc">Routing, fallback, normalization — with a score so your agent can refuse unreliable data before acting.</p>
+      </div>
+      <div class="why-cell">
+        <div class="why-cat">+ act</div>
+        <h3 class="why-title">Read AND act</h3>
+        <p class="why-desc">Non-custodial execution included — swap, perp, bet, vote. Your agent signs; your wallet broadcasts.</p>
+      </div>
+      <div class="why-cell">
+        <div class="why-cat">+ mcp</div>
+        <h3 class="why-title">MCP-native</h3>
+        <p class="why-desc">Plug into Claude, Cursor, Windsurf, eliza in 30 seconds. JSON-Schema-clean tools.</p>
+      </div>
+      <div class="why-cell">
+        <div class="why-cat">+ pricing</div>
+        <h3 class="why-title">Pay how you want</h3>
+        <p class="why-desc">Subscription, X402 (Basechain pay-per-call), MPP (Tempo) micropayments — three rails, your choice.</p>
+      </div>
+      <div class="why-cell">
+        <div class="why-cat">+ tested</div>
+        <h3 class="why-title">Production-tested</h3>
+        <p class="why-desc">19.4M tx executed at 96.4% success across BNB, Sui, TON.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== USE CASES ====================== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">From idea to production agent<br>in a weekend.</h2>
+      </div>
+    </div>
+
+    <div class="uses-grid">
+      <div class="use-card">
+        <div class="use-cat">trading</div>
+        <h3 class="use-title">Polymarket ↔ Hyperliquid arb</h3>
+        <p class="use-desc">Same event, two venues, auto-execute the spread.</p>
+      </div>
+      <div class="use-card">
+        <div class="use-cat">trading</div>
+        <h3 class="use-title">Hyperliquid vault copy-trader</h3>
+        <p class="use-desc">Sub-second mirror of any top vault, with risk caps.</p>
+      </div>
+      <div class="use-card">
+        <div class="use-cat">signal</div>
+        <h3 class="use-title">News-to-trade</h3>
+        <p class="use-desc">Headline drops → PM or HL perp moves first → take the lag.</p>
+      </div>
+      <div class="use-card">
+        <div class="use-cat">signal</div>
+        <h3 class="use-title">Memecoin radar</h3>
+        <p class="use-desc">pump.fun graduations × smart-money inflows, alert in &lt;5s.</p>
+      </div>
+      <div class="use-card">
+        <div class="use-cat">risk</div>
+        <h3 class="use-title">Liquidation hunter</h3>
+        <p class="use-desc">Watch HL + Aave health, snipe at the wick.</p>
+      </div>
+      <div class="use-card">
+        <div class="use-cat">research</div>
+        <h3 class="use-title">DAO governance agent</h3>
+        <p class="use-desc">Read every Snapshot proposal touching X, with treasury exposure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== INSTALL + PRICING ====================== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="ip-grid">
+      <div class="ip-block">
+        <h2 class="block-title">
+          <span class="block-title-tab active" data-target="npm">npm install</span> ·
+          <span class="block-title-tab" data-target="pip">pip install</span> ·
+          <span class="block-title-tab" data-target="mcp">MCP add-server</span>
+        </h2>
+        <div class="code-frame">
+          <div class="code-tabs">
+            <div class="tab active" data-target="npm">npm</div>
+            <div class="tab" data-target="pip">pip</div>
+            <div class="tab" data-target="curl">curl</div>
+            <div class="tab" data-target="mcp">MCP</div>
+          </div>
+          <div class="code-block active" data-block="npm"><span class="code-comment"># Install the SDK</span>
+npm install @tearline/sdk
+
+<span class="code-comment"># Make your first call</span>
+import { Dataline } from <span class="code-string">'@tearline/sdk'</span>;
+const tl = new Dataline({ apiKey: process.env.TEARLINE_KEY });
+
+const data = await tl.price(<span class="code-string">'BTC'</span>);
+console.log(data.price);      <span class="code-comment">// 67123.45</span>
+console.log(data.confidence); <span class="code-comment">// 0.98</span></div>
+          <div class="code-block" data-block="pip"><span class="code-comment"># Install the SDK</span>
+pip install tearline
+
+<span class="code-comment"># Make your first call</span>
+from tearline import Dataline
+tl = Dataline(api_key=os.environ[<span class="code-string">"TEARLINE_KEY"</span>])
+
+data = tl.price(<span class="code-string">"BTC"</span>)
+print(data.price)        <span class="code-comment"># 67123.45</span>
+print(data.confidence)   <span class="code-comment"># 0.98</span></div>
+          <div class="code-block" data-block="curl"><span class="code-comment"># Hit the REST endpoint directly</span>
+curl https://api.tearline.io/v1/price/BTC \
+  -H <span class="code-string">"Authorization: Bearer $TEARLINE_KEY"</span>
+
+<span class="code-comment"># Response</span>
+{
+  <span class="code-string">"symbol"</span>: <span class="code-string">"BTC"</span>,
+  <span class="code-string">"price"</span>: 67123.45,
+  <span class="code-string">"confidence"</span>: 0.98,
+  <span class="code-string">"source"</span>: <span class="code-string">"aggregated"</span>
+}</div>
+          <div class="code-block" data-block="mcp"><span class="code-comment"># Add Dataline as an MCP server in Claude Desktop</span>
+claude mcp add tearline \
+  --url https://mcp.tearline.io \
+  --header <span class="code-string">"Authorization: Bearer $TEARLINE_KEY"</span>
+
+<span class="code-comment"># Or in any MCP-compatible host</span>
+mcp install @tearline/server
+
+<span class="code-comment"># Now ask: "what's the BTC price?" — agent calls Dataline directly</span></div>
+        </div>
+      </div>
+
+      <div class="ip-block">
+        <h2 class="block-title">Three payment rails. Free tier, no card.</h2>
+        <a href="/pricing" class="rail" style="text-decoration:none;color:inherit;">
+          <div>
+            <div class="rail-name">Monthly subscription</div>
+            <div class="rail-desc">From $19/mo. Predictable spend.</div>
+          </div>
+          <div class="rail-arrow">→</div>
+        </a>
+        <a href="/pricing" class="rail" style="text-decoration:none;color:inherit;">
+          <div>
+            <div class="rail-name">X402 (Basechain)</div>
+            <div class="rail-desc">Per-call USDC. No signup.</div>
+          </div>
+          <div class="rail-arrow">→</div>
+        </a>
+        <a href="/pricing" class="rail" style="text-decoration:none;color:inherit;">
+          <div>
+            <div class="rail-name">MPP (Tempo)</div>
+            <div class="rail-desc">Streaming micropayments per event.</div>
+          </div>
+          <div class="rail-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FAQ ====================== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header" style="justify-content:center;text-align:center;">
+      <div>
+        <h2 class="section-title">Questions, answered.</h2>
+      </div>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Why not just call Coingecko and the Hyperliquid SDK directly?</summary>
+        <div class="faq-body">You can — for one source. Dataline aggregates across many sources, normalizes them into one schema, and ships every response with a confidence score so your agent can detect divergence and refuse stale data. Building that yourself is a multi-week integration per source.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What chains and venues do you cover at launch?</summary>
+        <div class="faq-body">Hyperliquid and Polymarket are the launch flagships. Underneath: BNB Chain, Sui, TON (where 19M+ tx already run), plus Coinbase, Binance, Kalshi for market data. More chains roll out monthly.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How does MCP work with Claude / Cursor / Windsurf?</summary>
+        <div class="faq-body">One add-server command in your host. Your agent reads our published AGENT_SKILL.md, registers tools, and starts calling. Every tool ships with JSON Schema, source attribution, and per-call pricing visible in the response.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How does the Act layer stay non-custodial?</summary>
+        <div class="faq-body">Dataline returns a signed transaction; your wallet broadcasts. Funds never leave the user's custody. On Hyperliquid we use trade-only API permissions. Your agent acts; you stay in control.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What is $TEARLINE?</summary>
+        <div class="faq-body">$TEARLINE is the native token on BNB Chain. Token utility (credit discounts, rate-limit staking, builder-code revenue share) is being finalized for v2. See /token for the latest.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== BIG CTA ====================== -->
+<section class="big-cta">
+  <h2>Stop stitching APIs.<br>Start <span class="accent">shipping agents</span>.</h2>
+  <p>Free tier, no credit card, 500 calls. See the response shape in 30 seconds.</p>
+  <div class="big-cta-row">
+    <a href="/api" class="btn-pill primary">Read Docs →</a>
+  </div>
+</section>
+
+<!-- ====================== FOOTER ====================== -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="/" class="brand"><svg class="delta-mark header-mark" data-orient="vertical" data-roots="1" data-density="7" data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2" data-stroke="0.3" data-dash="0.7 0.9"></svg><span>Dataline</span></a>
+      <p class="footer-bio">Stream clean Web3 data to any AI agent.</p>
+      <p class="footer-bio subline">Plug intent. Get data.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Products</div>
+      <a href="/data">Dataline Data</a>
+      <a href="/flowagent">FlowAgent</a>
+      <a href="/ghostdriver">GhostDriver</a>
+      <a href="/chatpilot">ChatPilot</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Developers</div>
+      <a href="/api">API Reference</a>
+      <a href="/mcp">MCP Server</a>    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Resources</div>
+      <a href="/pricing">Pricing</a>
+      <a href="/blog">Blog</a>
+      <a href="https://medium.com/tearline" target="_blank" rel="noopener">Medium</a>
+      <a href="https://x.com/TearlineAI" target="_blank" rel="noopener">Twitter / X</a>
+      <a href="https://t.me/tearlinexyz" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://www.youtube.com/@Dataline" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://github.com/tearline-xyz/GhostDriver?tab=readme-ov-file#installation" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Dataline · Plug intent. Get data.</div>
+    <div>dataline.xyz</div>
+  </div>
+</footer>
+
+<script>
+  /* ─── Megamenu: click to toggle (parallel to hover) ─── */
+  document.querySelectorAll('.nav-item-wrap .nav-trigger').forEach(trigger => {
+    if (trigger.tagName === 'BUTTON') {
+      trigger.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        const wrap = trigger.closest('.nav-item-wrap');
+        const wasOpen = wrap.classList.contains('open');
+        document.querySelectorAll('.nav-item-wrap.open').forEach(w => w.classList.remove('open'));
+        if (!wasOpen) wrap.classList.add('open');
+      });
+    }
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.nav-item-wrap')) {
+      document.querySelectorAll('.nav-item-wrap.open').forEach(w => w.classList.remove('open'));
+    }
+  });
+
+  /* ─── Install section: tab switcher + looping typewriter animation ─── */
+  (function () {
+    const frame = document.querySelector('.code-frame');
+    if (!frame) return;
+    const tabs = frame.querySelectorAll('.code-tabs .tab');
+    const blocks = Array.from(frame.querySelectorAll('.code-block'));
+    const titleTabs = document.querySelectorAll('.block-title-tab');
+
+    // Wrap each block's content into per-line spans (preserve inline highlight spans)
+    blocks.forEach(block => {
+      const lines = block.innerHTML.split('\n');
+      block.innerHTML = lines.map(l => `<span class="term-line">${l || '&nbsp;'}</span>`).join('');
+    });
+
+    let activeAnim = null;
+    function stopAnim() {
+      if (activeAnim) {
+        activeAnim.cancelled = true;
+        activeAnim.timeouts.forEach(clearTimeout);
+        activeAnim = null;
+      }
+    }
+    function playBlock(block) {
+      stopAnim();
+      const lines = block.querySelectorAll('.term-line');
+      lines.forEach(l => l.classList.remove('visible'));
+      const a = { cancelled: false, timeouts: [] };
+      activeAnim = a;
+      let delay = 220;
+      lines.forEach((line) => {
+        const t = setTimeout(() => { if (!a.cancelled) line.classList.add('visible'); }, delay);
+        a.timeouts.push(t);
+        const txt = line.textContent.trim();
+        // pacing: empty line quick, comments medium, code lines slower
+        delay += txt === '' ? 90 : (txt.startsWith('#') ? 170 : 230);
+      });
+      // Hold the completed state, then loop
+      const restart = setTimeout(() => {
+        if (!a.cancelled && block.classList.contains('active')) playBlock(block);
+      }, delay + 4200);
+      a.timeouts.push(restart);
+    }
+    function activate(target) {
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.target === target));
+      blocks.forEach(b => b.classList.toggle('active', b.dataset.block === target));
+      titleTabs.forEach(t => t.classList.toggle('active', t.dataset.target === target));
+      const block = blocks.find(b => b.dataset.block === target);
+      if (block && hasStarted) playBlock(block);
+    }
+    tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.target)));
+    titleTabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.target)));
+
+    // Start animation only when the section is in view (don't burn cycles before)
+    let hasStarted = false;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !hasStarted) {
+          hasStarted = true;
+          const initial = blocks.find(b => b.classList.contains('active')) || blocks[0];
+          if (initial) playBlock(initial);
+        }
+      });
+    }, { threshold: 0.3 });
+    obs.observe(frame);
+  })();
+
+
+  /* ─── Trust strip number counters (fire on first scroll into view) ─── */
+  function animateCounters() {
+    const els = document.querySelectorAll('.trust-num');
+    els.forEach(el => {
+      const finalText = (el.dataset.final || el.textContent).trim();
+      if (!el.dataset.final) el.dataset.final = finalText;
+      const m = finalText.match(/^([\d.]+)(.*)$/);
+      if (!m) return;
+      const target = parseFloat(m[1]);
+      const suffix = m[2];
+      const decimals = m[1].includes('.') ? 1 : 0;
+      const duration = 1100;
+      const start = performance.now();
+      el.textContent = '0' + suffix;
+      function tick(now) {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const cur = target * eased;
+        el.textContent = cur.toFixed(decimals) + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = finalText;
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+  const trustSection = document.querySelector('.trust');
+  if (trustSection) {
+    let counterTriggered = false;
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !counterTriggered) {
+          counterTriggered = true;
+          animateCounters();
+        }
+      });
+    }, { threshold: 0.3 });
+    counterObserver.observe(trustSection);
+  }
+
+  /* ─── Live timestamp + ping ─── */
+  function updateTime() {
+    const now = new Date();
+    const t = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+    const td = document.getElementById('time-display');     if (td) td.textContent = t;
+    const ft = document.getElementById('footer-time');      if (ft) ft.textContent = t;
+    if (Math.random() > 0.7) {
+      const p = 8 + Math.floor(Math.random() * 18);
+      const pv = document.getElementById('ping-val');       if (pv) pv.textContent = p;
+      const fp = document.getElementById('footer-ping');    if (fp) fp.textContent = p;
+    }
+  }
+  setInterval(updateTime, 1000);
+  updateTime();
+
+  /* ─── Hero canvas — generative ASCII wave (adapted from Sandro Kozmanishvili template) ─── */
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  let mouse = { x: -9999, y: -9999, vx: 0, vy: 0 };
+  let lastMouse = { x: 0, y: 0 };
+  let COLS = window.innerWidth < 768 ? 50 : 120;
+  let rows = 0, cellW, cellH;
+  let time = 0;
+  let phase = 'intro';
+  let introProgress = 0;
+  const INTRO_DURATION = 180;
+  let zoomTarget = 1.0, zoomCurrent = 1.0;
+  let speedTarget = 1.0, speedCurrent = 1.0;
+  let scrollBoost = 0;
+  let h1DistortStrength = 0, h1DistortCurrent = 0;
+
+  const ACCENT_COLS = ['#114433','#113322','#221133'];
+  let accents = [];
+  let accentTimer = 0;
+  const waveChars = ' .,;:!|/\\-_~^`'.split('');
+  const glitchChars = '/\\|!?;:.,+=-~^'.split('');
+
+  function resize() {
+    width = canvas.parentElement.offsetWidth;
+    height = canvas.parentElement.offsetHeight;
+    canvas.width = width * window.devicePixelRatio;
+    canvas.height = height * window.devicePixelRatio;
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    // Recompute COLS responsively (mobile = sparser, larger chars)
+    COLS = window.innerWidth < 768 ? 50 : 120;
+    cellW = width / COLS;
+    cellH = cellW * 1.55;
+    rows = Math.ceil(height / cellH);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  window.addEventListener('wheel', e => {
+    scrollBoost = Math.min(scrollBoost + Math.abs(e.deltaY) * 0.012, 3);
+  }, { passive: true });
+
+  const heroEl = document.getElementById('hero');
+  heroEl.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.vx = e.clientX - lastMouse.x;
+    mouse.vy = e.clientY - lastMouse.y;
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+    lastMouse.x = e.clientX;
+    lastMouse.y = e.clientY;
+  });
+  heroEl.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  const h1El = document.getElementById('hero-h1');
+  let h1Rect = null;
+  function refreshH1Rect() { if (h1El) h1Rect = h1El.getBoundingClientRect(); }
+  refreshH1Rect();
+  window.addEventListener('resize', refreshH1Rect);
+  window.addEventListener('scroll', refreshH1Rect);
+
+  h1El.addEventListener('mouseenter', () => {
+    zoomTarget = 1.12; speedTarget = 1.4; h1DistortStrength = 1.0;
+  });
+  h1El.addEventListener('mouseleave', () => {
+    zoomTarget = 1.0; speedTarget = 1.0; h1DistortStrength = 0;
+  });
+
+  function waveAmp(x, l, t, spd) {
+    const nx = x / COLS;
+    return (
+      0.20 * Math.sin(nx * 6.2 + t * 1.1 * spd + l * 1.3) +
+      0.12 * Math.sin(nx * 14.8 - t * 1.7 * spd + l * 2.1) +
+      0.07 * Math.sin(nx * 28 + t * 2.3 * spd - l * 0.7) +
+      0.04 * Math.sin(nx * 53 - t * 3.1 * spd + l * 4.0)
+    );
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+
+    if (phase === 'intro') {
+      introProgress++;
+      if (introProgress >= INTRO_DURATION) phase = 'idle';
+    }
+
+    const lerpK = 0.05;
+    zoomCurrent += (zoomTarget - zoomCurrent) * lerpK;
+    speedCurrent += (speedTarget - speedCurrent) * lerpK;
+    h1DistortCurrent += (h1DistortStrength - h1DistortCurrent) * 0.06;
+    scrollBoost *= 0.94;
+
+    const effectiveSpeed = speedCurrent + scrollBoost;
+    time += 0.012 * effectiveSpeed;
+    accentTimer++;
+
+    if (accentTimer % 22 === 0) {
+      const cx = Math.floor(Math.random() * COLS);
+      const cy = Math.floor(Math.random() * rows * 0.85 + rows * 0.1);
+      const col = ACCENT_COLS[Math.floor(Math.random() * 3)];
+      accents.push({ cx, cy, col, life: 0, maxLife: 30 });
+      if (accents.length > 8) accents.splice(0, 2);
+    }
+    accents.forEach(a => a.life++);
+    accents = accents.filter(a => a.life < a.maxLife);
+
+    const velMag = Math.hypot(mouse.vx, mouse.vy);
+    const CHAR_SIZE = Math.max(8, Math.round(cellH * 0.70));
+    ctx.font = `${CHAR_SIZE}px "Fragment Mono", monospace`;
+
+    ctx.save();
+    const cx0 = width / 2, cy0 = height / 2;
+    ctx.translate(cx0, cy0);
+    ctx.scale(zoomCurrent, zoomCurrent);
+    ctx.translate(-cx0, -cy0);
+
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < COLS; col++) {
+        let px = col * cellW + cellW / 2;
+        let py = row * cellH + cellH / 2;
+
+        const dx = px - mouse.x / zoomCurrent;
+        const dy = py - mouse.y / zoomCurrent;
+        const dist = Math.hypot(dx, dy);
+        const RADIUS = 140;
+        const affected = dist < RADIUS;
+
+        const BANDS = 5;
+        const bandH = rows / BANDS;
+        const band = Math.floor(row / bandH);
+        const bandT = (row % bandH) / bandH;
+
+        const amp = waveAmp(col, band, time, effectiveSpeed);
+        const center = 0.5 + amp;
+        const dist2c = Math.abs(bandT - center);
+        const thickness = 0.22;
+        const density = Math.exp(-dist2c * dist2c / (thickness * thickness * 0.5));
+
+        const charIdx = Math.floor(density * (waveChars.length - 1));
+        let char = waveChars[Math.min(charIdx, waveChars.length - 1)];
+        let opacity = density * 0.70;
+
+        let renderX = px, renderY = py;
+        if (affected) {
+          const f = (RADIUS - dist) / RADIUS;
+          renderX += (dx / (dist || 1)) * f * 14;
+          renderY += (dy / (dist || 1)) * f * 14;
+          opacity = Math.min(1, opacity + f * 0.4);
+          if (velMag > 5) char = Math.random() > 0.5 ? '/' : '\\';
+        }
+
+        if (h1DistortCurrent > 0.01 && h1Rect) {
+          const canvasRect = canvas.getBoundingClientRect();
+          const hcx = (h1Rect.left + h1Rect.width / 2) - canvasRect.left;
+          const hcy = (h1Rect.top + h1Rect.height / 2) - canvasRect.top;
+          const hdx = px - hcx;
+          const hdy = py - hcy;
+          const hd = Math.hypot(hdx, hdy);
+          const falloff = Math.max(0, 1 - hd / 280);
+          if (falloff > 0) {
+            const breathe = Math.sin(time * 1.4) * 0.5 + 0.5;
+            const push = falloff * h1DistortCurrent * breathe * 18;
+            renderX += (hdx / (hd || 1)) * push;
+            renderY += (hdy / (hd || 1)) * push * 0.6;
+            if (falloff > 0.6) opacity = Math.max(opacity, falloff * h1DistortCurrent * 0.55);
+            if (falloff > 0.7 && falloff < 0.85 && Math.random() < h1DistortCurrent * 0.3) {
+              char = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+            }
+          }
+        }
+
+        const acc = accents.find(a => a.cx === col && a.cy === row);
+        if (acc) {
+          const t01 = acc.life / acc.maxLife;
+          const alpha = Math.sin(t01 * Math.PI) * 0.7;
+          const r = parseInt(acc.col.slice(1,3),16);
+          const g = parseInt(acc.col.slice(3,5),16);
+          const b = parseInt(acc.col.slice(5,7),16);
+          ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
+          ctx.fillText(char || '.', renderX, renderY);
+        } else if (char && char !== ' ' && opacity > 0.04) {
+          ctx.fillStyle = `rgba(232,230,224,${opacity})`;
+          ctx.fillText(char, renderX, renderY);
+        }
+      }
+    }
+
+    ctx.restore();
+    requestAnimationFrame(draw);
+  }
+  draw();
+</script>
+
+
+<script>
+  /* ─── delta-mark logo builder (canonical, ported from /logos) ─── */
+  (function(){
+    function buildDelta(svg) {
+      const density = parseInt(svg.dataset.density || '9', 10);
+      const w = parseFloat(svg.dataset.w || 280);
+      const h = parseFloat(svg.dataset.h || 120);
+      const leafR = parseFloat(svg.dataset.leafR || 2.6);
+      const rootR = parseFloat(svg.dataset.rootR || 3.6);
+      const stroke = parseFloat(svg.dataset.stroke || 0.7);
+      const dash = svg.dataset.dash || '1.6 1.8';
+      const isStatic = svg.classList.contains('static');
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      svg.setAttribute('width', w);
+      svg.setAttribute('height', h);
+      const ns = 'http://www.w3.org/2000/svg';
+      const orient = svg.dataset.orient || 'horizontal';
+      const isVertical = orient === 'vertical';
+      const seed = density * 7919 + (isVertical ? 31 : 7);
+      function rng(i){ const x = Math.sin(seed + i*9301)*233280; return x - Math.floor(x); }
+      let rootPositions, leafCoord, padX, padY;
+      const numRoots = isVertical ? Math.max(1, parseInt(svg.dataset.roots || '1', 10)) : 1;
+      if (isVertical) {
+        padX = Math.max(2, w * 0.06);
+        padY = Math.max(2, h * 0.06);
+        const rootSpanFrac = parseFloat(svg.dataset.rootSpan || '0.32');
+        const rootSpan = numRoots > 1 ? w * rootSpanFrac : 0;
+        const rootStartX = (w - rootSpan) / 2;
+        rootPositions = [];
+        for (let r = 0; r < numRoots; r++) {
+          const tr = numRoots === 1 ? 0.5 : r / (numRoots - 1);
+          rootPositions.push({ x: numRoots === 1 ? w / 2 : rootStartX + rootSpan * tr, y: h - padY - rootR });
+        }
+        const centerGap = parseFloat(svg.dataset.centerGap || '0.22');
+        const totalSpan = w - 2*padX - 2*leafR;
+        const gapSpan = totalSpan * centerGap;
+        const halfSpan = (totalSpan - gapSpan) / 2;
+        const leftStartX = padX + leafR;
+        const rightStartX = padX + leafR + halfSpan + gapSpan;
+        leafCoord = (i, t) => {
+          if (centerGap <= 0) return { x: padX + leafR + totalSpan * t, y: padY + leafR };
+          if (t < 0.5) { const localT = halfSpan === 0 ? 0 : (t * 2); return { x: leftStartX + halfSpan * localT, y: padY + leafR }; }
+          const localT = halfSpan === 0 ? 0 : ((t - 0.5) * 2);
+          return { x: rightStartX + halfSpan * localT, y: padY + leafR };
+        };
+      } else {
+        padX = Math.max(2, w * 0.04);
+        padY = Math.max(2, h * 0.05);
+        rootPositions = [{ x: padX + rootR, y: h / 2 }];
+        const leafX = w - padX - leafR;
+        leafCoord = (i, t) => ({ x: leafX, y: padY + leafR + (h - 2*padY - 2*leafR) * t });
+      }
+      function assignedRootIndex(i){ if (numRoots === 1) return 0; return (numRoots - 1) - Math.floor((i / density) * numRoots); }
+      const leafState = [];
+      const alertSet = new Set();
+      if (density >= 2) {
+        const leftHalf = Math.max(1, Math.floor(density / 2));
+        const rightHalf = density - leftHalf;
+        alertSet.add(Math.floor(rng(0) * leftHalf));
+        alertSet.add(leftHalf + Math.floor(rng(1) * rightHalf));
+      }
+      for (let i = 0; i < density; i++) {
+        if (alertSet.has(i)) leafState.push('alert');
+        else leafState.push(rng(i + 50) > 0.22 ? 'active' : 'idle');
+      }
+      const showPulses = !isStatic && Math.min(w, h) >= 30;
+      const pathSpecs = [];
+      for (let i = 0; i < density; i++) {
+        const t = density === 1 ? 0.5 : i / (density - 1);
+        const { x: lx, y: ly } = leafCoord(i, t);
+        const root = rootPositions[assignedRootIndex(i)];
+        const dx = lx - root.x;
+        const dy = ly - root.y;
+        let d;
+        if (isVertical) {
+          const absDy = Math.abs(dy);
+          const cp1x = root.x + dx * 0.08;
+          const cp1y = root.y - absDy * 0.45;
+          const cp2x = root.x + dx * 0.75;
+          const cp2y = root.y - absDy * 0.92;
+          d = `M ${root.x} ${root.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${lx} ${ly}`;
+        } else {
+          const cp1x = root.x + dx * 0.55;
+          const cp1y = root.y;
+          const cp2x = lx - dx * 0.25;
+          const cp2y = ly;
+          d = `M ${root.x} ${root.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${lx} ${ly}`;
+        }
+        pathSpecs.push({ i, t, lx, ly, root, dx, d });
+      }
+      pathSpecs.sort((a, b) => {
+        const aRight = a.dx > 0 ? 0 : 1;
+        const bRight = b.dx > 0 ? 0 : 1;
+        if (aRight !== bRight) return aRight - bRight;
+        return a.i - b.i;
+      });
+      pathSpecs.forEach(spec => {
+        const { i, t, d } = spec;
+        const path = document.createElementNS(ns, 'path');
+        path.setAttribute('d', d);
+        path.setAttribute('class', 'path' + (rng(i) > 0.55 ? ' reverse' : '') + (rng(i + 100) > 0.7 ? ' bright' : ''));
+        path.style.strokeWidth = stroke;
+        path.style.strokeDasharray = dash;
+        const dur = 8 + rng(i + 200) * 10;
+        const delay = -rng(i + 300) * dur;
+        path.style.animationDuration = dur.toFixed(2) + 's';
+        path.style.animationDelay = delay.toFixed(2) + 's';
+        const dist = Math.abs(t - 0.5) * 2;
+        path.style.opacity = 0.55 + (1 - dist) * 0.35;
+        svg.appendChild(path);
+        if (showPulses) {
+          const state = leafState[i];
+          const pulseR = Math.max(0.7, leafR * 0.55);
+          const pulseDur = 2.6 + rng(i + 600) * 2.2;
+          const pulseDelay = -rng(i + 700) * pulseDur;
+          const pulse = document.createElementNS(ns, 'circle');
+          pulse.setAttribute('r', pulseR);
+          pulse.setAttribute('class', 'pulse' + (state === 'alert' ? ' alert' : ''));
+          pulse.setAttribute('cx', 0);
+          pulse.setAttribute('cy', 0);
+          const motion = document.createElementNS(ns, 'animateMotion');
+          motion.setAttribute('dur', pulseDur.toFixed(2) + 's');
+          motion.setAttribute('repeatCount', 'indefinite');
+          motion.setAttribute('begin', pulseDelay.toFixed(2) + 's');
+          motion.setAttribute('path', d);
+          pulse.appendChild(motion);
+          const fade = document.createElementNS(ns, 'animate');
+          fade.setAttribute('attributeName', 'opacity');
+          fade.setAttribute('values', '0;1;1;0');
+          fade.setAttribute('keyTimes', '0;0.15;0.85;1');
+          fade.setAttribute('dur', pulseDur.toFixed(2) + 's');
+          fade.setAttribute('repeatCount', 'indefinite');
+          fade.setAttribute('begin', pulseDelay.toFixed(2) + 's');
+          pulse.appendChild(fade);
+          svg.appendChild(pulse);
+        }
+      });
+      rootPositions.forEach(rp => {
+        const root = document.createElementNS(ns, 'circle');
+        root.setAttribute('cx', rp.x); root.setAttribute('cy', rp.y);
+        root.setAttribute('r', rootR); root.setAttribute('class', 'root');
+        svg.appendChild(root);
+      });
+      const dancing = !isStatic && Math.min(w, h) >= 22;
+      for (let i = 0; i < density; i++) {
+        const t = density === 1 ? 0.5 : i / (density - 1);
+        const { x: lx, y: ly } = leafCoord(i, t);
+        const state = leafState[i];
+        const isActive = state === 'active';
+        const isAlert = state === 'alert';
+        const leaf = document.createElementNS(ns, 'circle');
+        leaf.setAttribute('cx', lx); leaf.setAttribute('cy', ly);
+        leaf.setAttribute('r', (isActive || isAlert) ? leafR * 1.3 : leafR);
+        leaf.setAttribute('class', 'leaf' + (isActive ? ' active' : '') + (isAlert ? ' alert' : ''));
+        const dist = Math.abs(t - 0.5) * 2;
+        if (!isActive && !isAlert) leaf.style.opacity = 0.6 + (1 - dist) * 0.4;
+        if (dancing) {
+          const amp = leafR * (1.1 + rng(i + 800) * 1.4);
+          const upAmp = amp;
+          const downAmp = amp * 0.6;
+          const danceDur = 2.0 + rng(i + 900) * 1.8;
+          const danceDelay = -rng(i + 1000) * danceDur;
+          const cyAnim = document.createElementNS(ns, 'animate');
+          cyAnim.setAttribute('attributeName', 'cy');
+          cyAnim.setAttribute('values', `${ly};${ly - upAmp};${ly + downAmp};${ly - upAmp * 0.4};${ly}`);
+          cyAnim.setAttribute('keyTimes', '0;0.3;0.6;0.85;1');
+          cyAnim.setAttribute('keySplines', '0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1');
+          cyAnim.setAttribute('calcMode', 'spline');
+          cyAnim.setAttribute('dur', danceDur.toFixed(2) + 's');
+          cyAnim.setAttribute('repeatCount', 'indefinite');
+          cyAnim.setAttribute('begin', danceDelay.toFixed(2) + 's');
+          leaf.appendChild(cyAnim);
+        }
+        svg.appendChild(leaf);
+      }
+    }
+    document.querySelectorAll('.delta-mark').forEach(buildDelta);
+  })();
+
+  /* ─── Mobile menu toggle ─── */
+  (function () {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const nav = document.getElementById('mobile-nav');
+    if (!toggle || !nav) return;
+    function setOpen(open) {
+      document.body.classList.toggle('mobile-menu-open', open);
+      toggle.classList.toggle('active', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    }
+    toggle.addEventListener('click', () => setOpen(!document.body.classList.contains('mobile-menu-open')));
+    nav.addEventListener('click', (e) => { if (e.target.tagName === 'A') setOpen(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 768 && document.body.classList.contains('mobile-menu-open')) setOpen(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  })();
+</script>
+</body>
+</html>
