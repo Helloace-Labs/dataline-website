@@ -493,6 +493,15 @@
     color: var(--ink-muted); line-height: 1.7;
   }
   .step-extra .accent { color: var(--green); }
+  .step-extra .caret {
+    display: inline-block;
+    width: 0.5ch;
+    color: var(--green);
+    animation: step-caret-blink 1s steps(1) infinite;
+  }
+  @keyframes step-caret-blink {
+    50% { opacity: 0; }
+  }
 
   /* ────────────── WHY ────────────── */
   .why-grid {
@@ -1219,7 +1228,7 @@
         <div class="step-num">05</div>
         <h3 class="step-title">Output</h3>
         <p class="step-desc">Clean JSON with confidence.</p>
-        <div class="step-extra">{ symbol, price,<br><span class="accent">confidence,<br>source</span>, ts }</div>
+        <div class="step-extra">{ symbol, price,<br><span class="accent" id="output-typer"><span class="typed"></span><span class="caret">▍</span></span>, ts }</div>
       </div>
     </div>
   </div>
@@ -2024,6 +2033,47 @@ mcp install @tearline/server
     nav.addEventListener('click', (e) => { if (e.target.tagName === 'A') setOpen(false); });
     window.addEventListener('resize', () => { if (window.innerWidth > 768 && document.body.classList.contains('mobile-menu-open')) setOpen(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  })();
+
+  /* ─── Pipeline 05 Output: typewriter loop on "confidence, source" ─── */
+  (function () {
+    const target = document.getElementById('output-typer');
+    if (!target) return;
+    const typed = target.querySelector('.typed');
+    const LINES = ['confidence,', 'source'];
+    let visible = false;
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    const render = (lineIdx, charIdx) => {
+      let html = '';
+      for (let i = 0; i < lineIdx; i++) html += LINES[i] + '<br>';
+      if (lineIdx < LINES.length) html += LINES[lineIdx].slice(0, charIdx);
+      typed.innerHTML = html;
+    };
+    async function loop() {
+      while (true) {
+        while (!visible) await sleep(250);
+        for (let line = 0; line < LINES.length; line++) {
+          for (let i = 1; i <= LINES[line].length; i++) {
+            render(line, i);
+            await sleep(70);
+          }
+          if (line < LINES.length - 1) await sleep(180);
+        }
+        await sleep(2200);
+        for (let line = LINES.length - 1; line >= 0; line--) {
+          for (let i = LINES[line].length; i >= 0; i--) {
+            render(line, i);
+            await sleep(35);
+          }
+        }
+        await sleep(700);
+      }
+    }
+    const io = new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting;
+    }, { threshold: 0.2 });
+    io.observe(target);
+    loop();
   })();
 </script>
 </body>
