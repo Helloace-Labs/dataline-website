@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stream Clean Web3 Data — Now Available — Dataline Blog</title>
-<meta name="description" content="The 5-stage pipeline behind every Dataline call: route, normalize, aggregate, score, return. How Dataline turns natural-language intent into a grounded answer.">
+<title>Dataline Joins Google for Startups Cloud Program — Dataline Blog</title>
+<meta name="description" content="Dataline joins Google for Startups Cloud Program — $200K in cloud credits, AI-optimized infrastructure, early access to Web3 products, and partner support across Solana, Aptos, Near, Base, and Polygon.">
 <!-- ─── Favicons ─── -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -16,9 +16,9 @@
 <!-- ─── Open Graph ─── -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Dataline">
-<meta property="og:title" content="Stream Clean Web3 Data — Now Available — Dataline Blog">
-<meta property="og:description" content="The 5-stage pipeline behind every Dataline call: route, normalize, aggregate, score, return. How Dataline turns natural-language intent into a grounded answer.">
-<meta property="og:url" content="https://dataline.xyz/blog-data-layer">
+<meta property="og:title" content="Dataline Joins Google for Startups Cloud Program — Dataline Blog">
+<meta property="og:description" content="Dataline joins Google for Startups Cloud Program — $200K in cloud credits, AI-optimized infrastructure, early access to Web3 products, and partner support across Solana, Aptos, Near, Base, and Polygon.">
+<meta property="og:url" content="https://dataline.xyz/blog-google-cloud">
 <meta property="og:image" content="https://dataline.xyz/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -26,11 +26,11 @@
 <!-- ─── Twitter ─── -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@TearlineAI">
-<meta name="twitter:title" content="Stream Clean Web3 Data — Now Available — Dataline Blog">
-<meta name="twitter:description" content="The 5-stage pipeline behind every Dataline call: route, normalize, aggregate, score, return. How Dataline turns natural-language intent into a grounded answer.">
+<meta name="twitter:title" content="Dataline Joins Google for Startups Cloud Program — Dataline Blog">
+<meta name="twitter:description" content="Dataline joins Google for Startups Cloud Program — $200K in cloud credits, AI-optimized infrastructure, early access to Web3 products, and partner support across Solana, Aptos, Near, Base, and Polygon.">
 <meta name="twitter:image" content="https://dataline.xyz/og-image.png">
 
-<link rel="canonical" href="https://dataline.xyz/blog-data-layer">
+<link rel="canonical" href="https://dataline.xyz/blog-google-cloud">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Fragment+Mono&display=swap');
 
@@ -403,117 +403,76 @@
 <section class="article-hero">
   <div class="article-hero-inner">
     <a href="/blog" class="back-link"><span class="arrow">←</span><span>All posts</span></a>
-    <div class="article-eyebrow">Now Available</div>
-    <h1 class="article-title">Stream Clean Web3 Data</h1>
-    <div class="article-meta"><span><span class="dot">●</span> Apr 30, 2026</span></div>
+    <div class="article-eyebrow">/ partnership</div>
+    <h1 class="article-title">Dataline Joins Google for Startups Cloud Program</h1>
+    <div class="article-meta"><span><span class="dot">●</span> Aug 28, 2025</span></div>
   </div>
 </section>
 
 <article class="article">
   <div class="article-inner">
 
-<p>If you're building an AI agent on crypto markets right now, you've already done the nights. Hyperliquid SDK for perps. Polymarket gamma for odds. Coingecko for token metadata. Three RPCs for the chains you care about. Web2 scrapers for the X feed and the protocol announcement page. Glue code, fallback logic, decimal coercion, outlier filters — all of it sitting in your repo before your agent has reasoned about a single trade.</p>
+<p>Today we're sharing that <b>Dataline has joined the Google for Startups Cloud Program</b> — Google's track for high-potential Web3 infrastructure startups. The program supplies up to <b>$200K in Google Cloud credits over two years</b>, AI-optimized infrastructure, early access to Google Cloud's Web3 product roadmap, and direct technical support across the Solana, Aptos, Near, Base, and Polygon ecosystems.</p>
 
-<p>Dataline is the data + execution layer for AI agents in Web3. One call replaces that pile. <b>You pass natural-language intent. You get back a structured answer, source attribution, and a confidence score the agent can budget against — across every market, in one schema.</b> 19.4M on-chain transactions executed at 96.4% success across BNB, Sui, and TON; 2.5M+ ChatPilot interactions served on the same data layer.</p>
+<p>For builders on Dataline, the read is simple: the data layer your AI agent depends on now runs on the same backbone Google uses for its own AI workloads — with deeper headroom to scale, more chains coming online faster, and the cost structure to keep aggressive free tiers in place as we grow.</p>
 
-<p>This post walks the layer end to end: the five stages every call passes through, what the confidence score actually measures, what's covered, and how a developer or an autonomous agent reaches it.</p>
+<p>This post covers why we picked Google Cloud, what's in the program, what changes downstream, and what's next.</p>
 
-<h2>The five stages</h2>
+<h2>Why Google Cloud</h2>
 
-<p>Every Dataline call passes through five stages. The trace is visible in the response if you ask for it (<code>trace: true</code>) — your agent can audit its own answer.</p>
+<p>The boring reason is the right reason: serving live crypto data to AI agents is two hard problems stacked. The data side wants low-latency, multi-region, redundant ingest from dozens of venues. The agent side wants AI-optimized inference for the routing, normalization, and confidence-scoring stages of the pipeline. Most clouds are good at one. Google Cloud's TPU / GPU surface plus their global network is the rare one that's good at both.</p>
 
-<div class="pipeline">
-  <div class="pipeline-step"><div class="pipeline-num">/ 01</div><div class="pipeline-name">Intent</div><div class="pipeline-desc">Parse natural language into a typed query.</div></div>
-  <div class="pipeline-step"><div class="pipeline-num">/ 02</div><div class="pipeline-name">Route</div><div class="pipeline-desc">Pick the venues and endpoints that can answer it.</div></div>
-  <div class="pipeline-step"><div class="pipeline-num">/ 03</div><div class="pipeline-name">Normalize</div><div class="pipeline-desc">Coerce mismatched schemas into one shape.</div></div>
-  <div class="pipeline-step"><div class="pipeline-num">/ 04</div><div class="pipeline-name">Aggregate</div><div class="pipeline-desc">Combine sources, drop outliers, weight by liquidity.</div></div>
-  <div class="pipeline-step"><div class="pipeline-num">/ 05</div><div class="pipeline-name">Output</div><div class="pipeline-desc">Return data + confidence + sources + latency.</div></div>
-</div>
+<p>The strategic reason matters too. Google Cloud has spent the last two years building real Web3 product surface — not press-release Web3, but actual node infrastructure, indexing primitives, and BigQuery-native chain datasets. Their Web3 program isn't a logo wall; it's a working roadmap, and the partner list (Solana, Aptos, Near, Base, Polygon) overlaps almost perfectly with the chains Dataline already covers and the ones we're prioritizing next.</p>
 
-<h3>1. Intent</h3>
-<p>You pass a string like <code>"BTC price"</code>, <code>"ETH funding rate on HL"</code>, or <code>"Polymarket odds for 2028 election"</code>. The intent stage maps that to a typed query: asset, venue class, time window, precision. The parser is deterministic on common shapes and falls back to an LLM only on rare inputs — so the same input deterministically produces the same routed call.</p>
+<h2>What's in the program</h2>
 
-<h3>2. Route</h3>
-<p>Given a typed query, the router picks venues. For <code>BTC price</code>: Binance, OKX, Coinbase, Hyperliquid, Uniswap. For <code>onchain.balances</code>: the right RPC fan-out across the chains the wallet actually holds value on. The router is venue-aware — if Hyperliquid depth is thin for an asset right now, its weight drops before its number ever lands in the aggregate.</p>
-
-<h3>3. Normalize</h3>
-<p>The unglamorous, load-bearing stage. Every venue returns its own shape: different decimals, different timestamps, different field names, different ideas of what "price" means (last trade vs mid vs VWAP). Normalization coerces them to one schema. Without it, aggregation is meaningless — you'd be averaging apples and oranges.</p>
-
-<h3>4. Aggregate</h3>
-<p>Normalized sources fold into one answer. Outliers get filtered (anything more than N standard deviations from the rest). Sources get weighted by liquidity, recency, and historical reliability. If only one source returns, the call still succeeds — but the confidence drops because there's nothing to cross-check.</p>
-
-<h3>5. Output</h3>
-<p>The response carries <code>data</code>, a <code>confidence</code> score (0–1), a <code>source</code> list, and <code>latency_ms</code>. Optionally a full <code>trace</code> of the four prior stages. You set <code>min_confidence</code> on the way in — anything below your threshold returns a <code>409</code> instead of data, and your agent refuses to act:</p>
-
-<pre><code>POST /v1/intent/resolve
-{
-  "intent": "BTC price",
-  "min_confidence": 0.9
-}
-
-→ 200
-{
-  "data": { "price": 67123.45 },
-  "confidence": 0.98,
-  "source": ["binance", "hyperliquid", "okx"],
-  "latency_ms": 87
-}</code></pre>
-
-<h2>What confidence actually measures</h2>
-
-<p>A flat number is a trap. <code>BTC = 67,123</code> looks identical whether it came from one stale source or twelve fresh ones, and an agent that doesn't see the difference acts on both with the same boldness. Confidence is the contract.</p>
-
-<p>The score is computed as <b>data agreement × source reliability × freshness</b>:</p>
+<p>The Google for Startups Cloud Program for Web3 includes:</p>
 
 <ul>
-  <li><b>Data agreement</b> — how tightly the normalized values cluster. Two sources with $67,121 and $67,124 score high. Two sources with $67,000 and $68,500 score low.</li>
-  <li><b>Source reliability</b> — historical accuracy of each venue for this query type. Hyperliquid for BTC perps weights heavier than a long-tail aggregator.</li>
-  <li><b>Freshness</b> — age of the latest tick. Two-second-old data scores higher than thirty-second-old data.</li>
+  <li><b>Up to $200,000 in Google Cloud credits</b> across two years — runway to scale ingest, storage, and inference without one-month spend cliffs.</li>
+  <li><b>AI-optimized infrastructure</b> — access to TPU and GPU instances tuned for the kind of low-latency model serving the routing and confidence stages of our pipeline lean on.</li>
+  <li><b>Early access to new Google Cloud Web3 products</b> — node services, blockchain indexing primitives, BigQuery chain datasets ahead of general availability.</li>
+  <li><b>Web3-focused training resources</b> — internal Google Cloud playbooks for cross-chain architectures.</li>
+  <li><b>Direct technical support</b> from the Solana, Aptos, Near, Base, and Polygon ecosystem teams Google Cloud already partners with.</li>
+  <li><b>Exclusive Discord access</b> + VIP invitations to Google Cloud's Web3 conferences and events.</li>
 </ul>
 
-<p>Calibrate against confidence the way you'd calibrate against latency. <code>min_confidence: 0.9</code> for trade execution, <code>0.6</code> for analytics dashboards, <code>0.4</code> for "I just want a number to render somewhere." When the score drops, your agent fails safely instead of confidently.</p>
+<h2>What this changes for builders on Dataline</h2>
 
-<blockquote>Confidence on every call. The point isn't to make your agent more right — it's to make your agent <i>refuse</i> when it would otherwise be wrong.</blockquote>
+<p>Three concrete things downstream:</p>
 
-<h2>What's covered</h2>
+<ol>
+  <li><b>More headroom on the free tier.</b> Cloud credits give us room to keep "500 calls free, no credit card" generous as the user base grows, instead of clawing it back when ingest costs scale.</li>
+  <li><b>Faster confidence-scoring.</b> Moving the model-serving slice of the pipeline onto AI-optimized infra trims tail latency on the heaviest queries (cross-venue aggregation, news + on-chain joins). Users notice the P99, not the median.</li>
+  <li><b>More chains, sooner.</b> Direct technical lines into Solana, Aptos, Near, Base, and Polygon teams compress the engineering cycle on each new chain we add to the data layer. Solana and Aptos coverage moves up the roadmap.</li>
+</ol>
 
-<p>The data layer reaches across the venues your agent already wants to read:</p>
+<h2>The proof we walked in with</h2>
+
+<p>Programs like this are competitive — Google Cloud picks for traction, not pitch decks. The numbers we showed up with:</p>
 
 <ul>
-  <li><b>Crypto markets</b> — spot, perps, funding rates, OHLCV. Hyperliquid, Binance, OKX, Coinbase, every major DEX, lending markets. CEX and DEX, EVM and non-EVM.</li>
-  <li><b>On-chain</b> — wallet balances, decoded transaction history, position state. Ethereum, Solana, Base, Arbitrum, Optimism, Polygon, BNB Chain, Sui, TON.</li>
-  <li><b>Prediction markets</b> — Polymarket, Kalshi, on-chain books. Live odds and resolution status in one schema.</li>
-  <li><b>News and social</b> — filtered crypto-relevant headlines from X, Farcaster, curated outlets — what an agent reasoning about <i>why</i> a price moved actually needs.</li>
-  <li><b>Web2 sources</b> — the long tail of pages, APIs, and registries Web3-only data graphs miss.</li>
+  <li><b>2.5M+ user interactions</b> via ChatPilot, the conversational entry point on the Dataline data layer.</li>
+  <li><b>450K+ tasks completed</b> by GhostDriver, the browser-native AI agent, at <b>96.4% success rate</b>.</li>
+  <li><b>Top 2 AI Dapp on BNB Chain</b> by user count.</li>
+  <li><b>19.4M on-chain transactions</b> routed through the data + execution stack across BNB, Sui, and TON.</li>
 </ul>
 
-<p>Markets and on-chain live next to news and social on purpose. Agents don't think in silos — they want the price, the position, the headline, and the X chatter in one round trip.</p>
+<p>None of these are vanity numbers. Each is a stress test on the same data layer the program will help us scale further.</p>
 
-<h2>Three ways to reach it</h2>
+<h2>What's next</h2>
 
-<p>Same data layer, three onboarding paths:</p>
-
-<ol>
-  <li><b>Subscription</b> — predictable monthly credits, four tiers from Free (500/mo) to Growth (500k/mo). Best when usage is steady.</li>
-  <li><b>X402</b> — pay-per-call in USDC/USDT across Base, Arbitrum, Solana, Polygon, BNB Chain, Optimism. No signup, no key. Best when usage is bursty or distributed.</li>
-  <li><b>MPP (Tempo)</b> — Stripe's machine-payment protocol. Crypto rails for sub-cent micropayments, fiat rails for receipts and reconciliation. Best for agent-to-agent commerce.</li>
-</ol>
-
-<p>And three surfaces:</p>
+<p>Three threads we're picking up immediately:</p>
 
 <ol>
-  <li><b>Direct API</b> — <code>POST /v1/intent/resolve</code>. Full endpoint surface at <a href="/api">/api</a>.</li>
-  <li><b>MCP-native</b> — every endpoint exposed as a tool your agent discovers at runtime in Claude, Cursor, Windsurf. Six lines of config. <a href="/mcp">/mcp</a>.</li>
-  <li><b>AGENT_SKILL.md</b> — published skill manifest at <code>tearline.io/AGENT_SKILL.md</code>. Drop the URL in your system prompt; the model fetches it and calls the API directly. For autonomous agents that don't have MCP yet.</li>
+  <li><b>Solana, Aptos, Near coverage.</b> Direct ecosystem support unlocks deeper-than-RPC integration on each. Expect first-class native coverage across these chains in the coming months.</li>
+  <li><b>Joint Web3 events.</b> We'll co-present at Google Cloud's Web3 conferences with live demos of the data layer + FlowAgent + GhostDriver running on Cloud infra.</li>
+  <li><b>Continued data layer buildout.</b> The free tier stays generous, the confidence-score pipeline gets faster, and more venues land in one schema.</li>
 </ol>
 
-<h2>Where this fits in the stack</h2>
+<p>If you're building an AI agent that needs to read live, confidence-scored Web3 data — across markets, chains, prediction markets, and the Web2 sources your agent actually wants — <a href="/data">try Dataline</a>, or wire up the <a href="/mcp">MCP server</a> in 30 seconds.</p>
 
-<p>Data is the flagship. The rest of the Dataline stack composes around it. <b>FlowAgent</b> orchestrates DAG-based agent workflows on top. <b>GhostDriver</b> covers browser-native execution where the action lives in a web UI, not an API. <b>ChatPilot</b> is the conversational entry point that already crossed 2.5M interactions on this same layer. They all read with confidence and act non-custodially.</p>
-
-<p>If you're building an agent that has to be right when it acts, this is the layer to build it on. <a href="/data#playground">Try a query in the Playground</a> — no signup. Or wire up the <a href="/mcp">MCP server</a> in 30 seconds.</p>
-
-<p>If you're building an agent that has to be right when it acts, this is the layer you'd build it on. <a href="/data#playground">Try a query in the playground</a>, or wire up the <a href="/mcp">MCP server</a> in 30 seconds.</p>
+<p>Thanks to the Google for Startups Cloud team for the inclusion. There's a lot more to ship.</p>
 
   </div>
 </article>
@@ -521,7 +480,7 @@
 <div class="article-foot">
   <span></span>
   <a class="index-link" href="/blog">← Back to all posts</a>
-  <a href="/blog-google-cloud">Joins Google Cloud… →</a>
+  <a href="/blog-full-chain-ai-stack">Full-Chain AI Stack… →</a>
 </div>
 
 <section class="big-cta">
