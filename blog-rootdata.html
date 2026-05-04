@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dataline Joins Google for Startups Cloud Program — Dataline Blog</title>
-<meta name="description" content="Dataline joins the Google for Startups Cloud Program for Web3. Up to $200,000 in cloud credits over two years, AI infrastructure access, early access to Web3 products, and partner support across Solana, Aptos, Near, Base, and Polygon.">
+<title>Dataline Integrates RootData's Web3 Datasets — Dataline Blog</title>
+<meta name="description" content="Dataline integrates RootData's Web3 datasets. Project profiles, funding rounds, investor portfolios, and partnership records are now reachable through natural-language queries on the Dataline data layer.">
 <!-- ─── Favicons ─── -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -16,9 +16,9 @@
 <!-- ─── Open Graph ─── -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Dataline">
-<meta property="og:title" content="Dataline Joins Google for Startups Cloud Program — Dataline Blog">
-<meta property="og:description" content="Dataline joins the Google for Startups Cloud Program for Web3. Up to $200,000 in cloud credits over two years, AI infrastructure access, early access to Web3 products, and partner support across Solana, Aptos, Near, Base, and Polygon.">
-<meta property="og:url" content="https://dataline.xyz/blog-google-cloud">
+<meta property="og:title" content="Dataline Integrates RootData's Web3 Datasets — Dataline Blog">
+<meta property="og:description" content="Dataline integrates RootData's Web3 datasets. Project profiles, funding rounds, investor portfolios, and partnership records are now reachable through natural-language queries on the Dataline data layer.">
+<meta property="og:url" content="https://dataline.xyz/blog-rootdata">
 <meta property="og:image" content="https://dataline.xyz/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -26,11 +26,11 @@
 <!-- ─── Twitter ─── -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@TearlineAI">
-<meta name="twitter:title" content="Dataline Joins Google for Startups Cloud Program — Dataline Blog">
-<meta name="twitter:description" content="Dataline joins the Google for Startups Cloud Program for Web3. Up to $200,000 in cloud credits over two years, AI infrastructure access, early access to Web3 products, and partner support across Solana, Aptos, Near, Base, and Polygon.">
+<meta name="twitter:title" content="Dataline Integrates RootData's Web3 Datasets — Dataline Blog">
+<meta name="twitter:description" content="Dataline integrates RootData's Web3 datasets. Project profiles, funding rounds, investor portfolios, and partnership records are now reachable through natural-language queries on the Dataline data layer.">
 <meta name="twitter:image" content="https://dataline.xyz/og-image.png">
 
-<link rel="canonical" href="https://dataline.xyz/blog-google-cloud">
+<link rel="canonical" href="https://dataline.xyz/blog-rootdata">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Fragment+Mono&display=swap');
 
@@ -404,81 +404,61 @@
   <div class="article-hero-inner">
     <a href="/blog" class="back-link"><span class="arrow">←</span><span>All posts</span></a>
     <div class="article-eyebrow">/ partnership</div>
-    <h1 class="article-title">Dataline Joins Google for Startups Cloud Program</h1>
-    <div class="article-meta"><span><span class="dot">●</span> Aug 28, 2025</span></div>
+    <h1 class="article-title">Dataline Integrates RootData's Web3 Datasets</h1>
+    <div class="article-meta"><span><span class="dot">●</span> Dec 27, 2024</span></div>
   </div>
 </section>
 
 <article class="article">
   <div class="article-inner">
 
-<p>Dataline has been accepted into the Google for Startups Cloud Program. The announcement was published on August 28, 2025. The program supports Web3 infrastructure companies with cloud credits, access to AI infrastructure, and technical support from Google Cloud's blockchain ecosystem partners.</p>
+<p>Dataline has integrated RootData's Web3 datasets into the Dataline data layer. The integration was announced on December 27, 2024. With it, queries through Dataline can now reach RootData's catalog of project profiles, funding rounds, team and investor records, and the broader on-chain project metadata RootData maintains.</p>
 
-<p>This post explains what the program includes, why we chose Google Cloud, what changes for our infrastructure, and what we plan to do next.</p>
+<p>This post explains what RootData covers, what the integration provides on the Dataline side, and what users can do with it that they could not do as cleanly before.</p>
 
-<h2>Why we chose Google Cloud</h2>
+<h2>About RootData</h2>
 
-<p>Running a live data layer for AI agents has two infrastructure requirements that tend to pull in different directions. The data side needs low-latency, multi-region ingest from many venues, with redundancy. The agent side needs AI-optimized inference for the routing, normalization, and confidence-scoring stages of our pipeline. Most clouds are stronger on one side than the other. Google Cloud is competitive on both.</p>
+<p>RootData is one of the most widely used research databases in Web3. It tracks projects, funding rounds, investors, team members, partnerships, and product timelines across thousands of crypto and blockchain companies. Investors, journalists, founders, and analysts use it as a reference layer for the parts of Web3 that are not on-chain yet.</p>
 
-<p>The other reason we picked Google Cloud is its existing Web3 product surface. Over the past two years, Google Cloud has built node infrastructure, indexing primitives, and BigQuery-native chain datasets. Their existing partner list (Solana, Aptos, Near, Base, Polygon) overlaps closely with the chains Dataline already covers and the chains we are prioritizing next. That overlap matters in practice for the engineering work ahead of us.</p>
+<p>The data is curated rather than scraped, which is what makes it useful for downstream agents: the entries are normalized, the relationships between entities are explicit, and the records are kept current.</p>
 
-<h2>What the program includes</h2>
+<h2>What the integration provides</h2>
 
-<p>The program provides:</p>
-
-<ul>
-  <li>Up to $200,000 in Google Cloud credits, valid over two years.</li>
-  <li>Access to AI-optimized infrastructure, including TPU and GPU instances.</li>
-  <li>Early access to new Google Cloud Web3 products before general availability, including node services, blockchain indexing primitives, and BigQuery chain datasets.</li>
-  <li>Internal Web3 training resources from Google Cloud.</li>
-  <li>Direct technical support from the Solana, Aptos, Near, Base, and Polygon ecosystem teams that Google Cloud partners with.</li>
-  <li>Access to a private Discord channel and invitations to Google Cloud's Web3 conferences.</li>
-</ul>
-
-<h2>What changes for our infrastructure</h2>
-
-<p>Three changes follow from the program.</p>
-
-<p>The largest is more room on the free tier. Cloud credits give us margin to keep the 500-call free tier in place as the user base grows, without needing to raise the floor on paid tiers.</p>
-
-<p>We also expect faster model serving on the inference stages of our pipeline. Moving the model-serving slice onto AI-optimized infrastructure should reduce tail latency on heavy queries, particularly cross-venue aggregation and the joins between on-chain state and news or social sources. Median latency on those queries was already acceptable; tail latency is the part users tend to notice when it goes bad.</p>
-
-<p>Finally, chain coverage moves faster. Direct technical support from Solana, Aptos, Near, Base, and Polygon ecosystem teams reduces the engineering effort required to add each chain. Solana and Aptos both move up our roadmap as a result.</p>
-
-<h2>What we walked in with</h2>
-
-<p>The Google for Startups Cloud Program selects on traction. The numbers we shared during the application:</p>
+<p>Dataline now resolves natural-language queries against RootData's catalog. The kinds of questions an agent can ask cleanly through Dataline:</p>
 
 <ul>
-  <li>2.5 million user interactions through ChatPilot, the conversational entry point on our data layer.</li>
-  <li>450,000 tasks completed by GhostDriver, our browser-native agent, at a 96.4 percent success rate.</li>
-  <li>Top 2 AI dapp on BNB Chain by user count.</li>
-  <li>19.4 million on-chain transactions routed across BNB Chain, Sui, and TON.</li>
+  <li>Project profiles, including what the project does, the team behind it, the chain or stack it sits on, and its public links.</li>
+  <li>Funding history, including round size, valuation, lead and participating investors, and date.</li>
+  <li>Investor portfolios, with the projects each investor has backed.</li>
+  <li>Partnership and integration relationships between projects.</li>
+  <li>Sector and category groupings, so an agent can ask for "AI infrastructure projects on BNB Chain" and get a coherent set rather than a search-string match.</li>
 </ul>
 
-<p>Each number is load on the same data layer the program is helping us scale.</p>
+<p>The response shape is the same as every other Dataline call: structured data, source attribution back to RootData, a confidence score, and optional trace.</p>
 
-<h2>What we plan to do next</h2>
+<h2>What users can do with it</h2>
 
-<p>Our first priority is deeper Solana, Aptos, and Near coverage, using the ecosystem support the program provides.</p>
+<p>The integration is most useful where an agent needs context outside of pure on-chain or market data. Examples include:</p>
 
-<p>We also plan joint events with Google Cloud, where we will demonstrate Dataline running on Cloud infrastructure at Google Cloud's Web3 conferences.</p>
+<ul>
+  <li>An agent that summarizes a token before a user trades it, including who is behind the project, who funded it, and whether the team has shipped before.</li>
+  <li>An assistant that drafts content about an emerging sector and needs the underlying list of projects, investors, and round history without manual research.</li>
+  <li>A bot that triggers on funding-round news and surfaces the related portfolio context to a user.</li>
+</ul>
 
-<p>For the rest of the year, we will continue extending the data layer with additional venues, faster confidence scoring, and broader chain reach.</p>
-
-<p>If you are building an AI agent that needs live, confidence-scored Web3 data across markets, chains, prediction markets, and Web2 sources, you can try Dataline at <a href="/data">/data</a>, or wire up the MCP server at <a href="/mcp">/mcp</a>.</p>
+<p>This is also where the AI agent surface on Dataline starts to feel less like a wrapper around price feeds and more like a research workspace. The same agent can read a wallet, read the market, and read the project context behind both, in one conversation.</p>
 
 <h2>Source</h2>
 
-<p>The original announcement is on Yahoo Finance: <a href="https://finance.yahoo.com/news/tearline-joins-google-startups-cloud-103000205.html" target="_blank" rel="noopener">Tearline Joins Google for Startups Cloud Program to Accelerate Full-Chain AI for Web3</a> (August 28, 2025).</p>
+<p>The original announcement is on RootData's X account: <a href="https://x.com/RootDataCrypto" target="_blank" rel="noopener">@RootDataCrypto</a> (December 27, 2024). RootData's product is at <a href="https://www.rootdata.com/" target="_blank" rel="noopener">rootdata.com</a>.</p>
 
   </div>
 </article>
 
 <div class="article-foot">
-  <a href="/blog-cetus">← FlowAgent on Sui with Cetus</a>
+  <a href="/blog-bnb-ai-hack">← Wins BNB AI Hack</a>
   <a class="index-link" href="/blog">← Back to all posts</a>
-  <a href="/blog-full-chain-ai-stack">Full-Chain AI Stack… →</a>
+  <span></span>
 </div>
 
 <section class="big-cta">
