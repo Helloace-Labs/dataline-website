@@ -367,11 +367,14 @@
   }
   .partners-row {
     position: relative; overflow: hidden;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    background: var(--bg-card);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
             mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
   }
   .partners-track {
-    display: flex; gap: 1rem; width: max-content;
+    display: flex; gap: 0; width: max-content;
     animation: partners-marquee-left 42s linear infinite;
   }
   .partners-track.reverse { animation: partners-marquee-right 42s linear infinite; }
@@ -385,37 +388,40 @@
     to   { transform: translateX(0); }
   }
   .partner-card {
-    flex: 0 0 auto; width: 240px; height: 92px;
-    border: 1px solid var(--hairline); background: var(--bg-card);
+    flex: 0 0 auto; width: 300px; height: 130px;
+    border: 0;
+    border-right: 1px solid var(--hairline);
+    background: transparent;
     display: flex; align-items: center; justify-content: center;
-    gap: 0.7rem; padding: 1rem 1.4rem;
-    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    gap: 1rem; padding: 1.2rem 1.6rem;
+    transition: background 0.2s, transform 0.2s;
     color: var(--ink);
   }
   .partner-card:hover {
-    border-color: var(--green-dim); background: var(--bg-elev);
+    background: var(--bg-elev);
     transform: translateY(-1px);
   }
   .partner-card .partner-logo {
-    width: 32px; height: 32px; flex: 0 0 32px; object-fit: contain;
+    width: 48px; height: 48px; flex: 0 0 48px; object-fit: contain;
   }
   .partner-card .partner-name {
-    font-size: 1.02rem; letter-spacing: -0.01em; font-weight: 500;
+    font-size: 1.15rem; letter-spacing: -0.01em; font-weight: 500;
     white-space: nowrap;
   }
   .partner-card .partner-name .sub {
-    display: block; font-family: var(--font-mono); font-size: 0.66rem;
+    display: block; font-family: var(--font-mono); font-size: 0.7rem;
     color: var(--ink-dim); font-weight: 400; letter-spacing: 0.05em;
-    text-transform: uppercase; margin-top: 0.18rem;
+    text-transform: uppercase; margin-top: 0.22rem;
   }
   .partner-card .partner-google {
-    font-family: 'Arial', sans-serif; font-weight: 500; font-size: 1.6rem;
+    font-family: 'Arial', sans-serif; font-weight: 500; font-size: 2.4rem;
     letter-spacing: -0.5px; line-height: 1;
   }
   @media (max-width: 720px) {
-    .partner-card { width: 200px; height: 80px; padding: 0.85rem 1.1rem; }
-    .partner-card .partner-name { font-size: 0.92rem; }
-    .partner-card .partner-google { font-size: 1.3rem; }
+    .partner-card { width: 240px; height: 110px; padding: 1rem 1.2rem; }
+    .partner-card .partner-logo { width: 40px; height: 40px; flex-basis: 40px; }
+    .partner-card .partner-name { font-size: 1.02rem; }
+    .partner-card .partner-google { font-size: 2rem; }
   }
 
   /* ────────────── STACK ────────────── */
