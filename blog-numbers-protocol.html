@@ -661,7 +661,7 @@
         root.setAttribute('r', rootR); root.setAttribute('class', 'root');
         svg.appendChild(root);
       });
-      const dancing = !isStatic && Math.min(w, h) >= 60;
+      const dancing = !isStatic && Math.min(w, h) >= 20;
       for (let i = 0; i < density; i++) {
         const t = density === 1 ? 0.5 : i / (density - 1);
         const { x: lx, y: ly } = leafCoord(i, t);
@@ -675,11 +675,13 @@
         const dist = Math.abs(t - 0.5) * 2;
         if (!isActive && !isAlert) leaf.style.opacity = 0.6 + (1 - dist) * 0.4;
         if (dancing) {
-          const amp = leafR * (1.1 + rng(i + 800) * 1.4);
+          const sizeFactor = Math.min(1, Math.min(w, h) / 90);
+          const amp = leafR * 0.9 * Math.max(0.35, sizeFactor);
           const upAmp = amp;
-          const downAmp = amp * 0.6;
-          const danceDur = 2.0 + rng(i + 900) * 1.8;
-          const danceDelay = -rng(i + 1000) * danceDur;
+          const downAmp = amp * 0.55;
+          const danceDur = 3.2;
+          const wavePos = density === 1 ? 0 : i / (density - 1);
+          const danceDelay = -(wavePos * danceDur);
           const cyAnim = document.createElementNS(ns, 'animate');
           cyAnim.setAttribute('attributeName', 'cy');
           cyAnim.setAttribute('values', `${ly};${ly - upAmp};${ly + downAmp};${ly - upAmp * 0.4};${ly}`);
