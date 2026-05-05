@@ -403,7 +403,10 @@
   }
   .partner-card .partner-logo {
     width: 48px; height: 48px; flex: 0 0 48px; object-fit: contain;
+    filter: grayscale(1); opacity: 0.5;
+    transition: filter 0.25s, opacity 0.25s;
   }
+  .partner-card:hover .partner-logo { filter: grayscale(0); opacity: 1; }
   .partner-card .partner-name {
     font-size: 1.15rem; letter-spacing: -0.01em; font-weight: 500;
     white-space: nowrap;
@@ -416,7 +419,10 @@
   .partner-card .partner-google {
     font-family: 'Arial', sans-serif; font-weight: 500; font-size: 2.4rem;
     letter-spacing: -0.5px; line-height: 1;
+    filter: grayscale(1); opacity: 0.55;
+    transition: filter 0.25s, opacity 0.25s;
   }
+  .partner-card:hover .partner-google { filter: grayscale(0); opacity: 1; }
   @media (max-width: 720px) {
     .partner-card { width: 240px; height: 110px; padding: 1rem 1.2rem; }
     .partner-card .partner-logo { width: 40px; height: 40px; flex-basis: 40px; }
