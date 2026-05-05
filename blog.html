@@ -1130,11 +1130,6 @@
           if (alertSet.has(bIdle)) bIdle = topHalf + ((bLocal + 1) % bottomHalf);
           idleSet.add(bIdle);
         }
-        if (density >= 10) {
-          let tIdle = Math.floor(rng(3) * topHalf);
-          if (alertSet.has(tIdle)) tIdle = (tIdle + 1) % topHalf;
-          idleSet.add(tIdle);
-        }
       }
       for (let i = 0; i < density; i++) {
         if (alertSet.has(i)) leafState.push('alert');
@@ -1228,7 +1223,7 @@
         root.setAttribute('r', rootR); root.setAttribute('class', 'root');
         svg.appendChild(root);
       });
-      const dancing = !isStatic && Math.min(w, h) >= 22;
+      const dancing = !isStatic && Math.min(w, h) >= 60;
       for (let i = 0; i < density; i++) {
         const t = density === 1 ? 0.5 : i / (density - 1);
         const { x: lx, y: ly } = leafCoord(i, t);

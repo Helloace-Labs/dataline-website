@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dataline — Logo · Tree (archive)</title>
+<meta name="description" content="A breathing data delta oriented as a T. One root, fifteen leaves, outward-bowing paths carrying live pulses. Three node states. Dancing leaves.">
+<!-- ─── Favicons ─── -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A0A0A">
+
+<!-- ─── Open Graph ─── -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dataline">
+<meta property="og:title" content="Dataline — Logo · Tree (archive)">
+<meta property="og:description" content="A breathing data delta oriented as a T. One root, fifteen leaves, outward-bowing paths carrying live pulses. Three node states. Dancing leaves.">
+<meta property="og:url" content="https://www.dataline.xyz/logo-tree">
+<meta property="og:image" content="https://tearline.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- ─── Twitter ─── -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@TearlineAI">
+<meta name="twitter:title" content="Dataline — Logo · Tree (archive)">
+<meta name="twitter:description" content="A breathing data delta oriented as a T. One root, fifteen leaves, outward-bowing paths carrying live pulses. Three node states. Dancing leaves.">
+<meta name="twitter:image" content="https://tearline.io/og-image.png">
+
+<link rel="canonical" href="https://www.dataline.xyz/logo-tree">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Fragment+Mono&display=swap');
+
+  :root {
+    --bg: #0A0A0A;
+    --bg-elev: #111111;
+    --bg-card: #0E0E0E;
+    --ink: #E8E6E0;
+    --ink-dim: #888880;
+    --ink-muted: #555550;
+    --hairline: rgba(232, 230, 224, 0.10);
+    --hairline-strong: rgba(232, 230, 224, 0.22);
+    --hairline-bright: rgba(232, 230, 224, 0.55);
+    --green: #34d399;
+    --green-dim: rgba(52, 211, 153, 0.55);
+    --green-faint: rgba(52, 211, 153, 0.18);
+    --red: #ef4444;
+    --red-dim: rgba(239, 68, 68, 0.55);
+    --font-main: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Fragment Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-main);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.005em;
+  }
+  a { color: inherit; text-decoration: none; }
+  .mono { font-family: var(--font-mono); }
+
+  /* TOP BAR */
+  .top {
+    padding: 1.5rem 2.5rem;
+    border-bottom: 1px solid var(--hairline);
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; background: rgba(10,10,10,0.85); backdrop-filter: blur(8px);
+    z-index: 10;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-weight: 500; font-size: 1.05rem; letter-spacing: -0.01em;
+  }
+  .brand-mark-tile {
+    width: 26px; height: 26px; border: 1px solid var(--hairline-strong);
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-elev);
+  }
+  .header-mark {
+    /* Inline mark in the top nav, no frame */
+    flex-shrink: 0;
+    overflow: visible;
+  }
+  .top-nav { display: flex; gap: 1.5rem; font-size: 0.88rem; }
+  .top-nav a { color: var(--ink-dim); transition: color 0.15s; }
+  .top-nav a:hover { color: var(--ink); }
+  .top-nav .here { color: var(--ink); }
+
+  /* PAGE HEADER */
+  .page-head {
+    padding: 4rem 2.5rem 2rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 0.7rem;
+    color: var(--ink-dim); letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .page-title {
+    font-weight: 300; font-size: clamp(2rem, 4.5vw, 3.25rem);
+    line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 0.75rem;
+  }
+  .page-title .accent { color: var(--green); }
+  .page-lead { color: var(--ink-dim); font-size: 1rem; max-width: 64ch; }
+
+  .pitch-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1rem; margin-top: 2rem;
+    border-top: 1px solid var(--hairline);
+    padding-top: 1.5rem;
+  }
+  .pitch-item .label {
+    font-family: var(--font-mono); font-size: 0.65rem;
+    color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+  .pitch-item .val { font-size: 0.92rem; color: var(--ink); }
+  .pitch-item .val .green { color: var(--green); }
+  @media (max-width: 720px) { .pitch-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* HERO */
+  .hero {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 2.5rem 4rem;
+  }
+  .hero-card {
+    border: 1px solid var(--hairline);
+    background: var(--bg-card);
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-mark-wrap {
+    height: 360px;
+    display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid var(--hairline);
+    position: relative;
+  }
+  .hero-corner {
+    position: absolute; bottom: 1rem; right: 1.25rem;
+    font-family: var(--font-mono); font-size: 0.62rem;
+    color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase;
+    line-height: 1.7; text-align: right;
+  }
+  .hero-corner .live { color: var(--green); }
+  .hero-corner .live::before {
+    content: '●'; margin-right: 0.4rem; animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .hero-foot {
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    flex-wrap: wrap;
+    font-family: var(--font-mono); font-size: 0.72rem;
+    color: var(--ink-dim); letter-spacing: 0.06em;
+  }
+  .hero-foot .group { display: flex; gap: 1rem; align-items: center; }
+  .hero-foot button {
+    background: transparent;
+    border: 1px solid var(--hairline-strong);
+    color: var(--ink-dim);
+    padding: 0.45rem 0.85rem;
+    font-family: var(--font-mono); font-size: 0.7rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer;
+  }
+  .hero-foot button:hover { color: var(--ink); border-color: var(--ink); }
+  .hero-foot button.on { color: var(--green); border-color: var(--green-dim); }
+
+  /* CONCEPT SCAFFOLD */
+  .concepts {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 2.5rem 4rem;
+  }
+  .concept {
+    border-top: 1px solid var(--hairline);
+    padding: 3.5rem 0;
+  }
+  .concept-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;
+  }
+  .concept-num {
+    font-family: var(--font-mono); font-size: 0.7rem;
+    color: var(--ink-muted); letter-spacing: 0.08em;
+  }
+  .concept-title {
+    font-weight: 300; font-size: clamp(1.5rem, 3vw, 2.2rem);
+    line-height: 1.15; letter-spacing: -0.02em; max-width: 22ch;
+  }
+  .concept-desc {
+    color: var(--ink-dim); font-size: 0.95rem; max-width: 52ch;
+    margin-top: 0.75rem;
+  }
+  .concept-meta {
+    font-family: var(--font-mono); font-size: 0.68rem;
+    color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase;
+    text-align: right; line-height: 1.7; min-width: 12ch;
+  }
+
+  /* CARDS */
+  .card-row {
+    display: grid; gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+    margin-top: 1.5rem;
+  }
+  .card-row.cols-2 { grid-template-columns: 1fr 1fr; }
+  .card-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  @media (max-width: 720px) { .card-row { grid-template-columns: 1fr 1fr !important; } }
+
+  .card {
+    background: var(--bg-card);
+    padding: 2.5rem 1.5rem 1.5rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    min-height: 220px;
+    justify-content: space-between;
+  }
+  .card-vis {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    width: 100%;
+  }
+  .card-label {
+    font-family: var(--font-mono); font-size: 0.65rem;
+    color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase;
+    text-align: center;
+  }
+  .card-label.bright { color: var(--ink-dim); }
+
+  /* THE MARK — the delta */
+  .delta-mark { display: block; }
+  .delta-mark .root {
+    fill: var(--green);
+  }
+  .delta-mark .leaf {
+    fill: var(--ink-muted);
+    transition: fill 0.3s;
+  }
+  .delta-mark .leaf.active {
+    fill: var(--green);
+  }
+  .delta-mark .leaf.alert {
+    fill: var(--red);
+  }
+  .delta-mark .pulse {
+    fill: var(--green);
+    filter: drop-shadow(0 0 1.5px var(--green));
+    pointer-events: none;
+  }
+  .delta-mark .pulse.alert {
+    fill: var(--red);
+    filter: drop-shadow(0 0 1.5px var(--red));
+  }
+  .delta-mark.ink-only .pulse,
+  .delta-mark.ink-only .pulse.alert {
+    fill: var(--ink);
+    filter: drop-shadow(0 0 1.2px var(--ink));
+  }
+  .delta-mark .path {
+    fill: none;
+    stroke: var(--hairline-strong);
+    stroke-width: 0.6;
+    stroke-dasharray: 1.4 1.6;
+    stroke-linecap: round;
+    animation: flowDash 14s linear infinite;
+  }
+  .delta-mark .path.reverse {
+    animation-direction: reverse;
+  }
+  .delta-mark .path.bright {
+    stroke: var(--hairline-bright);
+  }
+  @keyframes flowDash {
+    to { stroke-dashoffset: -40; }
+  }
+
+  /* Variant — ink only (no green) */
+  .delta-mark.ink-only .root { fill: var(--ink); }
+  .delta-mark.ink-only .leaf.active { fill: var(--ink); }
+  .delta-mark.ink-only .leaf.alert { fill: var(--ink); }
+  .delta-mark.ink-only .leaf { fill: var(--ink-muted); }
+
+  /* Variant — pulse: active leaves throb */
+  .delta-mark.pulse .leaf.active {
+    animation: leafPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes leafPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* WORDMARK row */
+  .brand-line {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    font-weight: 500; font-size: 1.05rem; letter-spacing: -0.01em;
+  }
+  .brand-line.lg { font-size: 1.45rem; gap: 0.7rem; }
+  .brand-line .wm { color: var(--ink); }
+
+  /* CONTEXT FRAME — fake site header */
+  .frame {
+    border: 1px solid var(--hairline);
+    background: var(--bg-elev);
+    width: 100%;
+  }
+  .frame-head {
+    padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--hairline);
+    font-family: var(--font-mono); font-size: 0.62rem;
+    color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.45rem;
+  }
+  .frame-head::before {
+    content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--ink-muted); display: inline-block;
+  }
+  .frame-body {
+    padding: 1rem 1.25rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .frame-nav {
+    display: flex; gap: 1rem; color: var(--ink-dim); font-size: 0.85rem;
+  }
+
+  /* TILE wrapping the mark */
+  .mark-tile {
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid var(--hairline-strong);
+    padding: 4px 6px;
+    background: var(--bg-elev);
+  }
+  .mark-tile.tight { padding: 2px 4px; }
+
+  /* FAVICON test */
+  .favicon-grid {
+    display: flex; gap: 1.5rem; align-items: flex-end; flex-wrap: wrap;
+    justify-content: center;
+  }
+  .favicon-cell {
+    display: flex; flex-direction: column; align-items: center; gap: 0.45rem;
+  }
+  .favicon-cell .f-label {
+    font-family: var(--font-mono); font-size: 0.62rem;
+    color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .favicon-cell .f-box {
+    border: 1px solid var(--hairline);
+    background: var(--bg-elev);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* RECOMMENDATION */
+  .rec-card {
+    border-top: 1px solid var(--hairline-strong);
+    padding-top: 3.5rem;
+  }
+
+  footer {
+    padding: 1.5rem 2.5rem;
+    border-top: 1px solid var(--hairline);
+    font-family: var(--font-mono); font-size: 0.7rem;
+    color: var(--ink-muted);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;
+  }
+  footer a { color: var(--ink-muted); transition: color 0.15s; }
+  footer a:hover { color: var(--ink); }  /* ─── Mobile safety: no horizontal scroll, table overflow handling ─── */
+  html, body { overflow-x: hidden; }
+  @media (max-width: 768px) {
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    img { max-width: 100%; height: auto; }
+  }
+
+
+  /* MOBILE — universal overflow guard so headings/text wrap instead of cutting off */
+  @media (max-width: 768px) {
+    h1, h2, h3, p,
+    .section-title, .section-lead, .block-title,
+    .stack-card-name, .stack-card-desc,
+    .step-title, .step-desc,
+    .why-title, .why-desc,
+    .use-title, .use-desc,
+    .article-title, .article-meta,
+    .group-desc, .endpoint-label, .endpoint-summary {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+  }
+
+  /* Footer column titles — same green gradient across all three columns */
+  .footer-grid > div:nth-of-type(2) .footer-col-title,
+  .footer-grid > div:nth-of-type(3) .footer-col-title,
+  .footer-grid > div:nth-of-type(4) .footer-col-title {
+    background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a href="/" class="brand">
+    <svg class="delta-mark header-mark" data-orient="vertical" data-roots="1"
+         data-density="7"
+         data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2"
+         data-stroke="0.3" data-dash="0.7 0.9"></svg>
+    <span>Dataline</span>
+  </a>
+  <nav class="top-nav">
+    <a href="/">hub</a>
+    <a href="/site">website</a>
+    <a href="/logo-data">logo · data</a>
+    <a class="here" href="/logo-tree">logo · tree</a>
+  </nav>
+</div>
+
+<div class="page-head">
+  <div class="eyebrow">/ logo · tree (archive)</div>
+  <h1 class="page-title">A breathing data <span class="accent">tree</span>.</h1>
+  <p class="page-lead">Archive of the earlier T-shape concept: five trunk roots at the bottom, eighteen leaves split 9+9 across the top, branches arching out half left and half right. Kept for reference. The current Dataline mark is the <a href="/logo-data" style="color: var(--green);">D for data</a>.</p>
+
+  <div class="pitch-grid">
+    <div class="pitch-item">
+      <div class="label">silhouette</div>
+      <div class="val">T-letter, no typography</div>
+    </div>
+    <div class="pitch-item">
+      <div class="label">root</div>
+      <div class="val"><span class="green">●</span> intent — one input</div>
+    </div>
+    <div class="pitch-item">
+      <div class="label">leaves</div>
+      <div class="val"><span class="green">●</span> active <span style="color:var(--red);">●</span> alert <span style="color:var(--ink-muted);">●</span> idle</div>
+    </div>
+    <div class="pitch-item">
+      <div class="label">motion</div>
+      <div class="val">streams · pulses · dance</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ HERO ════════ -->
+<div class="hero">
+  <div class="hero-card">
+    <div class="hero-mark-wrap" id="hero-mark-wrap">
+      <svg id="hero-mark" class="delta-mark"
+           data-orient="vertical" data-roots="5" data-root-span="0.16" data-center-gap="0.22"
+           data-density="18" data-w="520" data-h="320"
+           data-leaf-r="3.6" data-root-r="5" data-stroke="0.7" data-dash="1.8 2.2"></svg>
+      <div class="hero-corner">
+        <div class="live">live · streaming</div>
+        <div>5 roots · 18 leaves · 9+9 mirror</div>
+        <div>16% trunk · 22% gap</div>
+      </div>
+    </div>
+    <div class="hero-foot">
+      <div class="group">
+        <span>density</span>
+        <button data-action="density" data-val="12">12</button>
+        <button data-action="density" data-val="18" class="on">18</button>
+        <button data-action="density" data-val="24">24</button>
+        <button data-action="density" data-val="30">30</button>
+      </div>
+      <div class="group">
+        <span>palette</span>
+        <button data-action="palette" data-val="green" class="on">green</button>
+        <button data-action="palette" data-val="ink">ink</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="concepts">
+
+  <!-- ════════ 01 / T-SHAPE PRIMARY ════════ -->
+  <div class="concept">
+
+    <!-- Hero showpiece — tree-shape v5 -->
+    <div class="card-row" style="grid-template-columns: 1fr;">
+      <div class="card" style="padding: 3rem 2rem 1.5rem; min-height: 380px;">
+        <div class="card-vis">
+          <svg class="delta-mark" data-orient="vertical" data-roots="5" data-root-span="0.16" data-density="18" data-center-gap="0.22"
+               data-w="420" data-h="320" data-leaf-r="3.8" data-root-r="5"
+               data-stroke="0.75" data-dash="2 2.4"></svg>
+        </div>
+        <div class="card-label bright">primary · 420×320 · 5 roots (16% trunk) · 18 leaves (9 + 9) · 22% gap</div>
+      </div>
+    </div>
+
+    <!-- Density variants -->
+    <div class="card-row cols-3" style="margin-top:1px;">
+      <div class="card">
+        <div class="card-vis">
+          <svg class="delta-mark" data-orient="vertical" data-roots="5" data-root-span="0.16" data-density="12" data-center-gap="0.22"
+               data-w="220" data-h="200" data-leaf-r="3.2" data-root-r="4"
+               data-stroke="0.75" data-dash="1.8 2.2"></svg>
+        </div>
+        <div class="card-label bright">12 leaves · 6+6</div>
+      </div>
+      <div class="card">
+        <div class="card-vis">
+          <svg class="delta-mark" data-orient="vertical" data-roots="5" data-root-span="0.16" data-density="18" data-center-gap="0.22"
+               data-w="220" data-h="200" data-leaf-r="3" data-root-r="3.8"
+               data-stroke="0.65" data-dash="1.6 1.9"></svg>
+        </div>
+        <div class="card-label bright">18 leaves · 9+9 · default</div>
+      </div>
+      <div class="card">
+        <div class="card-vis">
+          <svg class="delta-mark" data-orient="vertical" data-roots="5" data-root-span="0.16" data-density="30" data-center-gap="0.22"
+               data-w="220" data-h="200" data-leaf-r="2.3" data-root-r="3.2"
+               data-stroke="0.5" data-dash="1.2 1.5"></svg>
+        </div>
+        <div class="card-label bright">30 leaves · 15+15</div>
+      </div>
+    </div>
+
+    <!-- Full logo: symbol + wordmark, big -->
+    <div class="concept-head" style="margin-top: 4rem; margin-bottom: 1rem;">
+      <div>
+        <div class="concept-num">/ full logo</div>
+        <p class="concept-desc">Symbol + wordmark, lockup. The mark sits inline with "Dataline" — no border around the symbol.</p>
+      </div>
+    </div>
+
+    <div class="card-row" style="grid-template-columns: 1fr;">
+      <div class="card" style="padding: 4rem 2rem;">
+        <div class="card-vis" style="display:flex; align-items:center; justify-content:center; gap: 1.5rem;">
+          <svg class="delta-mark" data-orient="vertical" data-density="13" data-center-gap="0.22"
+               data-w="120" data-h="120" data-leaf-r="3" data-root-r="3.6"
+               data-stroke="0.7" data-dash="1.6 1.9"></svg>
+          <span style="font-family: var(--font-main); font-weight: 400; font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: -0.025em; color: var(--ink); line-height: 1;">Dataline</span>
+        </div>
+        <div class="card-label" style="margin-top: 1.5rem;">full logo · symbol + wordmark · 120 sq mark</div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  <div>dataline · logo · tree (archive)</div>
+  <div><a href="/">← back to hub</a></div>
+</footer>
+
+<script>
+  /* ───────────────────────────────────────────────
+     Generate the delta mark into every <svg.delta-mark>.
+     Each svg has data attributes that drive geometry:
+       data-density · number of leaves
+       data-w / data-h · viewBox dimensions
+       data-leaf-r · radius of inactive leaves (active are 1.3x)
+       data-root-r · radius of root
+       data-stroke · path stroke width
+       data-dash · stroke-dasharray ("a b" — pass "100 0" for solid)
+     ─────────────────────────────────────────────── */
+
+  function buildDelta(svg) {
+    const density = parseInt(svg.dataset.density || '9', 10);
+    const w = parseFloat(svg.dataset.w || 280);
+    const h = parseFloat(svg.dataset.h || 120);
+    const leafR = parseFloat(svg.dataset.leafR || 2.6);
+    const rootR = parseFloat(svg.dataset.rootR || 3.6);
+    const stroke = parseFloat(svg.dataset.stroke || 0.7);
+    const dash = svg.dataset.dash || '1.6 1.8';
+    const isStatic = svg.classList.contains('static');
+
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    svg.setAttribute('width', w);
+    svg.setAttribute('height', h);
+
+    const ns = 'http://www.w3.org/2000/svg';
+    const orient = svg.dataset.orient || 'horizontal';
+    const isVertical = orient === 'vertical';
+
+    /* Deterministic-ish per-path randomness, stable per density+orient */
+    const seed = density * 7919 + (isVertical ? 31 : 7);
+    function rng(i) {
+      const x = Math.sin(seed + i * 9301) * 233280;
+      return x - Math.floor(x);
+    }
+
+    /* Position calc — flips on orientation.
+       Vertical = "T" with optional MULTIPLE roots across the bottom and
+       arched-blade curves that swing wide (like the original Dataline logo).
+       Horizontal stays single-root. */
+    let rootPositions, leafCoord;
+    let padX, padY;
+    const numRoots = isVertical ? Math.max(1, parseInt(svg.dataset.roots || '1', 10)) : 1;
+
+    if (isVertical) {
+      padX = Math.max(2, w * 0.06);
+      padY = Math.max(2, h * 0.06);
+      /* Root-span fraction (of width) is configurable per-instance via
+         data-root-span (e.g. 0.16 for a tighter trunk). Default 0.32. */
+      const rootSpanFrac = parseFloat(svg.dataset.rootSpan || '0.32');
+      const rootSpan = numRoots > 1 ? w * rootSpanFrac : 0;
+      const rootStartX = (w - rootSpan) / 2;
+      rootPositions = [];
+      for (let r = 0; r < numRoots; r++) {
+        const tr = numRoots === 1 ? 0.5 : r / (numRoots - 1);
+        rootPositions.push({
+          x: numRoots === 1 ? w / 2 : rootStartX + rootSpan * tr,
+          y: h - padY - rootR
+        });
+      }
+      /* TREE-SHAPE leaf layout: leaves cluster on the LEFT and RIGHT halves,
+         with a configurable center gap. Mirrors the original Dataline mark's
+         silhouette where 3 blades sweep left and 3 sweep right with a clear
+         centerline trunk. Default 22% gap. */
+      const centerGap = parseFloat(svg.dataset.centerGap || '0.22');
+      const totalSpan = w - 2 * padX - 2 * leafR;
+      const gapSpan = totalSpan * centerGap;
+      const halfSpan = (totalSpan - gapSpan) / 2;
+      const leftStartX = padX + leafR;
+      const rightStartX = padX + leafR + halfSpan + gapSpan;
+      leafCoord = (i, t) => {
+        if (centerGap <= 0) {
+          return { x: padX + leafR + totalSpan * t, y: padY + leafR };
+        }
+        if (t < 0.5) {
+          const localT = halfSpan === 0 ? 0 : (t * 2);          /* 0 → 1 across left cluster */
+          return { x: leftStartX + halfSpan * localT, y: padY + leafR };
+        } else {
+          const localT = halfSpan === 0 ? 0 : ((t - 0.5) * 2);  /* 0 → 1 across right cluster */
+          return { x: rightStartX + halfSpan * localT, y: padY + leafR };
+        }
+      };
+    } else {
+      padX = Math.max(2, w * 0.04);
+      padY = Math.max(2, h * 0.05);
+      rootPositions = [{ x: padX + rootR, y: h / 2 }];
+      const leafX = w - padX - leafR;
+      leafCoord = (i, t) => ({
+        x: leafX,
+        y: padY + leafR + (h - 2 * padY - 2 * leafR) * t
+      });
+    }
+
+    /* Crossover mapping: top-left leaves connect to rightmost root and
+       vice versa. This produces lines that flow leftward AND rightward,
+       crossing in the middle — the look of the original Dataline logo's
+       overlapping blades. */
+    function assignedRootIndex(i) {
+      if (numRoots === 1) return 0;
+      return (numRoots - 1) - Math.floor((i / density) * numRoots);
+    }
+
+    /* Per-leaf state — exactly 2 red leaves (mirror-balanced, one on each
+       side of the gap), and the rest mostly green with a sprinkle of idle
+       grays so the mark doesn't read as monochromatic. */
+    const leafState = []; // 'idle' | 'active' | 'alert'
+    const alertSet = new Set();
+    if (density >= 2) {
+      const leftHalf = Math.max(1, Math.floor(density / 2));
+      const rightHalf = density - leftHalf;
+      alertSet.add(Math.floor(rng(0) * leftHalf));
+      alertSet.add(leftHalf + Math.floor(rng(1) * rightHalf));
+    }
+    for (let i = 0; i < density; i++) {
+      if (alertSet.has(i)) {
+        leafState.push('alert');
+      } else {
+        leafState.push(rng(i + 50) > 0.22 ? 'active' : 'idle');
+      }
+    }
+
+    /* Pulses + dance allowed at smaller sizes than before so the top-nav
+       header mark (~30 sq) animates. Larger threshold for pulses keeps
+       favicon ladders quiet. */
+    const showPulses = !isStatic && Math.min(w, h) >= 30;
+
+    /* Build path specs first (no DOM yet) so we can two-pass render: right-flowing
+       paths underneath, left-flowing paths on top. Per Chad's brief: where they
+       overlap in the middle, the left side covers the right side. */
+    const pathSpecs = [];
+    for (let i = 0; i < density; i++) {
+      const t = density === 1 ? 0.5 : i / (density - 1);
+      const { x: lx, y: ly } = leafCoord(i, t);
+      const root = rootPositions[assignedRootIndex(i)];
+      const dx = lx - root.x;
+      const dy = ly - root.y;
+
+      let d;
+      if (isVertical) {
+        /* TREE BRANCH: a graceful sweep from root up into the leaf, like the
+           blades in the original Dataline mark. cp1 keeps the line vertical
+           near the root so the trunk shows through; cp2 sits well past the
+           midpoint on the leaf side, tilted slightly toward the leaf y, so
+           the branch arcs out and rises into the leaf rather than turning a
+           hard corner. The further the leaf is from center, the wider the
+           sweep (controlled by |dx|). */
+        const absDy = Math.abs(dy);
+        const cp1x = root.x + dx * 0.08;            /* trunk segment — almost vertical */
+        const cp1y = root.y - absDy * 0.45;         /* 45% up — branch starts splitting here */
+        const cp2x = root.x + dx * 0.75;            /* well past midpoint toward leaf x */
+        const cp2y = root.y - absDy * 0.92;         /* near the top, but still arcing */
+        d = `M ${root.x} ${root.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${lx} ${ly}`;
+      } else {
+        const cp1x = root.x + dx * 0.55;
+        const cp1y = root.y;
+        const cp2x = lx - dx * 0.25;
+        const cp2y = ly;
+        d = `M ${root.x} ${root.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${lx} ${ly}`;
+      }
+
+      pathSpecs.push({ i, t, lx, ly, root, dx, d });
+    }
+
+    /* Sort: right-flowing (dx > 0) first, then left-flowing (dx <= 0) — left
+       paints over right in the overlapping middle. Within each group preserve
+       original index order so pulses don't reshuffle. */
+    pathSpecs.sort((a, b) => {
+      const aRight = a.dx > 0 ? 0 : 1;
+      const bRight = b.dx > 0 ? 0 : 1;
+      if (aRight !== bRight) return aRight - bRight;
+      return a.i - b.i;
+    });
+
+    /* Render paths + pulses in sorted order */
+    pathSpecs.forEach(spec => {
+      const { i, t, d } = spec;
+      const path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('class', 'path' + (rng(i) > 0.55 ? ' reverse' : '') + (rng(i + 100) > 0.7 ? ' bright' : ''));
+      path.style.strokeWidth = stroke;
+      path.style.strokeDasharray = dash;
+
+      const dur = 8 + rng(i + 200) * 10;
+      const delay = -rng(i + 300) * dur;
+      path.style.animationDuration = dur.toFixed(2) + 's';
+      path.style.animationDelay = delay.toFixed(2) + 's';
+
+      const dist = Math.abs(t - 0.5) * 2;
+      path.style.opacity = 0.55 + (1 - dist) * 0.35;
+      svg.appendChild(path);
+
+      if (showPulses) {
+        const state = leafState[i];
+        const pulseR = Math.max(0.7, leafR * 0.55);
+        const pulseDur = 2.6 + rng(i + 600) * 2.2;
+        const pulseDelay = -rng(i + 700) * pulseDur;
+
+        const pulse = document.createElementNS(ns, 'circle');
+        pulse.setAttribute('r', pulseR);
+        pulse.setAttribute('class', 'pulse' + (state === 'alert' ? ' alert' : ''));
+        pulse.setAttribute('cx', 0);
+        pulse.setAttribute('cy', 0);
+
+        const motion = document.createElementNS(ns, 'animateMotion');
+        motion.setAttribute('dur', pulseDur.toFixed(2) + 's');
+        motion.setAttribute('repeatCount', 'indefinite');
+        motion.setAttribute('begin', pulseDelay.toFixed(2) + 's');
+        motion.setAttribute('path', d);
+        pulse.appendChild(motion);
+
+        const fade = document.createElementNS(ns, 'animate');
+        fade.setAttribute('attributeName', 'opacity');
+        fade.setAttribute('values', '0;1;1;0');
+        fade.setAttribute('keyTimes', '0;0.15;0.85;1');
+        fade.setAttribute('dur', pulseDur.toFixed(2) + 's');
+        fade.setAttribute('repeatCount', 'indefinite');
+        fade.setAttribute('begin', pulseDelay.toFixed(2) + 's');
+        pulse.appendChild(fade);
+
+        svg.appendChild(pulse);
+      }
+    });
+
+    /* Root circles — one per anchor */
+    rootPositions.forEach(rp => {
+      const root = document.createElementNS(ns, 'circle');
+      root.setAttribute('cx', rp.x);
+      root.setAttribute('cy', rp.y);
+      root.setAttribute('r', rootR);
+      root.setAttribute('class', 'root');
+      svg.appendChild(root);
+    });
+
+    /* Dance at any size >= 22; static stays frozen. */
+    const dancing = !isStatic && Math.min(w, h) >= 22;
+
+    /* Leaves — colored per pre-computed state */
+    for (let i = 0; i < density; i++) {
+      const t = density === 1 ? 0.5 : i / (density - 1);
+      const { x: lx, y: ly } = leafCoord(i, t);
+      const state = leafState[i];
+      const isActive = state === 'active';
+      const isAlert = state === 'alert';
+      const leaf = document.createElementNS(ns, 'circle');
+      leaf.setAttribute('cx', lx);
+      leaf.setAttribute('cy', ly);
+      leaf.setAttribute('r', (isActive || isAlert) ? leafR * 1.3 : leafR);
+      leaf.setAttribute('class', 'leaf' + (isActive ? ' active' : '') + (isAlert ? ' alert' : ''));
+      const dist = Math.abs(t - 0.5) * 2;
+      if (!isActive && !isAlert) leaf.style.opacity = 0.6 + (1 - dist) * 0.4;
+
+      /* Dancing leaves — each bobs up and down on its own randomized rhythm.
+         Amplitude scales with leaf radius so it never looks broken or too jumpy.
+         Asymmetric values (up more than down) give a "floating" feel. */
+      if (dancing) {
+        const amp = leafR * (1.1 + rng(i + 800) * 1.4);  /* 1.1× → 2.5× of leaf radius (2× the prior range) */
+        const upAmp = amp;
+        const downAmp = amp * 0.6;
+        const danceDur = 2.0 + rng(i + 900) * 1.8;       /* 2.0–3.8s */
+        const danceDelay = -rng(i + 1000) * danceDur;    /* stagger start */
+        const cyAnim = document.createElementNS(ns, 'animate');
+        cyAnim.setAttribute('attributeName', 'cy');
+        cyAnim.setAttribute('values',
+          `${ly};${ly - upAmp};${ly + downAmp};${ly - upAmp * 0.4};${ly}`);
+        cyAnim.setAttribute('keyTimes', '0;0.3;0.6;0.85;1');
+        cyAnim.setAttribute('keySplines', '0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1');
+        cyAnim.setAttribute('calcMode', 'spline');
+        cyAnim.setAttribute('dur', danceDur.toFixed(2) + 's');
+        cyAnim.setAttribute('repeatCount', 'indefinite');
+        cyAnim.setAttribute('begin', danceDelay.toFixed(2) + 's');
+        leaf.appendChild(cyAnim);
+      }
+
+      svg.appendChild(leaf);
+    }
+  }
+
+  document.querySelectorAll('.delta-mark').forEach(buildDelta);
+
+  /* ─── Hero controls ─── */
+  const heroSvg = document.getElementById('hero-mark');
+  function rebuildHero(overrides = {}) {
+    Object.entries(overrides).forEach(([k, v]) => {
+      heroSvg.dataset[k] = v;
+    });
+    heroSvg.innerHTML = '';
+    buildDelta(heroSvg);
+  }
+
+  document.querySelectorAll('[data-action="density"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-action="density"]').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      rebuildHero({ density: btn.dataset.val });
+    });
+  });
+  document.querySelectorAll('[data-action="palette"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-action="palette"]').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      heroSvg.classList.toggle('ink-only', btn.dataset.val === 'ink');
+    });
+  });
+  document.querySelectorAll('[data-action="motion"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-action="motion"]').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      const isPulse = btn.dataset.val === 'pulse';
+      heroSvg.classList.toggle('pulse', isPulse);
+      if (isPulse) {
+        heroSvg.dataset.dash = '100 0';
+      } else {
+        heroSvg.dataset.dash = '3 4';
+      }
+      heroSvg.innerHTML = '';
+      buildDelta(heroSvg);
+    });
+  });
+  document.querySelectorAll('[data-action="orient"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-action="orient"]').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      const v = btn.dataset.val;
+      heroSvg.dataset.orient = v;
+      if (v === 'vertical') {
+        heroSvg.dataset.w = 520;
+        heroSvg.dataset.h = 320;
+        heroSvg.dataset.density = 18;
+        heroSvg.dataset.roots = 5;
+        heroSvg.dataset.rootSpan = 0.16;
+        heroSvg.dataset.centerGap = 0.22;
+        document.querySelectorAll('[data-action="density"]').forEach(b => b.classList.toggle('on', b.dataset.val === '18'));
+      } else {
+        heroSvg.dataset.w = 640;
+        heroSvg.dataset.h = 280;
+        heroSvg.dataset.density = 13;
+        heroSvg.dataset.roots = 1;
+        heroSvg.dataset.rootSpan = 0.32;
+        heroSvg.dataset.centerGap = 0;
+        document.querySelectorAll('[data-action="density"]').forEach(b => b.classList.toggle('on', b.dataset.val === '13'));
+      }
+      heroSvg.innerHTML = '';
+      buildDelta(heroSvg);
+    });
+  });
+</script>
+
+</body>
+</html>

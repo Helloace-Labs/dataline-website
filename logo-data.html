@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dataline — Logo · D-shape</title>
+<title>Dataline — Logo · Data</title>
 <meta name="description" content="A breathing data delta oriented as a D. Spine on the left, leaves on a right-bulging bowl, ribs curving between them carrying live pulses. Three node states. Dancing leaves.">
 <!-- ─── Favicons ─── -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -16,9 +16,9 @@
 <!-- ─── Open Graph ─── -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Dataline">
-<meta property="og:title" content="Dataline — Logo · D-shape">
+<meta property="og:title" content="Dataline — Logo · Data">
 <meta property="og:description" content="A breathing data delta oriented as a D. Spine on the left, leaves on a right-bulging bowl, ribs curving between them carrying live pulses. Three node states. Dancing leaves.">
-<meta property="og:url" content="https://tearline.io/logos">
+<meta property="og:url" content="https://www.dataline.xyz/logo-data">
 <meta property="og:image" content="https://tearline.io/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -26,11 +26,11 @@
 <!-- ─── Twitter ─── -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@TearlineAI">
-<meta name="twitter:title" content="Dataline — Logo · D-shape">
+<meta name="twitter:title" content="Dataline — Logo · Data">
 <meta name="twitter:description" content="A breathing data delta oriented as a D. Spine on the left, leaves on a right-bulging bowl, ribs curving between them carrying live pulses. Three node states. Dancing leaves.">
 <meta name="twitter:image" content="https://tearline.io/og-image.png">
 
-<link rel="canonical" href="https://tearline.io/logos">
+<link rel="canonical" href="https://www.dataline.xyz/logo-data">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Fragment+Mono&display=swap');
 
@@ -461,7 +461,8 @@
   <nav class="top-nav">
     <a href="/">hub</a>
     <a href="/site">website</a>
-    <a class="here" href="/logos">logos</a>
+    <a class="here" href="/logo-data">logo · data</a>
+    <a href="/logo-tree">logo · tree</a>
   </nav>
 </div>
 
@@ -602,7 +603,7 @@
 </section>
 
 <footer>
-  <div>dataline · logo · D-shape v1</div>
+  <div>dataline · logo · data (current)</div>
   <div><a href="/">← back to hub</a></div>
 </footer>
 
@@ -724,23 +725,28 @@
       return (numRoots - 1) - Math.floor((i / density) * numRoots);
     }
 
-    /* Per-leaf state — exactly 2 red leaves (mirror-balanced, one on each
-       side of the gap), and the rest mostly green with a sprinkle of idle
-       grays so the mark doesn't read as monochromatic. */
+    /* Per-leaf state for the D-shape bowl (i = 0 at top → density-1 at
+       bottom). Top half stays fully active (one alert, no gray). Bottom
+       half gets one alert and exactly one gray. Everything else green. */
     const leafState = []; // 'idle' | 'active' | 'alert'
     const alertSet = new Set();
+    const idleSet = new Set();
     if (density >= 2) {
-      const leftHalf = Math.max(1, Math.floor(density / 2));
-      const rightHalf = density - leftHalf;
-      alertSet.add(Math.floor(rng(0) * leftHalf));
-      alertSet.add(leftHalf + Math.floor(rng(1) * rightHalf));
+      const topHalf = Math.max(1, Math.floor(density / 2));
+      const bottomHalf = density - topHalf;
+      alertSet.add(Math.floor(rng(0) * topHalf));
+      alertSet.add(topHalf + Math.floor(rng(1) * bottomHalf));
+      if (density >= 4) {
+        let bLocal = Math.floor(rng(2) * bottomHalf);
+        let bIdle = topHalf + bLocal;
+        if (alertSet.has(bIdle)) bIdle = topHalf + ((bLocal + 1) % bottomHalf);
+        idleSet.add(bIdle);
+      }
     }
     for (let i = 0; i < density; i++) {
-      if (alertSet.has(i)) {
-        leafState.push('alert');
-      } else {
-        leafState.push(rng(i + 50) > 0.22 ? 'active' : 'idle');
-      }
+      if (alertSet.has(i)) leafState.push('alert');
+      else if (idleSet.has(i)) leafState.push('idle');
+      else leafState.push('active');
     }
 
     /* Pulses + dance allowed at smaller sizes than before so the top-nav
@@ -866,8 +872,9 @@
       svg.appendChild(root);
     });
 
-    /* Dance at any size >= 22; static stays frozen. */
-    const dancing = !isStatic && Math.min(w, h) >= 22;
+    /* Dance only at meaningful sizes; tiny header marks stay still
+       so they don't read as jittery. */
+    const dancing = !isStatic && Math.min(w, h) >= 60;
 
     /* Leaves — colored per pre-computed state */
     for (let i = 0; i < density; i++) {
