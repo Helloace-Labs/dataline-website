@@ -285,6 +285,10 @@
   @keyframes flowDash {
     to { stroke-dashoffset: -40; }
   }
+  /* Static variant — kills the dash flow so the mark is fully frozen
+     (pulses + dance are already gated by isStatic in the JS builder). */
+  .delta-mark.static .path { animation: none; }
+  .delta-mark.static .live::before { animation: none; }
 
   /* Variant — ink only (no green) */
   .delta-mark.ink-only .root { fill: var(--ink); }
@@ -560,6 +564,44 @@
                data-stroke="0.7" data-dash="1.8 2.2"></svg>
         </div>
         <div class="card-label bright">symbol · 320 sq · 13 sources → 1 destination</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════════ STATIC — frozen snapshot of the v1 D shape ════════ -->
+  <div class="concept">
+
+    <div class="concept-head">
+      <div>
+        <div class="concept-num">/ static</div>
+        <h2 class="concept-title">Frozen, for static use.</h2>
+        <p class="concept-desc">A snapshot of the v1 D shape with all motion disabled — no flowing dashes, no pulses, no dance. Use this when the logo lives somewhere that can't animate (favicons, embedded raster exports, print).</p>
+      </div>
+    </div>
+
+    <div class="card-row" style="grid-template-columns: 1fr;">
+      <div class="card" style="padding: 3rem 2rem 1.5rem; min-height: 380px;">
+        <div class="card-vis">
+          <svg class="delta-mark static" data-orient="d-converge" data-density="13"
+               data-w="320" data-h="320" data-leaf-r="3.2" data-root-r="4.4"
+               data-stroke="0.7" data-dash="1.8 2.2"></svg>
+        </div>
+        <div class="card-label bright">static · full size · 320 sq</div>
+      </div>
+    </div>
+
+    <div class="card-row" style="grid-template-columns: 1fr; margin-top: 1px;">
+      <div class="card" style="padding: 4rem 2rem;">
+        <div class="card-vis">
+          <span style="font-weight:500; font-size:1.05rem; letter-spacing:-0.01em; color: var(--ink); display:inline-flex; align-items:center; gap:0.6rem;">
+            <svg class="delta-mark static" data-orient="d-converge" data-density="5"
+                 data-w="22" data-h="22" data-leaf-r="0.85" data-root-r="1.15"
+                 data-stroke="0.3" data-dash="0.7 0.9"></svg>
+            Dataline
+          </span>
+        </div>
+        <div class="card-label bright" style="margin-top: 1.5rem;">static · header · 22 sq · navbar size</div>
       </div>
     </div>
 
