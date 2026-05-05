@@ -439,7 +439,7 @@
 <!-- ====================== HEADER ====================== -->
 <header class="site-header">
   <div class="header-inner">
-    <a href="/" class="brand"><svg class="delta-mark header-mark" data-orient="d-converge" data-density="5" data-w="22" data-h="22" data-leaf-r="0.85" data-root-r="1.15" data-stroke="0.3" data-dash="0.7 0.9"></svg><span>Dataline</span></a>
+    <a href="/" class="brand"><svg class="delta-mark header-mark" data-orient="tree" data-roots="1" data-density="7" data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2" data-stroke="0.3" data-dash="0.7 0.9"></svg><span>Dataline</span></a>
     <nav class="nav">
       <!-- Products mega -->
       <div class="nav-item-wrap">
@@ -1035,7 +1035,7 @@ print(result.data, result.confidence)</pre>
 <footer>
   <div class="footer-grid">
     <div>
-      <a href="/" class="brand"><svg class="delta-mark header-mark" data-orient="d-converge" data-density="5" data-w="22" data-h="22" data-leaf-r="0.85" data-root-r="1.15" data-stroke="0.3" data-dash="0.7 0.9"></svg><span>Dataline</span></a>
+      <a href="/" class="brand"><svg class="delta-mark header-mark" data-orient="tree" data-roots="1" data-density="7" data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2" data-stroke="0.3" data-dash="0.7 0.9"></svg><span>Dataline</span></a>
       <p class="footer-bio">Stream clean Web3 data to any AI agent.</p>
       <p class="footer-bio subline">Plug intent. Get data.</p>
     </div>
@@ -1313,9 +1313,43 @@ print(result.data, result.confidence)</pre>
       const seed = density * 7919 + (isVertical ? 31 : 7);
       function rng(i){ const x = Math.sin(seed + i*9301)*233280; return x - Math.floor(x); }
       let rootPositions, leafCoord, padX, padY;
-      const numRoots = isVertical ? Math.max(1, parseInt(svg.dataset.roots || '1', 10)) : 1;
+      const isTree = orient === 'tree';
+      const numRoots = (isVertical || isTree) ? Math.max(1, parseInt(svg.dataset.roots || '1', 10)) : 1;
       const isConverge = orient === 'd-converge';
-      if (isConverge) {
+      if (isTree) {
+        /* T-TREE: multi-root trunk at the bottom-center, leaves at the
+           top split into LEFT and RIGHT clusters with a center gap.
+           Branches arch up from each root with crossover. Original
+           Dataline mark silhouette. */
+        padX = Math.max(2, w * 0.06);
+        padY = Math.max(2, h * 0.06);
+        const rootSpanFrac = parseFloat(svg.dataset.rootSpan || '0.32');
+        const rootSpan = numRoots > 1 ? w * rootSpanFrac : 0;
+        const rootStartX = (w - rootSpan) / 2;
+        rootPositions = [];
+        for (let r = 0; r < numRoots; r++) {
+          const tr = numRoots === 1 ? 0.5 : r / (numRoots - 1);
+          rootPositions.push({
+            x: numRoots === 1 ? w / 2 : rootStartX + rootSpan * tr,
+            y: h - padY - rootR
+          });
+        }
+        const centerGap = parseFloat(svg.dataset.centerGap || '0.22');
+        const totalSpan = w - 2*padX - 2*leafR;
+        const gapSpan = totalSpan * centerGap;
+        const halfSpan = (totalSpan - gapSpan) / 2;
+        const leftStartX = padX + leafR;
+        const rightStartX = padX + leafR + halfSpan + gapSpan;
+        leafCoord = (i, t) => {
+          if (centerGap <= 0) return { x: padX + leafR + totalSpan * t, y: padY + leafR };
+          if (t < 0.5) {
+            const localT = halfSpan === 0 ? 0 : (t * 2);
+            return { x: leftStartX + halfSpan * localT, y: padY + leafR };
+          }
+          const localT = halfSpan === 0 ? 0 : ((t - 0.5) * 2);
+          return { x: rightStartX + halfSpan * localT, y: padY + leafR };
+        };
+      } else if (isConverge) {
         /* D-CONVERGE: column of source dots on LEFT, single destination
            on RIGHT, ribs arc outward to trace a rounded D outline. */
         padX = Math.max(2, w * 0.05);
@@ -1367,6 +1401,7 @@ print(result.data, result.confidence)</pre>
       function assignedRootIndex(i){
         if (numRoots === 1) return 0;
         if (isVertical) return Math.min(numRoots - 1, Math.floor((i / density) * numRoots));
+        // tree + horizontal both use crossover (top-left → rightmost root)
         return (numRoots - 1) - Math.floor((i / density) * numRoots);
       }
       const leafState = [];
@@ -1399,7 +1434,17 @@ print(result.data, result.confidence)</pre>
         const dx = lx - root.x;
         const dy = ly - root.y;
         let d;
-        if (isConverge) {
+        if (isTree) {
+          /* T-tree branch: arches from a bottom root up into a top
+             leaf. cp1 keeps it vertical near the root (trunk feel);
+             cp2 arcs out toward leaf x near the top. */
+          const absDy = Math.abs(dy);
+          const cp1x = root.x + dx * 0.08;
+          const cp1y = root.y - absDy * 0.45;
+          const cp2x = root.x + dx * 0.75;
+          const cp2y = root.y - absDy * 0.92;
+          d = `M ${root.x} ${root.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${lx} ${ly}`;
+        } else if (isConverge) {
           const cy = h / 2;
           const dirY = ly < cy ? -1 : 1;
           const halfSpan = h * 0.42;
