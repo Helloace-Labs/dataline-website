@@ -425,7 +425,7 @@
   <div class="filter-inner">
     <label class="filter-input">
       <span>filter</span>
-      <input id="search" type="search" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="search title, tags, or text..." />
+      <input id="search" type="search" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="search title, eyebrow, tags, or text..." />
     </label>
   </div>
 </section>
@@ -743,15 +743,20 @@
   const postCount   = document.getElementById('post-count');
   let activeTag = '';
 
+  // Normalize so "PR release" / "pr-release" / "PR_Release" all match each other.
+  const norm = (s) => s.toLowerCase().replace(/[\s\-_]+/g, '');
+
   function applyFilter() {
-    const q = searchInput.value.trim().toLowerCase();
+    const q = norm(searchInput.value.trim());
     let visible = 0;
     cards.forEach(card => {
-      const title   = (card.querySelector('.post-title')?.textContent   || '').toLowerCase();
-      const snippet = (card.querySelector('.post-snippet')?.textContent || '').toLowerCase();
-      const tags    = (card.dataset.tags || '').toLowerCase();
-      const matchesQuery = !q || title.includes(q) || snippet.includes(q) || tags.includes(q);
-      const matchesTag   = !activeTag || tags.includes(activeTag);
+      const title    = (card.querySelector('.post-title')?.textContent   || '');
+      const snippet  = (card.querySelector('.post-snippet')?.textContent || '');
+      const eyebrow  = (card.querySelector('.thumb-title')?.textContent  || '');
+      const tags     = (card.dataset.tags || '');
+      const haystack = norm(title + '|' + snippet + '|' + eyebrow + '|' + tags);
+      const matchesQuery = !q || haystack.includes(q);
+      const matchesTag   = !activeTag || tags.toLowerCase().includes(activeTag);
       const show = matchesQuery && matchesTag;
       card.style.display = show ? '' : 'none';
       if (show) visible++;
