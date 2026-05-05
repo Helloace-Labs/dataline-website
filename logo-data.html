@@ -569,17 +569,18 @@
 
   </div>
 
-  <!-- ════════ STATIC — frozen snapshot of the v1 D shape ════════ -->
+  <!-- ════════ V1 — frozen snapshots of the D shape ════════ -->
   <div class="concept">
 
     <div class="concept-head">
       <div>
-        <div class="concept-num">/ static</div>
-        <h2 class="concept-title">Frozen, for static use.</h2>
-        <p class="concept-desc">A snapshot of the v1 D shape with all motion disabled — no flowing dashes, no pulses, no dance. Use this when the logo lives somewhere that can't animate (favicons, embedded raster exports, print).</p>
+        <div class="concept-num">/ v1</div>
+        <h2 class="concept-title">Static, frozen variants.</h2>
+        <p class="concept-desc">Snapshots of the v1 D shape with all motion disabled — no flowing dashes, no pulses, no dance. Use these when the logo lives somewhere that can't animate (raster exports, print, light surfaces, favicons).</p>
       </div>
     </div>
 
+    <!-- 1. Static · full symbol -->
     <div class="card-row" style="grid-template-columns: 1fr;">
       <div class="card" style="padding: 3rem 2rem 1.5rem; min-height: 380px;">
         <div class="card-vis">
@@ -587,10 +588,37 @@
                data-w="320" data-h="320" data-leaf-r="3.2" data-root-r="4.4"
                data-stroke="0.7" data-dash="1.8 2.2"></svg>
         </div>
-        <div class="card-label bright">static · full size · 320 sq</div>
+        <div class="card-label bright">static · symbol · 320 sq</div>
       </div>
     </div>
 
+    <!-- 2. Static · symbol + Dataline lockup -->
+    <div class="card-row" style="grid-template-columns: 1fr; margin-top: 1px;">
+      <div class="card" style="padding: 4rem 2rem;">
+        <div class="card-vis" style="display:flex; align-items:center; justify-content:center; gap: 1.5rem;">
+          <svg class="delta-mark static" data-orient="d-converge" data-density="13"
+               data-w="120" data-h="120" data-leaf-r="2.8" data-root-r="3.6"
+               data-stroke="0.6" data-dash="1.4 1.7"></svg>
+          <span style="font-family: var(--font-main); font-weight: 400; font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: -0.025em; color: var(--ink); line-height: 1;">Dataline</span>
+        </div>
+        <div class="card-label bright" style="margin-top: 1.5rem;">static · symbol + wordmark lockup · 120 sq mark</div>
+      </div>
+    </div>
+
+    <!-- 3. Static · light surface (inverse) -->
+    <div class="card-row" style="grid-template-columns: 1fr; margin-top: 1px;">
+      <div class="card light-surface" style="padding: 4rem 2rem;">
+        <div class="card-vis" style="display:flex; align-items:center; justify-content:center; gap: 1.5rem;">
+          <svg class="delta-mark static dark-on-light" data-orient="d-converge" data-density="13"
+               data-w="120" data-h="120" data-leaf-r="2.8" data-root-r="3.6"
+               data-stroke="0.6" data-dash="1.4 1.7"></svg>
+          <span style="font-family: var(--font-main); font-weight: 400; font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: -0.025em; color: #0A0A0A; line-height: 1;">Dataline</span>
+        </div>
+        <div class="card-label bright" style="margin-top: 1.5rem;">static · light surface · for light backgrounds</div>
+      </div>
+    </div>
+
+    <!-- 4. Static · header -->
     <div class="card-row" style="grid-template-columns: 1fr; margin-top: 1px;">
       <div class="card" style="padding: 4rem 2rem;">
         <div class="card-vis">
