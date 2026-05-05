@@ -1094,6 +1094,10 @@
             return x - Math.floor(x);
           };
           for (let p = 0; p < numStatic; p++) {
+            /* Drop ~20% of snapshot dots so the bowl doesn't read as
+               too busy. Per-(path, pulse) random gate so the missing
+               dots scatter rather than clustering. */
+            if (snapRng(i * 100 + p + 50) < 0.20) continue;
             const tFrac = 0.08 + snapRng(i * 100 + p) * 0.84;
             const pt = path.getPointAtLength(totalLen * tFrac);
             const dot = document.createElementNS(ns, 'circle');
