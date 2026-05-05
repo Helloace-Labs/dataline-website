@@ -851,11 +851,10 @@
     /* Pulses + dance allowed at smaller sizes than before so the top-nav
        header mark (~30 sq) animates. Larger threshold for pulses keeps
        favicon ladders quiet. */
-    /* Static marks keep their flowing pulses — only the dash flow and
-       leaf dance are silenced (dance via the isStatic guard below;
-       dash flow via the .static CSS rule). The pulses are what carry
-       the "data flow" identity, so they stay even when frozen. */
-    const showPulses = Math.min(w, h) >= 18;
+    /* Static marks freeze everything: no pulses, no dance, no dash
+       flow. Pulses are gated by isStatic here; dance is gated below;
+       dash flow is killed via the .static CSS rule. */
+    const showPulses = !isStatic && Math.min(w, h) >= 18;
 
     /* Build path specs first (no DOM yet) so we can two-pass render: right-flowing
        paths underneath, left-flowing paths on top. Per Chad's brief: where they

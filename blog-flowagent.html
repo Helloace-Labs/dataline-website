@@ -585,7 +585,7 @@ footer { padding: 4rem var(--pad) 2rem; }
         else if (idleSet.has(i)) leafState.push('idle');
         else leafState.push('active');
       }
-      const showPulses = Math.min(w, h) >= 18;
+      const showPulses = !isStatic && Math.min(w, h) >= 18;
       const pathSpecs = [];
       for (let i = 0; i < density; i++) {
         const t = density === 1 ? 0.5 : i / (density - 1);
