@@ -1104,7 +1104,7 @@ claude mcp add tearline -s user -e TEARLINE_KEY=sk_live_... \
         else if (idleSet.has(i)) leafState.push('idle');
         else leafState.push('active');
       }
-      const showPulses = !isStatic && Math.min(w, h) >= 18;
+      const showPulses = Math.min(w, h) >= 18;
       const pathSpecs = [];
       for (let i = 0; i < density; i++) {
         const t = density === 1 ? 0.5 : i / (density - 1);
