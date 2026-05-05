@@ -436,7 +436,7 @@
 <!-- ====================== HEADER ====================== -->
 <header class="site-header">
   <div class="header-inner">
-    <a href="/" class="brand"><svg class="delta-mark header-mark" data-orient="vertical" data-roots="1" data-density="7" data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2" data-stroke="0.3" data-dash="0.7 0.9"></svg><span>Dataline</span></a>
+    <a href="/" class="brand"><svg class="delta-mark header-mark" data-orient="vertical" data-roots="1" data-density="6" data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2" data-stroke="0.3" data-dash="0.7 0.9"></svg><span>Dataline</span></a>
     <nav class="nav">
       <!-- Products mega -->
       <div class="nav-item-wrap">
@@ -671,7 +671,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <a href="/" class="brand"><svg class="delta-mark header-mark" data-orient="vertical" data-roots="1" data-density="7" data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2" data-stroke="0.3" data-dash="0.7 0.9"></svg><span>Dataline</span></a>
+      <a href="/" class="brand"><svg class="delta-mark header-mark" data-orient="vertical" data-roots="1" data-density="6" data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2" data-stroke="0.3" data-dash="0.7 0.9"></svg><span>Dataline</span></a>
       <p class="footer-bio">Stream clean Web3 data to any AI agent.</p>
       <p class="footer-bio subline">Plug intent. Get data.</p>
     </div>
@@ -1124,11 +1124,10 @@
         const dist = Math.abs(t - 0.5) * 2;
         if (!isActive && !isAlert) leaf.style.opacity = 0.6 + (1 - dist) * 0.4;
         if (dancing) {
-          const sizeFactor = Math.min(1, Math.min(w, h) / 90);
-          const amp = leafR * 0.9 * Math.max(0.35, sizeFactor);
+          const amp = leafR * 1.9;
           const upAmp = amp;
           const downAmp = amp * 0.55;
-          const danceDur = 3.2;
+          const danceDur = 2.6;
           const wavePos = density === 1 ? 0 : i / (density - 1);
           const danceDelay = -(wavePos * danceDur);
           const cyAnim = document.createElementNS(ns, 'animate');
