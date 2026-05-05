@@ -543,6 +543,30 @@
 
   </div>
 
+  <!-- ════════ V2 PROTOTYPE — D-converge ════════ -->
+  <div class="concept">
+
+    <div class="concept-head">
+      <div>
+        <div class="concept-num">/ v2 prototype</div>
+        <h2 class="concept-title">Many sources, one destination.</h2>
+        <p class="concept-desc">An inverse cut. A vertical column of source dots on the left — just dots, no connecting line — flows into a single destination on the right. Each rib arcs outward; the union of curves traces a rounded D bowl that closes on the right.</p>
+      </div>
+    </div>
+
+    <div class="card-row" style="grid-template-columns: 1fr;">
+      <div class="card" style="padding: 3rem 2rem 1.5rem; min-height: 380px;">
+        <div class="card-vis">
+          <svg class="delta-mark" data-orient="d-converge" data-density="13"
+               data-w="320" data-h="320" data-leaf-r="3.2" data-root-r="4.4"
+               data-stroke="0.7" data-dash="1.8 2.2"></svg>
+        </div>
+        <div class="card-label bright">v2 · 13 sources on the left → 1 destination on the right</div>
+      </div>
+    </div>
+
+  </div>
+
 </section>
 
 <footer>
@@ -595,7 +619,27 @@
     let padX, padY;
     const numRoots = isVertical ? Math.max(1, parseInt(svg.dataset.roots || '1', 10)) : 1;
 
-    if (isVertical) {
+    const isConverge = orient === 'd-converge';
+    if (isConverge) {
+      /* D-CONVERGE (v2 prototype): vertical column of source dots on
+         the LEFT (just dots, no connecting line), single destination
+         on the RIGHT. Each rib arcs outward — top ribs bulge up,
+         bottom ribs bulge down — so the union of curves traces a
+         rounded D outline that closes on the right destination. */
+      padX = Math.max(2, w * 0.05);
+      padY = Math.max(2, h * 0.06);
+      const aFracC = parseFloat(svg.dataset.bowlR || '0.59');
+      const aC = aFracC * h;
+      const spineFracRawC = svg.dataset.spineFrac;
+      const spineXC = spineFracRawC
+        ? Math.max(padX + leafR, w * parseFloat(spineFracRawC))
+        : Math.max(padX + leafR, (w - aC) / 2);
+      const spineSpanC = parseFloat(svg.dataset.spineSpan || '0.84');
+      const spineLenC = h * spineSpanC;
+      const spineTopC = (h - spineLenC) / 2;
+      rootPositions = [{ x: spineXC + aC, y: h / 2 }];
+      leafCoord = (i, t) => ({ x: spineXC, y: spineTopC + spineLenC * t });
+    } else if (isVertical) {
       /* D-SHAPE: spine of roots stacked along the LEFT, leaves traced
          along a right-bulging half-ellipse (the bowl of the D). Ribs
          curve from each spine root out to a leaf on the bowl.
@@ -712,7 +756,25 @@
       const dy = ly - root.y;
 
       let d;
-      if (isVertical) {
+      if (isConverge) {
+        /* D-CONVERGE rib: bezier from each LEFT source to the right
+           destination, bulging outward away from the horizontal
+           centerline. Outer ribs (top/bottom of column) arc most;
+           the middle rib is nearly straight. The union of ribs
+           traces the rounded D outline. Path is drawn LEAF → ROOT
+           so pulses flow toward the destination on the right. */
+        const cy = h / 2;
+        const dirY = ly < cy ? -1 : 1;
+        const halfSpan = h * 0.42;
+        const distFromMid = Math.min(1, Math.abs(ly - cy) / halfSpan);
+        const adx = Math.abs(dx);
+        const arcAmt = distFromMid * adx * 0.32;
+        const cpLeafX  = lx + adx * 0.30;
+        const cpLeafY  = ly + dirY * arcAmt * 0.65;
+        const cpRootX  = root.x - adx * 0.30;
+        const cpRootY  = root.y + dirY * arcAmt * 0.65;
+        d = `M ${lx} ${ly} C ${cpLeafX} ${cpLeafY}, ${cpRootX} ${cpRootY}, ${root.x} ${root.y}`;
+      } else if (isVertical) {
         /* D-RIB: a rib of the bowl, exiting horizontally from a spine
            root and curving out to meet the leaf on the bowl arc. cp1
            hugs the spine y-line so the rib leaves horizontally; cp2
