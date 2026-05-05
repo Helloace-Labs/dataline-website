@@ -1061,7 +1061,7 @@
         path.setAttribute('class', 'path' + (rng(i) > 0.55 ? ' reverse' : '') + (rng(i + 100) > 0.7 ? ' bright' : ''));
         path.style.strokeWidth = stroke;
         path.style.strokeDasharray = dash;
-        const dur = 8 + rng(i + 200) * 10;
+        const dur = 4 + rng(i + 200) * 5;
         const delay = -rng(i + 300) * dur;
         path.style.animationDuration = dur.toFixed(2) + 's';
         path.style.animationDelay = delay.toFixed(2) + 's';
@@ -1071,27 +1071,32 @@
         if (showPulses) {
           const state = leafState[i];
           const pulseR = Math.max(0.7, leafR * 0.55);
-          const pulseDur = 2.6 + rng(i + 600) * 2.2;
-          const pulseDelay = -rng(i + 700) * pulseDur;
-          const pulse = document.createElementNS(ns, 'circle');
-          pulse.setAttribute('r', pulseR);
-          pulse.setAttribute('class', 'pulse' + (state === 'alert' ? ' alert' : ''));
-          pulse.setAttribute('cx', 0); pulse.setAttribute('cy', 0);
-          const motion = document.createElementNS(ns, 'animateMotion');
-          motion.setAttribute('dur', pulseDur.toFixed(2) + 's');
-          motion.setAttribute('repeatCount', 'indefinite');
-          motion.setAttribute('begin', pulseDelay.toFixed(2) + 's');
-          motion.setAttribute('path', d);
-          pulse.appendChild(motion);
-          const fade = document.createElementNS(ns, 'animate');
-          fade.setAttribute('attributeName', 'opacity');
-          fade.setAttribute('values', '0;1;1;0');
-          fade.setAttribute('keyTimes', '0;0.15;0.85;1');
-          fade.setAttribute('dur', pulseDur.toFixed(2) + 's');
-          fade.setAttribute('repeatCount', 'indefinite');
-          fade.setAttribute('begin', pulseDelay.toFixed(2) + 's');
-          pulse.appendChild(fade);
-          svg.appendChild(pulse);
+          const pulseDur = 1.4 + rng(i + 600) * 1.2;
+          const numPulses = 2;
+          const baseDelay = -rng(i + 700) * pulseDur;
+          for (let p = 0; p < numPulses; p++) {
+            const phaseOffset = (p / numPulses) * pulseDur;
+            const pulseDelay = baseDelay - phaseOffset;
+            const pulse = document.createElementNS(ns, 'circle');
+            pulse.setAttribute('r', pulseR);
+            pulse.setAttribute('class', 'pulse' + (state === 'alert' ? ' alert' : ''));
+            pulse.setAttribute('cx', 0); pulse.setAttribute('cy', 0);
+            const motion = document.createElementNS(ns, 'animateMotion');
+            motion.setAttribute('dur', pulseDur.toFixed(2) + 's');
+            motion.setAttribute('repeatCount', 'indefinite');
+            motion.setAttribute('begin', pulseDelay.toFixed(2) + 's');
+            motion.setAttribute('path', d);
+            pulse.appendChild(motion);
+            const fade = document.createElementNS(ns, 'animate');
+            fade.setAttribute('attributeName', 'opacity');
+            fade.setAttribute('values', '0;1;1;0');
+            fade.setAttribute('keyTimes', '0;0.15;0.85;1');
+            fade.setAttribute('dur', pulseDur.toFixed(2) + 's');
+            fade.setAttribute('repeatCount', 'indefinite');
+            fade.setAttribute('begin', pulseDelay.toFixed(2) + 's');
+            pulse.appendChild(fade);
+            svg.appendChild(pulse);
+          }
         }
       });
       /* Spine line — backbone of the D when there are 2+ roots. */
@@ -1129,7 +1134,7 @@
           const amp = leafR * 1.9 * sizeFactor;
           const upAmp = amp;
           const downAmp = amp * 0.55;
-          const danceDur = 2.8;
+          const danceDur = 2.0;
           const wavePos = density === 1 ? 0 : i / (density - 1);
           const danceDelay = -(wavePos * danceDur);
           const cyAnim = document.createElementNS(ns, 'animate');

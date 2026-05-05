@@ -565,6 +565,20 @@
       </div>
     </div>
 
+    <div class="card-row" style="grid-template-columns: 1fr; margin-top: 1px;">
+      <div class="card" style="padding: 4rem 2rem;">
+        <div class="card-vis">
+          <span style="font-weight:500; font-size:1.05rem; letter-spacing:-0.01em; color: var(--ink); display:inline-flex; align-items:center; gap:0.6rem;">
+            <svg class="delta-mark" data-orient="d-converge" data-density="5"
+                 data-w="22" data-h="22" data-leaf-r="0.85" data-root-r="1.15"
+                 data-stroke="0.3" data-dash="0.7 0.9"></svg>
+            Dataline
+          </span>
+        </div>
+        <div class="card-label bright" style="margin-top: 1.5rem;">v2 header · 22 sq · navbar size</div>
+      </div>
+    </div>
+
   </div>
 
 </section>
@@ -814,7 +828,8 @@
       path.style.strokeWidth = stroke;
       path.style.strokeDasharray = dash;
 
-      const dur = 8 + rng(i + 200) * 10;
+      /* Faster dash flow — energy/dynamics. Was 8–18s, now 4–9s. */
+      const dur = 4 + rng(i + 200) * 5;
       const delay = -rng(i + 300) * dur;
       path.style.animationDuration = dur.toFixed(2) + 's';
       path.style.animationDelay = delay.toFixed(2) + 's';
@@ -824,34 +839,43 @@
       svg.appendChild(path);
 
       if (showPulses) {
+        /* Two staggered pulses per path so the flow feels populated:
+           at any moment there are ~2 traveling dots per rib instead
+           of 1. Each pulse is faster than before (1.4–2.6s vs 2.6–4.8s). */
         const state = leafState[i];
         const pulseR = Math.max(0.7, leafR * 0.55);
-        const pulseDur = 2.6 + rng(i + 600) * 2.2;
-        const pulseDelay = -rng(i + 700) * pulseDur;
+        const pulseDur = 1.4 + rng(i + 600) * 1.2;
+        const numPulses = 2;
+        const baseDelay = -rng(i + 700) * pulseDur;
 
-        const pulse = document.createElementNS(ns, 'circle');
-        pulse.setAttribute('r', pulseR);
-        pulse.setAttribute('class', 'pulse' + (state === 'alert' ? ' alert' : ''));
-        pulse.setAttribute('cx', 0);
-        pulse.setAttribute('cy', 0);
+        for (let p = 0; p < numPulses; p++) {
+          const phaseOffset = (p / numPulses) * pulseDur;
+          const pulseDelay = baseDelay - phaseOffset;
 
-        const motion = document.createElementNS(ns, 'animateMotion');
-        motion.setAttribute('dur', pulseDur.toFixed(2) + 's');
-        motion.setAttribute('repeatCount', 'indefinite');
-        motion.setAttribute('begin', pulseDelay.toFixed(2) + 's');
-        motion.setAttribute('path', d);
-        pulse.appendChild(motion);
+          const pulse = document.createElementNS(ns, 'circle');
+          pulse.setAttribute('r', pulseR);
+          pulse.setAttribute('class', 'pulse' + (state === 'alert' ? ' alert' : ''));
+          pulse.setAttribute('cx', 0);
+          pulse.setAttribute('cy', 0);
 
-        const fade = document.createElementNS(ns, 'animate');
-        fade.setAttribute('attributeName', 'opacity');
-        fade.setAttribute('values', '0;1;1;0');
-        fade.setAttribute('keyTimes', '0;0.15;0.85;1');
-        fade.setAttribute('dur', pulseDur.toFixed(2) + 's');
-        fade.setAttribute('repeatCount', 'indefinite');
-        fade.setAttribute('begin', pulseDelay.toFixed(2) + 's');
-        pulse.appendChild(fade);
+          const motion = document.createElementNS(ns, 'animateMotion');
+          motion.setAttribute('dur', pulseDur.toFixed(2) + 's');
+          motion.setAttribute('repeatCount', 'indefinite');
+          motion.setAttribute('begin', pulseDelay.toFixed(2) + 's');
+          motion.setAttribute('path', d);
+          pulse.appendChild(motion);
 
-        svg.appendChild(pulse);
+          const fade = document.createElementNS(ns, 'animate');
+          fade.setAttribute('attributeName', 'opacity');
+          fade.setAttribute('values', '0;1;1;0');
+          fade.setAttribute('keyTimes', '0;0.15;0.85;1');
+          fade.setAttribute('dur', pulseDur.toFixed(2) + 's');
+          fade.setAttribute('repeatCount', 'indefinite');
+          fade.setAttribute('begin', pulseDelay.toFixed(2) + 's');
+          pulse.appendChild(fade);
+
+          svg.appendChild(pulse);
+        }
       }
     });
 
@@ -909,7 +933,7 @@
         const amp = leafR * 1.9 * sizeFactor;
         const upAmp = amp;
         const downAmp = amp * 0.55;
-        const danceDur = 2.8;
+        const danceDur = 2.0;
         const wavePos = density === 1 ? 0 : i / (density - 1);
         const danceDelay = -(wavePos * danceDur);
         const cyAnim = document.createElementNS(ns, 'animate');
