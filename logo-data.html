@@ -453,7 +453,7 @@
 <div class="top">
   <a href="/" class="brand">
     <svg class="delta-mark header-mark" data-orient="vertical" data-roots="1"
-         data-density="6"
+         data-density="7"
          data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2"
          data-stroke="0.3" data-dash="0.7 0.9"></svg>
     <span>Dataline</span>
@@ -531,7 +531,7 @@
       <div class="card" style="padding: 4rem 2rem;">
         <div class="card-vis">
           <span style="font-weight:500; font-size:1.05rem; letter-spacing:-0.01em; color: var(--ink); display:inline-flex; align-items:center; gap:0.6rem;">
-            <svg class="delta-mark" data-orient="vertical" data-density="6"
+            <svg class="delta-mark" data-orient="vertical" data-density="7"
                  data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2"
                  data-stroke="0.3" data-dash="0.7 0.9"></svg>
             Dataline
@@ -670,16 +670,19 @@
 
     /* Per-leaf state for the D-shape bowl (i = 0 at top → density-1 at
        bottom). Top half stays fully active (one alert, no gray). Bottom
-       half gets one alert and exactly one gray. Everything else green. */
+       half gets one alert and one gray — but only when the mark is big
+       enough to read three states clearly; tiny header marks skip gray
+       entirely so they stay clean. */
     const leafState = []; // 'idle' | 'active' | 'alert'
     const alertSet = new Set();
     const idleSet = new Set();
+    const allowIdle = Math.min(w, h) >= 30;
     if (density >= 2) {
       const topHalf = Math.max(1, Math.floor(density / 2));
       const bottomHalf = density - topHalf;
       alertSet.add(Math.floor(rng(0) * topHalf));
       alertSet.add(topHalf + Math.floor(rng(1) * bottomHalf));
-      if (density >= 4) {
+      if (allowIdle && density >= 4) {
         let bLocal = Math.floor(rng(2) * bottomHalf);
         let bIdle = topHalf + bLocal;
         if (alertSet.has(bIdle)) bIdle = topHalf + ((bLocal + 1) % bottomHalf);
@@ -835,15 +838,16 @@
       const dist = Math.abs(t - 0.5) * 2;
       if (!isActive && !isAlert) leaf.style.opacity = 0.6 + (1 - dist) * 0.4;
 
-      /* Wave dance — every leaf rides the SAME period and amplitude;
-         only the phase shifts with leaf position so the bowl ripples
-         as a single coordinated wave. Amplitude scales generously off
-         leaf radius so even tiny header marks visibly bob. */
+      /* Wave dance — every leaf rides the SAME period; phase shifts
+         with leaf position so the bowl ripples as one coordinated
+         wave. Amplitude is dialed back on tiny marks (header size)
+         so the motion stays subtle, full strength on the hero. */
       if (dancing) {
-        const amp = leafR * 1.9;
+        const sizeFactor = Math.max(0.45, Math.min(1, Math.min(w, h) / 70));
+        const amp = leafR * 1.9 * sizeFactor;
         const upAmp = amp;
         const downAmp = amp * 0.55;
-        const danceDur = 2.6;
+        const danceDur = 2.8;
         const wavePos = density === 1 ? 0 : i / (density - 1);
         const danceDelay = -(wavePos * danceDur);
         const cyAnim = document.createElementNS(ns, 'animate');
