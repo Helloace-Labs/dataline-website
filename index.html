@@ -349,6 +349,75 @@
     font-family: var(--font-main);
   }
 
+  /* ────────────── PARTNERS — built with, backed by ────────────── */
+  .partners { padding: 4rem var(--pad); border-bottom: 1px solid var(--hairline); }
+  .partners-inner { max-width: 1280px; margin: 0 auto; }
+  .partners-title {
+    font-weight: 300; font-size: clamp(1.7rem, 3vw, 2.2rem);
+    letter-spacing: -0.025em; line-height: 1.15; text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .partners-title .accent { color: var(--green); }
+  .partners-row-block { margin-top: 1rem; }
+  .partners-row-block + .partners-row-block { margin-top: 1.25rem; }
+  .partners-row-label {
+    font-family: var(--font-mono); font-size: 0.72rem;
+    color: var(--ink-dim); letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 0.85rem; padding: 0 calc(var(--pad) * 0.4);
+  }
+  .partners-row {
+    position: relative; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+  }
+  .partners-track {
+    display: flex; gap: 1rem; width: max-content;
+    animation: partners-marquee-left 42s linear infinite;
+  }
+  .partners-track.reverse { animation: partners-marquee-right 42s linear infinite; }
+  .partners-row:hover .partners-track { animation-play-state: paused; }
+  @keyframes partners-marquee-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes partners-marquee-right {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
+  .partner-card {
+    flex: 0 0 auto; width: 240px; height: 92px;
+    border: 1px solid var(--hairline); background: var(--bg-card);
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.7rem; padding: 1rem 1.4rem;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    color: var(--ink);
+  }
+  .partner-card:hover {
+    border-color: var(--green-dim); background: var(--bg-elev);
+    transform: translateY(-1px);
+  }
+  .partner-card .partner-logo {
+    width: 32px; height: 32px; flex: 0 0 32px; object-fit: contain;
+  }
+  .partner-card .partner-name {
+    font-size: 1.02rem; letter-spacing: -0.01em; font-weight: 500;
+    white-space: nowrap;
+  }
+  .partner-card .partner-name .sub {
+    display: block; font-family: var(--font-mono); font-size: 0.66rem;
+    color: var(--ink-dim); font-weight: 400; letter-spacing: 0.05em;
+    text-transform: uppercase; margin-top: 0.18rem;
+  }
+  .partner-card .partner-google {
+    font-family: 'Arial', sans-serif; font-weight: 500; font-size: 1.6rem;
+    letter-spacing: -0.5px; line-height: 1;
+  }
+  @media (max-width: 720px) {
+    .partner-card { width: 200px; height: 80px; padding: 0.85rem 1.1rem; }
+    .partner-card .partner-name { font-size: 0.92rem; }
+    .partner-card .partner-google { font-size: 1.3rem; }
+  }
+
   /* ────────────── STACK ────────────── */
   .stack-flagship {
     border-top: 1px solid var(--hairline);
@@ -1116,6 +1185,47 @@
             <span>Kalshi</span>
             <span>Manifold</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PARTNERS — built with, backed by ====================== -->
+<section class="partners" id="partners">
+  <div class="partners-inner">
+    <h2 class="partners-title">Built with, <span class="accent">backed by</span>.</h2>
+
+    <!-- Row 1 — Built with (integrations). Scrolls right-to-left. -->
+    <div class="partners-row-block">
+      <div class="partners-row-label">/ built with</div>
+      <div class="partners-row">
+        <div class="partners-track">
+          <a href="/blog-langchain" class="partner-card"><img class="partner-logo" src="/langchain-logo.webp" alt=""><span class="partner-name">LangChain<span class="sub">FlowAgent backbone</span></span></a>
+          <a href="/blog-cetus" class="partner-card"><img class="partner-logo" src="/cetus-logo.webp" alt=""><span class="partner-name">Cetus Protocol<span class="sub">Sui DEX integration</span></span></a>
+          <a href="/blog-numbers-protocol" class="partner-card"><img class="partner-logo" src="/numbers-protocol-logo.webp" alt=""><span class="partner-name">Numbers Protocol<span class="sub">verifiable outputs</span></span></a>
+          <a href="/blog-rootdata" class="partner-card"><img class="partner-logo" src="/rootdata-logo.webp" alt=""><span class="partner-name">RootData<span class="sub">Web3 dataset</span></span></a>
+          <!-- duplicate for seamless loop -->
+          <a href="/blog-langchain" class="partner-card" aria-hidden="true"><img class="partner-logo" src="/langchain-logo.webp" alt=""><span class="partner-name">LangChain<span class="sub">FlowAgent backbone</span></span></a>
+          <a href="/blog-cetus" class="partner-card" aria-hidden="true"><img class="partner-logo" src="/cetus-logo.webp" alt=""><span class="partner-name">Cetus Protocol<span class="sub">Sui DEX integration</span></span></a>
+          <a href="/blog-numbers-protocol" class="partner-card" aria-hidden="true"><img class="partner-logo" src="/numbers-protocol-logo.webp" alt=""><span class="partner-name">Numbers Protocol<span class="sub">verifiable outputs</span></span></a>
+          <a href="/blog-rootdata" class="partner-card" aria-hidden="true"><img class="partner-logo" src="/rootdata-logo.webp" alt=""><span class="partner-name">RootData<span class="sub">Web3 dataset</span></span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 — Backed by (infra + ecosystem). Scrolls left-to-right. -->
+    <div class="partners-row-block">
+      <div class="partners-row-label">/ backed by</div>
+      <div class="partners-row">
+        <div class="partners-track reverse">
+          <a href="/blog-google-cloud" class="partner-card"><span class="partner-google"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></span><span class="partner-name">for Startups<span class="sub">Cloud Program</span></span></a>
+          <a href="/blog-bnb-ai-hack" class="partner-card"><img class="partner-logo" src="/bnb-chain-logo.webp" alt=""><span class="partner-name">BNB Chain<span class="sub">ecosystem partner</span></span></a>
+          <a href="/blog-bnb-ai-hack" class="partner-card"><img class="partner-logo" src="/bnb-chain-logo.webp" alt=""><span class="partner-name">BNB AI Hack<span class="sub">2025 winner</span></span></a>
+          <!-- duplicate for seamless loop -->
+          <a href="/blog-google-cloud" class="partner-card" aria-hidden="true"><span class="partner-google"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></span><span class="partner-name">for Startups<span class="sub">Cloud Program</span></span></a>
+          <a href="/blog-bnb-ai-hack" class="partner-card" aria-hidden="true"><img class="partner-logo" src="/bnb-chain-logo.webp" alt=""><span class="partner-name">BNB Chain<span class="sub">ecosystem partner</span></span></a>
+          <a href="/blog-bnb-ai-hack" class="partner-card" aria-hidden="true"><img class="partner-logo" src="/bnb-chain-logo.webp" alt=""><span class="partner-name">BNB AI Hack<span class="sub">2025 winner</span></span></a>
         </div>
       </div>
     </div>
