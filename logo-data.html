@@ -452,9 +452,9 @@
 
 <div class="top">
   <a href="/" class="brand">
-    <svg class="delta-mark header-mark" data-orient="vertical" data-roots="1"
-         data-density="7"
-         data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2"
+    <svg class="delta-mark header-mark" data-orient="d-converge"
+         data-density="5"
+         data-w="22" data-h="22" data-leaf-r="0.85" data-root-r="1.15"
          data-stroke="0.3" data-dash="0.7 0.9"></svg>
     <span>Dataline</span>
   </a>
@@ -469,7 +469,7 @@
 <div class="page-head">
   <div class="eyebrow">/ logo · data</div>
   <h1 class="page-title">The <span class="accent">Dataline</span> logo.</h1>
-  <p class="page-lead">A breathing D for data, paired with the Dataline wordmark. One source dot near the spine, leaves traced along a right-bulging bowl arc, branches curving between them as a coordinated wave.</p>
+  <p class="page-lead">A breathing D for data, paired with the Dataline wordmark. A vertical column of source dots on the left, a single destination on the right, ribs arcing outward to trace the rounded D. Pulses flow left → right.</p>
 
   <div class="pitch-grid">
     <div class="pitch-item">
@@ -496,8 +496,8 @@
   <div class="hero-card">
     <div class="hero-mark-wrap">
       <div class="lockup">
-        <svg class="delta-mark" data-orient="vertical" data-density="10"
-             data-w="160" data-h="160" data-leaf-r="3.4" data-root-r="4.2"
+        <svg class="delta-mark" data-orient="d-converge" data-density="13"
+             data-w="160" data-h="160" data-leaf-r="3.2" data-root-r="4.2"
              data-stroke="0.7" data-dash="1.8 2.2"></svg>
         <span class="wordmark">Dataline</span>
       </div>
@@ -508,7 +508,7 @@
     </div>
     <div class="hero-foot">
       <div class="group">
-        <span>primary · one source · 10 leaves on the bowl</span>
+        <span>primary · 13 sources → 1 destination · arcs trace a rounded D</span>
       </div>
     </div>
   </div>
@@ -523,7 +523,7 @@
       <div>
         <div class="concept-num">/ header</div>
         <h2 class="concept-title">As it appears in the top nav.</h2>
-        <p class="concept-desc">The exact 22-sq lockup used in the navbar of every page. Same density, same dot size, same wordmark — pulled out so we can see it in isolation.</p>
+        <p class="concept-desc">The exact 22-sq lockup used in the navbar of every page. Same orientation, same density, same wordmark — pulled out so we can see it in isolation.</p>
       </div>
     </div>
 
@@ -531,8 +531,8 @@
       <div class="card" style="padding: 4rem 2rem;">
         <div class="card-vis">
           <span style="font-weight:500; font-size:1.05rem; letter-spacing:-0.01em; color: var(--ink); display:inline-flex; align-items:center; gap:0.6rem;">
-            <svg class="delta-mark" data-orient="vertical" data-density="7"
-                 data-w="22" data-h="22" data-leaf-r="0.9" data-root-r="1.2"
+            <svg class="delta-mark" data-orient="d-converge" data-density="5"
+                 data-w="22" data-h="22" data-leaf-r="0.85" data-root-r="1.15"
                  data-stroke="0.3" data-dash="0.7 0.9"></svg>
             Dataline
           </span>
@@ -543,14 +543,14 @@
 
   </div>
 
-  <!-- ════════ V2 PROTOTYPE — D-converge ════════ -->
+  <!-- ════════ SYMBOL AT SCALE ════════ -->
   <div class="concept">
 
     <div class="concept-head">
       <div>
-        <div class="concept-num">/ v2 prototype</div>
-        <h2 class="concept-title">Many sources, one destination.</h2>
-        <p class="concept-desc">An inverse cut. A vertical column of source dots on the left — just dots, no connecting line — flows into a single destination on the right. Each rib arcs outward; the union of curves traces a rounded D bowl that closes on the right.</p>
+        <div class="concept-num">/ symbol</div>
+        <h2 class="concept-title">The mark at scale.</h2>
+        <p class="concept-desc">The D mark on its own at 320 sq. Vertical column of source dots on the left, single destination dot on the right, ribs arcing outward to trace the rounded D. Pulses flow left → right toward the destination.</p>
       </div>
     </div>
 
@@ -561,21 +561,7 @@
                data-w="320" data-h="320" data-leaf-r="3.2" data-root-r="4.4"
                data-stroke="0.7" data-dash="1.8 2.2"></svg>
         </div>
-        <div class="card-label bright">v2 · 13 sources on the left → 1 destination on the right</div>
-      </div>
-    </div>
-
-    <div class="card-row" style="grid-template-columns: 1fr; margin-top: 1px;">
-      <div class="card" style="padding: 4rem 2rem;">
-        <div class="card-vis">
-          <span style="font-weight:500; font-size:1.05rem; letter-spacing:-0.01em; color: var(--ink); display:inline-flex; align-items:center; gap:0.6rem;">
-            <svg class="delta-mark" data-orient="d-converge" data-density="5"
-                 data-w="22" data-h="22" data-leaf-r="0.85" data-root-r="1.15"
-                 data-stroke="0.3" data-dash="0.7 0.9"></svg>
-            Dataline
-          </span>
-        </div>
-        <div class="card-label bright" style="margin-top: 1.5rem;">v2 header · 22 sq · navbar size</div>
+        <div class="card-label bright">symbol · 320 sq · 13 sources → 1 destination</div>
       </div>
     </div>
 
@@ -756,7 +742,7 @@
     /* Pulses + dance allowed at smaller sizes than before so the top-nav
        header mark (~30 sq) animates. Larger threshold for pulses keeps
        favicon ladders quiet. */
-    const showPulses = !isStatic && Math.min(w, h) >= 30;
+    const showPulses = !isStatic && Math.min(w, h) >= 18;
 
     /* Build path specs first (no DOM yet) so we can two-pass render: right-flowing
        paths underneath, left-flowing paths on top. Per Chad's brief: where they
