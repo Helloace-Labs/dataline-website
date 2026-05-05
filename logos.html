@@ -309,6 +309,44 @@
   .brand-line.lg { font-size: 1.45rem; gap: 0.7rem; }
   .brand-line .wm { color: var(--ink); }
 
+  /* LOCKUP — symbol + wordmark together */
+  .lockup {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1.5rem;
+  }
+  .lockup-stack {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 0.85rem;
+  }
+  .wordmark, .wordmark-md, .wordmark-sm {
+    font-family: var(--font-main);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .wordmark    { font-size: clamp(2.8rem, 5.5vw, 5rem); }
+  .wordmark-md { font-size: 2rem; }
+  .wordmark-sm { font-size: 1.35rem; }
+
+  /* LIGHT-SURFACE variant — D + wordmark on a near-white card */
+  .card.light-surface {
+    background: #F5F4EE;
+  }
+  .card.light-surface .card-label,
+  .card.light-surface .card-label.bright {
+    color: rgba(10, 10, 10, 0.55);
+  }
+  .delta-mark.dark-on-light .leaf {
+    fill: rgba(10, 10, 10, 0.30);
+  }
+  .delta-mark.dark-on-light .path {
+    stroke: rgba(10, 10, 10, 0.18);
+  }
+  .delta-mark.dark-on-light .path.bright {
+    stroke: rgba(10, 10, 10, 0.40);
+  }
+
   /* CONTEXT FRAME — fake site header */
   .frame {
     border: 1px solid var(--hairline);
@@ -428,9 +466,9 @@
 </div>
 
 <div class="page-head">
-  <div class="eyebrow">/ logo · data</div>
-  <h1 class="page-title">A breathing <span class="accent">D</span> for data.</h1>
-  <p class="page-lead">A vertical spine of roots on the left. Eighteen leaves traced along a right-bulging bowl. Ribs curve from spine out to bowl, carrying live pulses. The whole mark reads as a capital D, no typography.</p>
+  <div class="eyebrow">/ logo system</div>
+  <h1 class="page-title">The <span class="accent">Dataline</span> logo.</h1>
+  <p class="page-lead">A breathing D for data, paired with the Dataline wordmark. Spine of roots on the left, leaves traced along a right-bulging bowl, ribs curving between them. Below: the primary lockup and its variations.</p>
 
   <div class="pitch-grid">
     <div class="pitch-item">
@@ -452,32 +490,24 @@
   </div>
 </div>
 
-<!-- ════════ HERO ════════ -->
+<!-- ════════ HERO — Full Logo Primary ════════ -->
 <div class="hero">
   <div class="hero-card">
-    <div class="hero-mark-wrap" id="hero-mark-wrap">
-      <svg id="hero-mark" class="delta-mark"
-           data-orient="vertical" data-roots="5" data-root-span="0.16" data-center-gap="0.22"
-           data-density="18" data-w="520" data-h="320"
-           data-leaf-r="3.6" data-root-r="5" data-stroke="0.7" data-dash="1.8 2.2"></svg>
+    <div class="hero-mark-wrap">
+      <div class="lockup">
+        <svg class="delta-mark" data-orient="vertical" data-density="13" data-roots="5"
+             data-w="160" data-h="160" data-leaf-r="3.4" data-root-r="4.2"
+             data-stroke="0.7" data-dash="1.8 2.2"></svg>
+        <span class="wordmark">Dataline</span>
+      </div>
       <div class="hero-corner">
         <div class="live">live · streaming</div>
-        <div>5 spine roots · 18 bowl leaves</div>
-        <div>left spine · right bowl arc</div>
+        <div>full logo · primary lockup</div>
       </div>
     </div>
     <div class="hero-foot">
       <div class="group">
-        <span>density</span>
-        <button data-action="density" data-val="12">12</button>
-        <button data-action="density" data-val="18" class="on">18</button>
-        <button data-action="density" data-val="24">24</button>
-        <button data-action="density" data-val="30">30</button>
-      </div>
-      <div class="group">
-        <span>palette</span>
-        <button data-action="palette" data-val="green" class="on">green</button>
-        <button data-action="palette" data-val="ink">ink</button>
+        <span>primary · symbol + wordmark · horizontal lockup</span>
       </div>
     </div>
   </div>
@@ -485,67 +515,86 @@
 
 <section class="concepts">
 
-  <!-- ════════ 01 / D-SHAPE PRIMARY ════════ -->
+  <!-- ════════ VARIATIONS ════════ -->
   <div class="concept">
 
-    <!-- Hero showpiece — D-shape v1 -->
-    <div class="card-row" style="grid-template-columns: 1fr;">
-      <div class="card" style="padding: 3rem 2rem 1.5rem; min-height: 380px;">
-        <div class="card-vis">
-          <svg class="delta-mark" data-orient="vertical" data-roots="5" data-root-span="0.16" data-density="18" data-center-gap="0.22"
-               data-w="420" data-h="320" data-leaf-r="3.8" data-root-r="5"
-               data-stroke="0.75" data-dash="2 2.4"></svg>
-        </div>
-        <div class="card-label bright">primary · 420×320 · 5 spine roots · 18 bowl leaves</div>
-      </div>
-    </div>
-
-    <!-- Density variants -->
-    <div class="card-row cols-3" style="margin-top:1px;">
-      <div class="card">
-        <div class="card-vis">
-          <svg class="delta-mark" data-orient="vertical" data-roots="5" data-root-span="0.16" data-density="12" data-center-gap="0.22"
-               data-w="220" data-h="200" data-leaf-r="3.2" data-root-r="4"
-               data-stroke="0.75" data-dash="1.8 2.2"></svg>
-        </div>
-        <div class="card-label bright">12 leaves · sparser bowl</div>
-      </div>
-      <div class="card">
-        <div class="card-vis">
-          <svg class="delta-mark" data-orient="vertical" data-roots="5" data-root-span="0.16" data-density="18" data-center-gap="0.22"
-               data-w="220" data-h="200" data-leaf-r="3" data-root-r="3.8"
-               data-stroke="0.65" data-dash="1.6 1.9"></svg>
-        </div>
-        <div class="card-label bright">18 leaves · default bowl</div>
-      </div>
-      <div class="card">
-        <div class="card-vis">
-          <svg class="delta-mark" data-orient="vertical" data-roots="5" data-root-span="0.16" data-density="30" data-center-gap="0.22"
-               data-w="220" data-h="200" data-leaf-r="2.3" data-root-r="3.2"
-               data-stroke="0.5" data-dash="1.2 1.5"></svg>
-        </div>
-        <div class="card-label bright">30 leaves · dense bowl</div>
-      </div>
-    </div>
-
-    <!-- Full logo: symbol + wordmark, big -->
-    <div class="concept-head" style="margin-top: 4rem; margin-bottom: 1rem;">
+    <div class="concept-head">
       <div>
-        <div class="concept-num">/ full logo</div>
-        <p class="concept-desc">Symbol + wordmark, lockup. The mark sits inline with "Dataline" — no border around the symbol.</p>
+        <div class="concept-num">/ variations</div>
+        <h2 class="concept-title">The full logo system.</h2>
+        <p class="concept-desc">One mark, one wordmark, six contexts. Reach for the primary lockup first; fall to a quieter variant only when space, surface, or color demands it.</p>
       </div>
     </div>
 
-    <div class="card-row" style="grid-template-columns: 1fr;">
-      <div class="card" style="padding: 4rem 2rem;">
-        <div class="card-vis" style="display:flex; align-items:center; justify-content:center; gap: 1.5rem;">
-          <svg class="delta-mark" data-orient="vertical" data-density="13" data-center-gap="0.22"
-               data-w="120" data-h="120" data-leaf-r="3" data-root-r="3.6"
-               data-stroke="0.7" data-dash="1.6 1.9"></svg>
-          <span style="font-family: var(--font-main); font-weight: 400; font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: -0.025em; color: var(--ink); line-height: 1;">Dataline</span>
+    <div class="card-row cols-3">
+
+      <!-- 1. Stacked -->
+      <div class="card">
+        <div class="card-vis">
+          <div class="lockup-stack">
+            <svg class="delta-mark" data-orient="vertical" data-density="13" data-roots="5"
+                 data-w="86" data-h="86" data-leaf-r="2.5" data-root-r="3.1"
+                 data-stroke="0.6" data-dash="1.4 1.7"></svg>
+            <span class="wordmark-md">Dataline</span>
+          </div>
         </div>
-        <div class="card-label" style="margin-top: 1.5rem;">full logo · symbol + wordmark · 120 sq mark</div>
+        <div class="card-label bright">stacked · mark above wordmark</div>
       </div>
+
+      <!-- 2. Symbol only -->
+      <div class="card">
+        <div class="card-vis">
+          <svg class="delta-mark" data-orient="vertical" data-density="13" data-roots="5"
+               data-w="120" data-h="120" data-leaf-r="3" data-root-r="3.8"
+               data-stroke="0.7" data-dash="1.6 1.9"></svg>
+        </div>
+        <div class="card-label bright">symbol only · the D mark</div>
+      </div>
+
+      <!-- 3. Wordmark only -->
+      <div class="card">
+        <div class="card-vis">
+          <span class="wordmark-md">Dataline</span>
+        </div>
+        <div class="card-label bright">wordmark only · type alone</div>
+      </div>
+
+      <!-- 4. Monochrome ink -->
+      <div class="card">
+        <div class="card-vis">
+          <div class="lockup">
+            <svg class="delta-mark ink-only" data-orient="vertical" data-density="13" data-roots="5"
+                 data-w="86" data-h="86" data-leaf-r="2.5" data-root-r="3.1"
+                 data-stroke="0.6" data-dash="1.4 1.7"></svg>
+            <span class="wordmark-sm">Dataline</span>
+          </div>
+        </div>
+        <div class="card-label bright">monochrome · ink only</div>
+      </div>
+
+      <!-- 5. Light surface -->
+      <div class="card light-surface">
+        <div class="card-vis">
+          <div class="lockup">
+            <svg class="delta-mark dark-on-light" data-orient="vertical" data-density="13" data-roots="5"
+                 data-w="86" data-h="86" data-leaf-r="2.5" data-root-r="3.1"
+                 data-stroke="0.6" data-dash="1.4 1.7"></svg>
+            <span class="wordmark-sm" style="color: #0A0A0A;">Dataline</span>
+          </div>
+        </div>
+        <div class="card-label bright">light surface · inverse</div>
+      </div>
+
+      <!-- 6. Favicon size -->
+      <div class="card">
+        <div class="card-vis">
+          <svg class="delta-mark" data-orient="vertical" data-density="9" data-roots="3"
+               data-w="32" data-h="32" data-leaf-r="1.2" data-root-r="1.5"
+               data-stroke="0.4" data-dash="0.8 1.0"></svg>
+        </div>
+        <div class="card-label bright">small · 32 sq · favicon</div>
+      </div>
+
     </div>
 
   </div>
@@ -862,73 +911,6 @@
   }
 
   document.querySelectorAll('.delta-mark').forEach(buildDelta);
-
-  /* ─── Hero controls ─── */
-  const heroSvg = document.getElementById('hero-mark');
-  function rebuildHero(overrides = {}) {
-    Object.entries(overrides).forEach(([k, v]) => {
-      heroSvg.dataset[k] = v;
-    });
-    heroSvg.innerHTML = '';
-    buildDelta(heroSvg);
-  }
-
-  document.querySelectorAll('[data-action="density"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-action="density"]').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-      rebuildHero({ density: btn.dataset.val });
-    });
-  });
-  document.querySelectorAll('[data-action="palette"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-action="palette"]').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-      heroSvg.classList.toggle('ink-only', btn.dataset.val === 'ink');
-    });
-  });
-  document.querySelectorAll('[data-action="motion"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-action="motion"]').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-      const isPulse = btn.dataset.val === 'pulse';
-      heroSvg.classList.toggle('pulse', isPulse);
-      if (isPulse) {
-        heroSvg.dataset.dash = '100 0';
-      } else {
-        heroSvg.dataset.dash = '3 4';
-      }
-      heroSvg.innerHTML = '';
-      buildDelta(heroSvg);
-    });
-  });
-  document.querySelectorAll('[data-action="orient"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-action="orient"]').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-      const v = btn.dataset.val;
-      heroSvg.dataset.orient = v;
-      if (v === 'vertical') {
-        heroSvg.dataset.w = 520;
-        heroSvg.dataset.h = 320;
-        heroSvg.dataset.density = 18;
-        heroSvg.dataset.roots = 5;
-        heroSvg.dataset.rootSpan = 0.16;
-        heroSvg.dataset.centerGap = 0.22;
-        document.querySelectorAll('[data-action="density"]').forEach(b => b.classList.toggle('on', b.dataset.val === '18'));
-      } else {
-        heroSvg.dataset.w = 640;
-        heroSvg.dataset.h = 280;
-        heroSvg.dataset.density = 13;
-        heroSvg.dataset.roots = 1;
-        heroSvg.dataset.rootSpan = 0.32;
-        heroSvg.dataset.centerGap = 0;
-        document.querySelectorAll('[data-action="density"]').forEach(b => b.classList.toggle('on', b.dataset.val === '13'));
-      }
-      heroSvg.innerHTML = '';
-      buildDelta(heroSvg);
-    });
-  });
 </script>
 
 </body>
