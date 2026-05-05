@@ -1271,10 +1271,12 @@
         path.style.opacity = 0.55 + (1 - dist) * 0.35;
         svg.appendChild(path);
         if (showPulses) {
+          const isSmall = Math.min(w, h) < 30;
+          const isOuter = i === 0 || i === density - 1;
+          const numPulses = isSmall ? (isOuter ? 1 : 0) : 2;
           const state = leafState[i];
           const pulseR = Math.max(0.7, leafR * 0.55);
           const pulseDur = 1.4 + rng(i + 600) * 1.2;
-          const numPulses = 2;
           const baseDelay = -rng(i + 700) * pulseDur;
           for (let p = 0; p < numPulses; p++) {
             const phaseOffset = (p / numPulses) * pulseDur;
