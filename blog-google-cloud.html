@@ -538,8 +538,7 @@
       const dash = svg.dataset.dash || '1.6 1.8';
       const isStatic = svg.classList.contains('static');
       svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-      svg.setAttribute('width', w);
-      svg.setAttribute('height', h);
+      svg.setAttribute('width', w); svg.setAttribute('height', h);
       const ns = 'http://www.w3.org/2000/svg';
       const orient = svg.dataset.orient || 'horizontal';
       const isVertical = orient === 'vertical';
@@ -548,27 +547,30 @@
       let rootPositions, leafCoord, padX, padY;
       const numRoots = isVertical ? Math.max(1, parseInt(svg.dataset.roots || '1', 10)) : 1;
       if (isVertical) {
-        padX = Math.max(2, w * 0.06);
+        /* D-shape: spine on left, leaves on right-bulging bowl arc. */
+        padX = Math.max(2, w * 0.05);
         padY = Math.max(2, h * 0.06);
-        const rootSpanFrac = parseFloat(svg.dataset.rootSpan || '0.32');
-        const rootSpan = numRoots > 1 ? w * rootSpanFrac : 0;
-        const rootStartX = (w - rootSpan) / 2;
+        const spineSpan = parseFloat(svg.dataset.spineSpan || '0.84');
+        const spineLen = h * spineSpan;
+        const spineTop = (h - spineLen) / 2;
+        const b = spineLen / 2;
+        const a = parseFloat(svg.dataset.bowlR || '0.59') * h;
+        const spineFracRaw = svg.dataset.spineFrac;
+        const spineX = spineFracRaw
+          ? Math.max(padX + rootR, w * parseFloat(spineFracRaw))
+          : Math.max(padX + rootR, (w - a) / 2);
         rootPositions = [];
         for (let r = 0; r < numRoots; r++) {
           const tr = numRoots === 1 ? 0.5 : r / (numRoots - 1);
-          rootPositions.push({ x: numRoots === 1 ? w / 2 : rootStartX + rootSpan * tr, y: h - padY - rootR });
+          rootPositions.push({ x: spineX, y: spineTop + spineLen * tr });
         }
-        const centerGap = parseFloat(svg.dataset.centerGap || '0.22');
-        const totalSpan = w - 2*padX - 2*leafR;
-        const gapSpan = totalSpan * centerGap;
-        const halfSpan = (totalSpan - gapSpan) / 2;
-        const leftStartX = padX + leafR;
-        const rightStartX = padX + leafR + halfSpan + gapSpan;
+        const cx = spineX, cy = h / 2;
+        const arcInset = parseFloat(svg.dataset.arcInset || '0.04');
+        const angleTop = Math.PI/2 - arcInset * Math.PI;
+        const angleBottom = -Math.PI/2 + arcInset * Math.PI;
         leafCoord = (i, t) => {
-          if (centerGap <= 0) return { x: padX + leafR + totalSpan * t, y: padY + leafR };
-          if (t < 0.5) { const localT = halfSpan === 0 ? 0 : (t * 2); return { x: leftStartX + halfSpan * localT, y: padY + leafR }; }
-          const localT = halfSpan === 0 ? 0 : ((t - 0.5) * 2);
-          return { x: rightStartX + halfSpan * localT, y: padY + leafR };
+          const angle = angleTop - (angleTop - angleBottom) * t;
+          return { x: cx + a * Math.cos(angle), y: cy - b * Math.sin(angle) };
         };
       } else {
         padX = Math.max(2, w * 0.04);
@@ -577,18 +579,35 @@
         const leafX = w - padX - leafR;
         leafCoord = (i, t) => ({ x: leafX, y: padY + leafR + (h - 2*padY - 2*leafR) * t });
       }
-      function assignedRootIndex(i){ if (numRoots === 1) return 0; return (numRoots - 1) - Math.floor((i / density) * numRoots); }
+      function assignedRootIndex(i){
+        if (numRoots === 1) return 0;
+        if (isVertical) return Math.min(numRoots - 1, Math.floor((i / density) * numRoots));
+        return (numRoots - 1) - Math.floor((i / density) * numRoots);
+      }
       const leafState = [];
       const alertSet = new Set();
+      const idleSet = new Set();
       if (density >= 2) {
-        const leftHalf = Math.max(1, Math.floor(density / 2));
-        const rightHalf = density - leftHalf;
-        alertSet.add(Math.floor(rng(0) * leftHalf));
-        alertSet.add(leftHalf + Math.floor(rng(1) * rightHalf));
+        const topHalf = Math.max(1, Math.floor(density / 2));
+        const bottomHalf = density - topHalf;
+        alertSet.add(Math.floor(rng(0) * topHalf));
+        alertSet.add(topHalf + Math.floor(rng(1) * bottomHalf));
+        if (density >= 4) {
+          let bLocal = Math.floor(rng(2) * bottomHalf);
+          let bIdle = topHalf + bLocal;
+          if (alertSet.has(bIdle)) bIdle = topHalf + ((bLocal + 1) % bottomHalf);
+          idleSet.add(bIdle);
+        }
+        if (density >= 10) {
+          let tIdle = Math.floor(rng(3) * topHalf);
+          if (alertSet.has(tIdle)) tIdle = (tIdle + 1) % topHalf;
+          idleSet.add(tIdle);
+        }
       }
       for (let i = 0; i < density; i++) {
         if (alertSet.has(i)) leafState.push('alert');
-        else leafState.push(rng(i + 50) > 0.22 ? 'active' : 'idle');
+        else if (idleSet.has(i)) leafState.push('idle');
+        else leafState.push('active');
       }
       const showPulses = !isStatic && Math.min(w, h) >= 30;
       const pathSpecs = [];
@@ -600,11 +619,10 @@
         const dy = ly - root.y;
         let d;
         if (isVertical) {
-          const absDy = Math.abs(dy);
-          const cp1x = root.x + dx * 0.08;
-          const cp1y = root.y - absDy * 0.45;
-          const cp2x = root.x + dx * 0.75;
-          const cp2y = root.y - absDy * 0.92;
+          const cp1x = root.x + dx * 0.45;
+          const cp1y = root.y;
+          const cp2x = root.x + dx * 0.92;
+          const cp2y = ly;
           d = `M ${root.x} ${root.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${lx} ${ly}`;
         } else {
           const cp1x = root.x + dx * 0.55;
@@ -643,8 +661,7 @@
           const pulse = document.createElementNS(ns, 'circle');
           pulse.setAttribute('r', pulseR);
           pulse.setAttribute('class', 'pulse' + (state === 'alert' ? ' alert' : ''));
-          pulse.setAttribute('cx', 0);
-          pulse.setAttribute('cy', 0);
+          pulse.setAttribute('cx', 0); pulse.setAttribute('cy', 0);
           const motion = document.createElementNS(ns, 'animateMotion');
           motion.setAttribute('dur', pulseDur.toFixed(2) + 's');
           motion.setAttribute('repeatCount', 'indefinite');
@@ -662,6 +679,17 @@
           svg.appendChild(pulse);
         }
       });
+      /* Spine line — backbone of the D when there are 2+ roots. */
+      if (isVertical && rootPositions.length >= 2) {
+        const top = rootPositions[0];
+        const bot = rootPositions[rootPositions.length - 1];
+        const spineLine = document.createElementNS(ns, 'line');
+        spineLine.setAttribute('x1', top.x); spineLine.setAttribute('y1', top.y);
+        spineLine.setAttribute('x2', bot.x); spineLine.setAttribute('y2', bot.y);
+        spineLine.setAttribute('class', 'spine');
+        spineLine.style.strokeWidth = Math.max(1, rootR * 0.6);
+        svg.appendChild(spineLine);
+      }
       rootPositions.forEach(rp => {
         const root = document.createElementNS(ns, 'circle');
         root.setAttribute('cx', rp.x); root.setAttribute('cy', rp.y);
