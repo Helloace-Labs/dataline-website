@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dataline — Twitter banner (1500×500)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;500&family=Fragment+Mono&display=swap');
+
+  :root {
+    --bg: #0A0A0A;
+    --ink: #E8E6E0;
+    --ink-dim: #888880;
+    --green: #34d399;
+    --hairline: rgba(232, 230, 224, 0.10);
+    --font-main: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Fragment Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #050505; height: 100%; }
+  body {
+    font-family: var(--font-main);
+    color: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .banner {
+    position: relative;
+    width: 1500px; height: 500px;
+    background: var(--bg);
+    overflow: hidden;
+    flex: 0 0 auto;
+    box-shadow: 0 0 0 1px var(--hairline);
+  }
+
+  canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    display: block;
+  }
+
+  .brand {
+    position: absolute;
+    left: 64px; bottom: 64px;
+    z-index: 5;
+  }
+  .brand-name {
+    font-weight: 300;
+    font-size: 4.6rem;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .brand-tag {
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-dim);
+    max-width: 38ch;
+  }
+  .brand-tag .accent { color: var(--green); }
+
+  .meta {
+    position: absolute;
+    right: 64px; top: 56px;
+    z-index: 5;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.08em;
+    text-align: right;
+    line-height: 1.7;
+    text-transform: uppercase;
+  }
+  .meta .live { color: var(--green); }
+  .meta .live::before {
+    content: '●'; margin-right: 0.4rem;
+  }
+
+  .url {
+    position: absolute;
+    right: 64px; bottom: 64px;
+    z-index: 5;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-dim);
+  }
+  .url .slash { color: var(--green); }
+
+  .controls {
+    position: fixed;
+    top: 1rem; left: 1rem;
+    background: #111;
+    border: 1px solid var(--hairline);
+    padding: 0.75rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+    z-index: 100;
+    line-height: 1.6;
+    max-width: 360px;
+  }
+  .controls b { color: var(--ink); font-weight: 500; }
+  .controls button {
+    background: transparent; border: 1px solid var(--hairline);
+    color: var(--ink); font-family: inherit; font-size: 0.7rem;
+    padding: 0.3rem 0.7rem; cursor: pointer; margin-right: 0.4rem;
+    margin-top: 0.4rem;
+  }
+  .controls button:hover { border-color: var(--green); color: var(--green); }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <b>Dataline · Twitter banner</b><br>
+  Banner is 1500×500. To export: open DevTools → Cmd-Shift-P → "Capture node screenshot" on the .banner element.
+  <br><br>
+  <button onclick="reseed()">re-seed wave</button>
+  <button onclick="toggleText()">toggle text</button>
+  <button onclick="freezeFrame()">freeze frame</button>
+</div>
+
+<div class="banner" id="banner">
+  <canvas id="banner-canvas"></canvas>
+
+  <div class="meta">
+    <div><span class="live">live</span></div>
+    <div>execution-grade data</div>
+  </div>
+
+  <div class="brand">
+    <div class="brand-name">Dataline</div>
+    <div class="brand-tag">Supercharge your AI agent with <span class="accent">clean Web3 data.</span></div>
+  </div>
+
+  <div class="url">
+    dataline<span class="slash">.</span>xyz
+  </div>
+</div>
+
+<script>
+  /* ─── Single irregular ASCII waveline, frozen-frame styling matching hero ─── */
+  const canvas = document.getElementById('banner-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 1500, H = 500;
+  const DPR = window.devicePixelRatio || 1;
+
+  function setupCanvas() {
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(DPR, DPR);
+  }
+  setupCanvas();
+
+  let seed = 0.42;
+  let frozen = false;
+  let textVisible = true;
+  let t = 0;
+
+  const waveChars = ' .,;:!|/\\-_~^`'.split('');
+  const ACCENTS = ['#114433', '#113322', '#221133'];
+
+  function rand(s) {
+    const x = Math.sin(s * 9301.0 + 49297.0) * 233280.0;
+    return x - Math.floor(x);
+  }
+
+  /* Compose an "irregular" waveform as the sum of 4 sinusoids at unrelated frequencies + a low-freq drift. */
+  function waveY(nx, time, s) {
+    return (
+      0.32 * Math.sin(nx * 4.1 + time * 0.7 + s * 6.28) +
+      0.20 * Math.sin(nx * 9.3 - time * 1.1 + s * 3.14) +
+      0.11 * Math.sin(nx * 19.7 + time * 1.7 + s * 1.57) +
+      0.06 * Math.sin(nx * 41.3 - time * 2.3) +
+      0.04 * Math.sin(nx * 0.9 + s * 9.42)  // slow drift, makes it asymmetric
+    );
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    /* Subtle band of ambient ASCII haze across the full canvas, like the hero — but very faint, only one band, no other rows. */
+    const COLS = 220;
+    const cellW = W / COLS;
+    const cellH = cellW * 1.55;
+    const charSize = Math.max(8, Math.round(cellH * 0.78));
+    ctx.font = `${charSize}px "Fragment Mono", ui-monospace, monospace`;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+
+    const yCenter = H / 2;
+    const amplitudePx = H * 0.30;
+    const time = frozen ? 0 : t;
+
+    /* For each column, compute the irregular line center y and render a vertical density band of chars around it. */
+    const verticalRows = Math.ceil((amplitudePx * 2.4) / cellH);
+
+    for (let col = 0; col < COLS; col++) {
+      const cx = col * cellW + cellW / 2;
+      const nx = col / COLS;
+
+      const offY = waveY(nx, time, seed) * amplitudePx;
+      const lineY = yCenter + offY;
+
+      /* Local slope — used to bias toward "/", "\\" chars where the line is steep. */
+      const offY1 = waveY((col + 1) / COLS, time, seed) * amplitudePx;
+      const slope = (offY1 - offY);
+
+      /* Render a vertical thickness around the centerline */
+      const bandHeightPx = amplitudePx * 0.42;
+      for (let r = -verticalRows / 2; r <= verticalRows / 2; r++) {
+        const py = lineY + r * cellH;
+        if (py < 0 || py > H) continue;
+        const dist = Math.abs(r * cellH);
+        const t01 = dist / bandHeightPx;
+        if (t01 > 1.6) continue;
+
+        /* Density falls off Gaussian-style from the centerline */
+        const density = Math.exp(-t01 * t01 * 1.2);
+
+        const charIdx = Math.floor(density * (waveChars.length - 1));
+        let char = waveChars[Math.min(charIdx, waveChars.length - 1)];
+
+        /* Bias steep regions toward slash chars */
+        if (Math.abs(slope) > 6 && density > 0.55) {
+          char = slope > 0 ? '\\' : '/';
+        }
+
+        let opacity = density * 0.78;
+        if (char === ' ' || opacity < 0.035) continue;
+
+        ctx.fillStyle = `rgba(232, 230, 224, ${opacity.toFixed(3)})`;
+        ctx.fillText(char, cx, py);
+      }
+
+      /* Sparse green accent dots along the centerline, deterministic by seed */
+      const accProb = rand(col * 7.31 + Math.floor(seed * 1000));
+      if (accProb > 0.965) {
+        ctx.fillStyle = 'rgba(52, 211, 153, 0.55)';
+        ctx.fillText('●', cx, lineY);
+      }
+    }
+
+    if (!frozen) {
+      t += 0.006;
+      requestAnimationFrame(draw);
+    }
+  }
+  draw();
+
+  function reseed() {
+    seed = Math.random();
+    if (frozen) {
+      ctx.clearRect(0, 0, W, H);
+      draw();
+    }
+  }
+  function freezeFrame() {
+    frozen = !frozen;
+    if (!frozen) draw();
+  }
+  function toggleText() {
+    textVisible = !textVisible;
+    document.querySelector('.brand').style.display = textVisible ? '' : 'none';
+    document.querySelector('.meta').style.display = textVisible ? '' : 'none';
+    document.querySelector('.url').style.display = textVisible ? '' : 'none';
+  }
+</script>
+
+</body>
+</html>
