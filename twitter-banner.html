@@ -41,28 +41,6 @@
     display: block;
   }
 
-  .brand {
-    position: absolute;
-    left: 64px; bottom: 64px;
-    z-index: 5;
-  }
-  .brand-name {
-    font-weight: 300;
-    font-size: 4.6rem;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    color: var(--ink);
-  }
-  .brand-tag {
-    margin-top: 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-    color: var(--ink-dim);
-    max-width: 38ch;
-  }
-  .brand-tag .accent { color: var(--green); }
-
   .meta {
     position: absolute;
     right: 64px; top: 56px;
@@ -118,11 +96,11 @@
 
 <div class="controls">
   <b>Dataline · Twitter banner</b><br>
-  Banner is 1500×500. To export: open DevTools → Cmd-Shift-P → "Capture node screenshot" on the .banner element.
+  Banner is 1500×500. Open DevTools → element-pick the <code>.banner</code> div → Cmd+Shift+P → "Capture node screenshot."
   <br><br>
   <button onclick="reseed()">re-seed wave</button>
+  <button onclick="freezeFrame()">freeze / play</button>
   <button onclick="toggleText()">toggle text</button>
-  <button onclick="freezeFrame()">freeze frame</button>
 </div>
 
 <div class="banner" id="banner">
@@ -133,18 +111,13 @@
     <div>execution-grade data</div>
   </div>
 
-  <div class="brand">
-    <div class="brand-name">Dataline</div>
-    <div class="brand-tag">Supercharge your AI agent with <span class="accent">clean Web3 data.</span></div>
-  </div>
-
   <div class="url">
     dataline<span class="slash">.</span>xyz
   </div>
 </div>
 
 <script>
-  /* ─── Single irregular ASCII waveline, frozen-frame styling matching hero ─── */
+  /* ─── ASCII waveline — same logic as the homepage hero, with BANDS=1. ─── */
   const canvas = document.getElementById('banner-canvas');
   const ctx = canvas.getContext('2d');
   const W = 1500, H = 500;
@@ -160,108 +133,78 @@
   }
   setupCanvas();
 
-  let seed = 0.42;
-  let frozen = false;
-  let textVisible = true;
-  let t = 0;
+  /* Match hero density: COLS=120 on desktop. We have a wider banner, scale up. */
+  const COLS = 220;
+  const cellW = W / COLS;
+  const cellH = cellW * 1.55;
+  const rows = Math.ceil(H / cellH);
+
+  /* Single band fills the whole canvas, exactly like setting BANDS=1 in hero. */
+  const BANDS = 1;
+  const bandH = rows / BANDS;
 
   const waveChars = ' .,;:!|/\\-_~^`'.split('');
-  const ACCENTS = ['#114433', '#113322', '#221133'];
+  const ACCENT_COLS = ['#114433','#113322','#221133'];
 
-  function rand(s) {
-    const x = Math.sin(s * 9301.0 + 49297.0) * 233280.0;
-    return x - Math.floor(x);
-  }
+  let time = 0;
+  let seed = 0;
+  let frozen = false;
+  let textVisible = true;
 
-  /* Compose an "irregular" waveform as the sum of 4 sinusoids at unrelated frequencies + a low-freq drift. */
-  function waveY(nx, time, s) {
+  /* Verbatim hero waveAmp; `l` here is just the band index (0). seed shifts the phase. */
+  function waveAmp(x, l, t, spd) {
+    const nx = x / COLS;
     return (
-      0.32 * Math.sin(nx * 4.1 + time * 0.7 + s * 6.28) +
-      0.20 * Math.sin(nx * 9.3 - time * 1.1 + s * 3.14) +
-      0.11 * Math.sin(nx * 19.7 + time * 1.7 + s * 1.57) +
-      0.06 * Math.sin(nx * 41.3 - time * 2.3) +
-      0.04 * Math.sin(nx * 0.9 + s * 9.42)  // slow drift, makes it asymmetric
+      0.20 * Math.sin(nx * 6.2 + t * 1.1 * spd + l * 1.3 + seed * 6.28) +
+      0.12 * Math.sin(nx * 14.8 - t * 1.7 * spd + l * 2.1 + seed * 3.14) +
+      0.07 * Math.sin(nx * 28 + t * 2.3 * spd - l * 0.7 + seed * 1.57) +
+      0.04 * Math.sin(nx * 53 - t * 3.1 * spd + l * 4.0 + seed * 9.42)
     );
   }
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
-
-    /* Subtle band of ambient ASCII haze across the full canvas, like the hero — but very faint, only one band, no other rows. */
-    const COLS = 220;
-    const cellW = W / COLS;
-    const cellH = cellW * 1.55;
-    const charSize = Math.max(8, Math.round(cellH * 0.78));
-    ctx.font = `${charSize}px "Fragment Mono", ui-monospace, monospace`;
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
 
-    const yCenter = H / 2;
-    const amplitudePx = H * 0.30;
-    const time = frozen ? 0 : t;
+    const effectiveSpeed = 1.0;
+    if (!frozen) time += 0.012 * effectiveSpeed;
 
-    /* For each column, compute the irregular line center y and render a vertical density band of chars around it. */
-    const verticalRows = Math.ceil((amplitudePx * 2.4) / cellH);
+    const CHAR_SIZE = Math.max(8, Math.round(cellH * 0.70));
+    ctx.font = `${CHAR_SIZE}px "Fragment Mono", ui-monospace, monospace`;
 
-    for (let col = 0; col < COLS; col++) {
-      const cx = col * cellW + cellW / 2;
-      const nx = col / COLS;
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < COLS; col++) {
+        const px = col * cellW + cellW / 2;
+        const py = row * cellH + cellH / 2;
 
-      const offY = waveY(nx, time, seed) * amplitudePx;
-      const lineY = yCenter + offY;
+        const band = Math.floor(row / bandH);   // always 0
+        const bandT = (row % bandH) / bandH;    // 0..1 over full canvas
 
-      /* Local slope — used to bias toward "/", "\\" chars where the line is steep. */
-      const offY1 = waveY((col + 1) / COLS, time, seed) * amplitudePx;
-      const slope = (offY1 - offY);
-
-      /* Render a vertical thickness around the centerline */
-      const bandHeightPx = amplitudePx * 0.42;
-      for (let r = -verticalRows / 2; r <= verticalRows / 2; r++) {
-        const py = lineY + r * cellH;
-        if (py < 0 || py > H) continue;
-        const dist = Math.abs(r * cellH);
-        const t01 = dist / bandHeightPx;
-        if (t01 > 1.6) continue;
-
-        /* Density falls off Gaussian-style from the centerline */
-        const density = Math.exp(-t01 * t01 * 1.2);
+        const amp = waveAmp(col, band, time, effectiveSpeed);
+        const center = 0.5 + amp;
+        const dist2c = Math.abs(bandT - center);
+        const thickness = 0.22;
+        const density = Math.exp(-dist2c * dist2c / (thickness * thickness * 0.5));
 
         const charIdx = Math.floor(density * (waveChars.length - 1));
-        let char = waveChars[Math.min(charIdx, waveChars.length - 1)];
+        const char = waveChars[Math.min(charIdx, waveChars.length - 1)];
+        const opacity = density * 0.70;
 
-        /* Bias steep regions toward slash chars */
-        if (Math.abs(slope) > 6 && density > 0.55) {
-          char = slope > 0 ? '\\' : '/';
+        if (char && char !== ' ' && opacity > 0.04) {
+          ctx.fillStyle = `rgba(232,230,224,${opacity})`;
+          ctx.fillText(char, px, py);
         }
-
-        let opacity = density * 0.78;
-        if (char === ' ' || opacity < 0.035) continue;
-
-        ctx.fillStyle = `rgba(232, 230, 224, ${opacity.toFixed(3)})`;
-        ctx.fillText(char, cx, py);
-      }
-
-      /* Sparse green accent dots along the centerline, deterministic by seed */
-      const accProb = rand(col * 7.31 + Math.floor(seed * 1000));
-      if (accProb > 0.965) {
-        ctx.fillStyle = 'rgba(52, 211, 153, 0.55)';
-        ctx.fillText('●', cx, lineY);
       }
     }
 
-    if (!frozen) {
-      t += 0.006;
-      requestAnimationFrame(draw);
-    }
+    if (!frozen) requestAnimationFrame(draw);
   }
   draw();
 
   function reseed() {
     seed = Math.random();
-    if (frozen) {
-      ctx.clearRect(0, 0, W, H);
-      draw();
-    }
+    if (frozen) draw();
   }
   function freezeFrame() {
     frozen = !frozen;
@@ -269,7 +212,6 @@
   }
   function toggleText() {
     textVisible = !textVisible;
-    document.querySelector('.brand').style.display = textVisible ? '' : 'none';
     document.querySelector('.meta').style.display = textVisible ? '' : 'none';
     document.querySelector('.url').style.display = textVisible ? '' : 'none';
   }
