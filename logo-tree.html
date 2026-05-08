@@ -637,11 +637,11 @@
       .asset-card .download:hover { background: rgba(52,211,153,0.12); }
     </style>
 
-    <!-- Symbol — dark + light -->
-    <div class="card-row cols-2" style="grid-template-columns: 1fr 1fr; margin-top: 1px;">
+    <!-- Symbol — dark + light + transparent -->
+    <div class="card-row cols-3" style="margin-top: 1px;">
       <div class="card asset-card">
         <div class="asset-preview">
-          <svg id="asset-symbol-dark" viewBox="0 0 400 400" width="280" height="280" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <svg id="asset-symbol-dark" viewBox="0 0 400 400" width="240" height="240" xmlns="http://www.w3.org/2000/svg" style="display:block;">
             <rect width="400" height="400" fill="#0A0A0A"/>
             <g fill="none" stroke-width="1.4" stroke-dasharray="4 4.4" stroke-linecap="round">
               <path d="M 230 290 C 218 218, 114 143, 75 130"  stroke="rgba(232,230,224,0.22)"/>
@@ -667,7 +667,7 @@
 
       <div class="card asset-card">
         <div class="asset-preview">
-          <svg id="asset-symbol-light" viewBox="0 0 400 400" width="280" height="280" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <svg id="asset-symbol-light" viewBox="0 0 400 400" width="240" height="240" xmlns="http://www.w3.org/2000/svg" style="display:block;">
             <rect width="400" height="400" fill="#E8E6E0"/>
             <g fill="none" stroke-width="1.4" stroke-dasharray="4 4.4" stroke-linecap="round">
               <path d="M 230 290 C 218 218, 114 143, 75 130"  stroke="rgba(10,10,10,0.22)"/>
@@ -690,13 +690,38 @@
         <div class="card-label">symbol · light · 400 × 400</div>
         <button class="download" data-svg="asset-symbol-light" data-name="dataline-symbol-light.png" data-w="400" data-h="400">Download PNG ↓</button>
       </div>
+
+      <div class="card asset-card" style="background: repeating-conic-gradient(#1a1a1a 0% 25%, #232323 0% 50%) 50% / 18px 18px;">
+        <div class="asset-preview">
+          <svg id="asset-symbol-transparent" viewBox="0 0 400 400" width="240" height="240" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+            <g fill="none" stroke-width="1.4" stroke-dasharray="4 4.4" stroke-linecap="round">
+              <path d="M 230 290 C 218 218, 114 143, 75 130"  stroke="rgba(120,120,120,0.55)"/>
+              <path d="M 230 290 C 222 191, 159 88, 135 70"   stroke="rgba(120,120,120,0.85)"/>
+              <path d="M 230 290 C 226 207, 193 120, 180 105" stroke="rgba(120,120,120,0.55)"/>
+              <path d="M 170 290 C 175 196, 215 97, 230 80"   stroke="rgba(120,120,120,0.55)"/>
+              <path d="M 170 290 C 179 211, 256 129, 285 115" stroke="rgba(120,120,120,0.85)"/>
+              <path d="M 170 290 C 183 202, 294 111, 335 95"  stroke="rgba(120,120,120,0.55)"/>
+            </g>
+            <g fill="#34d399">
+              <circle cx="170" cy="290" r="16"/><circle cx="230" cy="290" r="16"/>
+              <circle cx="75"  cy="130" r="20"/><circle cx="180" cy="105" r="20"/>
+              <circle cx="285" cy="115" r="20"/><circle cx="335" cy="95"  r="20"/>
+            </g>
+            <g fill="#ef4444">
+              <circle cx="135" cy="70" r="20"/><circle cx="230" cy="80" r="20"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card-label">symbol · transparent · 400 × 400</div>
+        <button class="download" data-svg="asset-symbol-transparent" data-name="dataline-symbol-transparent.png" data-w="400" data-h="400">Download PNG ↓</button>
+      </div>
     </div>
 
-    <!-- Lockup (symbol + Dataline wordmark) — dark + light -->
-    <div class="card-row cols-2" style="grid-template-columns: 1fr 1fr; margin-top: 1px;">
+    <!-- Lockup (symbol + Dataline wordmark) — dark + light + transparent -->
+    <div class="card-row cols-3" style="margin-top: 1px;">
       <div class="card asset-card">
         <div class="asset-preview">
-          <svg id="asset-lockup-dark" viewBox="0 0 800 320" width="380" height="152" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <svg id="asset-lockup-dark" viewBox="0 0 800 320" width="320" height="128" xmlns="http://www.w3.org/2000/svg" style="display:block;">
             <rect width="800" height="320" fill="#0A0A0A"/>
             <!-- Symbol scaled 0.7 (400 -> 280), centered at left ~ (140, 160) -->
             <g transform="translate(0, 0) scale(0.7)">
@@ -726,7 +751,7 @@
 
       <div class="card asset-card">
         <div class="asset-preview">
-          <svg id="asset-lockup-light" viewBox="0 0 800 320" width="380" height="152" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <svg id="asset-lockup-light" viewBox="0 0 800 320" width="320" height="128" xmlns="http://www.w3.org/2000/svg" style="display:block;">
             <rect width="800" height="320" fill="#E8E6E0"/>
             <g transform="translate(0, 0) scale(0.7)">
               <g fill="none" stroke-width="2.0" stroke-dasharray="6 6.4" stroke-linecap="round">
@@ -751,6 +776,34 @@
         </div>
         <div class="card-label">symbol + wordmark · light · 800 × 320</div>
         <button class="download" data-svg="asset-lockup-light" data-name="dataline-lockup-light.png" data-w="800" data-h="320">Download PNG ↓</button>
+      </div>
+
+      <div class="card asset-card" style="background: repeating-conic-gradient(#1a1a1a 0% 25%, #232323 0% 50%) 50% / 18px 18px;">
+        <div class="asset-preview">
+          <svg id="asset-lockup-transparent" viewBox="0 0 800 320" width="320" height="128" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+            <g transform="scale(0.7)">
+              <g fill="none" stroke-width="2" stroke-dasharray="6 6.4" stroke-linecap="round">
+                <path d="M 230 290 C 218 218, 114 143, 75 130"  stroke="rgba(120,120,120,0.55)"/>
+                <path d="M 230 290 C 222 191, 159 88, 135 70"   stroke="rgba(120,120,120,0.85)"/>
+                <path d="M 230 290 C 226 207, 193 120, 180 105" stroke="rgba(120,120,120,0.55)"/>
+                <path d="M 170 290 C 175 196, 215 97, 230 80"   stroke="rgba(120,120,120,0.55)"/>
+                <path d="M 170 290 C 179 211, 256 129, 285 115" stroke="rgba(120,120,120,0.85)"/>
+                <path d="M 170 290 C 183 202, 294 111, 335 95"  stroke="rgba(120,120,120,0.55)"/>
+              </g>
+              <g fill="#34d399">
+                <circle cx="170" cy="290" r="16"/><circle cx="230" cy="290" r="16"/>
+                <circle cx="75"  cy="130" r="20"/><circle cx="180" cy="105" r="20"/>
+                <circle cx="285" cy="115" r="20"/><circle cx="335" cy="95"  r="20"/>
+              </g>
+              <g fill="#ef4444">
+                <circle cx="135" cy="70" r="20"/><circle cx="230" cy="80" r="20"/>
+              </g>
+            </g>
+            <text x="320" y="160" font-family="'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif" font-weight="400" font-size="100" letter-spacing="-2.5" fill="#9CA3AF" dominant-baseline="middle">Dataline</text>
+          </svg>
+        </div>
+        <div class="card-label">symbol + wordmark · transparent · 800 × 320</div>
+        <button class="download" data-svg="asset-lockup-transparent" data-name="dataline-lockup-transparent.png" data-w="800" data-h="320">Download PNG ↓</button>
       </div>
     </div>
 
