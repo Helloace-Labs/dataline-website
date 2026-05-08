@@ -578,9 +578,71 @@
       </div>
     </div>
 
+    <!-- Variation · static snapshot · arched top row -->
+    <div class="card-row" style="grid-template-columns: 1fr; margin-top: 1px;">
+      <div class="card" style="padding: 4rem 2rem;">
+        <div class="card-vis">
+          <svg id="tree-variation-static" viewBox="0 0 320 240" width="320" height="240" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+            <style>
+              #tree-variation-static .path { fill: none; stroke: var(--hairline-strong); stroke-width: 0.95; stroke-dasharray: 2.4 2.6; stroke-linecap: round; }
+              #tree-variation-static .path.bright { stroke: var(--hairline-bright); }
+              #tree-variation-static .leaf { fill: var(--green); }
+              #tree-variation-static .leaf.idle { fill: var(--ink-muted); }
+              #tree-variation-static .leaf.alert { fill: var(--red); }
+              #tree-variation-static .root { fill: var(--green); }
+              #tree-variation-static .snap { fill: var(--green); filter: drop-shadow(0 0 2px rgba(52, 211, 153, 0.85)); }
+            </style>
+            <!-- Branch paths (root → leaf, crossover, arch top) -->
+            <path class="path"        d="M 186 217 C 173 139, 66 58, 26 44"/>
+            <path class="path bright" d="M 186 217 C 177 135, 98 49, 68 34"/>
+            <path class="path"        d="M 186 217 C 180 132, 129 42, 110 27"/>
+            <path class="path"        d="M 134 217 C 140 132, 191 42, 210 27"/>
+            <path class="path bright" d="M 134 217 C 143 135, 223 49, 252 34"/>
+            <path class="path"        d="M 134 217 C 147 139, 254 58, 294 44"/>
+
+            <!-- Roots (bottom) -->
+            <circle class="root" cx="134" cy="217" r="9"/>
+            <circle class="root" cx="186" cy="217" r="9"/>
+
+            <!-- Leaves on the arched top: edges low, center high -->
+            <circle class="leaf"       cx="26"  cy="44" r="7"/>
+            <circle class="leaf alert" cx="68"  cy="34" r="9"/>
+            <circle class="leaf"       cx="110" cy="27" r="9"/>
+            <circle class="leaf"       cx="210" cy="27" r="9"/>
+            <circle class="leaf idle"  cx="252" cy="34" r="7"/>
+            <circle class="leaf"       cx="294" cy="44" r="9"/>
+          </svg>
+        </div>
+        <div class="card-label bright" style="margin-top: 1.5rem;">variation · static · arched top · snapshot of in-flight dots</div>
+      </div>
+    </div>
+
   </div>
 
 </section>
+
+<script>
+  /* Snapshot dots frozen on the static variation paths.
+     Reads each path and drops one dot at a fixed t along its length,
+     so the static image still suggests motion mid-stream. */
+  (function () {
+    const svg = document.getElementById('tree-variation-static');
+    if (!svg) return;
+    const paths = svg.querySelectorAll('path.path');
+    const ts = [0.46, 0.58, 0.4, 0.6, 0.52, 0.44];
+    const ns = 'http://www.w3.org/2000/svg';
+    paths.forEach((p, i) => {
+      const len = p.getTotalLength();
+      const pt = p.getPointAtLength(len * (ts[i] ?? 0.5));
+      const dot = document.createElementNS(ns, 'circle');
+      dot.setAttribute('cx', pt.x.toFixed(2));
+      dot.setAttribute('cy', pt.y.toFixed(2));
+      dot.setAttribute('r', '3.6');
+      dot.setAttribute('class', 'snap');
+      svg.appendChild(dot);
+    });
+  })();
+</script>
 
 <footer>
   <div>dataline · logo · tree (archive)</div>
