@@ -613,36 +613,13 @@
             <circle class="leaf"       cx="294" cy="44" r="9"/>
           </svg>
         </div>
-        <div class="card-label bright" style="margin-top: 1.5rem;">variation · static · arched top · snapshot of in-flight dots</div>
+        <div class="card-label bright" style="margin-top: 1.5rem;">variation · static · arched top</div>
       </div>
     </div>
 
   </div>
 
 </section>
-
-<script>
-  /* Snapshot dots frozen on the static variation paths.
-     Reads each path and drops one dot at a fixed t along its length,
-     so the static image still suggests motion mid-stream. */
-  (function () {
-    const svg = document.getElementById('tree-variation-static');
-    if (!svg) return;
-    const paths = svg.querySelectorAll('path.path');
-    const ts = [0.46, 0.58, 0.4, 0.6, 0.52, 0.44];
-    const ns = 'http://www.w3.org/2000/svg';
-    paths.forEach((p, i) => {
-      const len = p.getTotalLength();
-      const pt = p.getPointAtLength(len * (ts[i] ?? 0.5));
-      const dot = document.createElementNS(ns, 'circle');
-      dot.setAttribute('cx', pt.x.toFixed(2));
-      dot.setAttribute('cy', pt.y.toFixed(2));
-      dot.setAttribute('r', '3.6');
-      dot.setAttribute('class', 'snap');
-      svg.appendChild(dot);
-    });
-  })();
-</script>
 
 <footer>
   <div>dataline · logo · tree (archive)</div>
