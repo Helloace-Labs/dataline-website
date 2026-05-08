@@ -592,28 +592,28 @@
               #tree-variation-static .root { fill: var(--green); }
               #tree-variation-static .snap { fill: var(--green); filter: drop-shadow(0 0 2px rgba(52, 211, 153, 0.85)); }
             </style>
-            <!-- Branch paths (root → leaf, crossover, arch top) -->
-            <path class="path"        d="M 186 217 C 173 139, 66 58, 26 44"/>
-            <path class="path bright" d="M 186 217 C 177 135, 98 49, 68 34"/>
-            <path class="path"        d="M 186 217 C 180 132, 129 42, 110 27"/>
-            <path class="path"        d="M 134 217 C 140 132, 191 42, 210 27"/>
-            <path class="path bright" d="M 134 217 C 143 135, 223 49, 252 34"/>
-            <path class="path"        d="M 134 217 C 147 139, 254 58, 294 44"/>
+            <!-- Branch paths (root → leaf, crossover, irregular top) -->
+            <path class="path"        d="M 186 217 C 173 138, 66 56, 26 42"/>
+            <path class="path bright" d="M 186 217 C 177 129, 98 38, 68 22"/>
+            <path class="path"        d="M 186 217 C 180 136, 129 50, 110 36"/>
+            <path class="path"        d="M 134 217 C 140 130, 191 39, 210 24"/>
+            <path class="path bright" d="M 134 217 C 143 137, 223 54, 252 40"/>
+            <path class="path"        d="M 134 217 C 147 132, 254 43, 294 28"/>
 
             <!-- Roots (bottom) -->
             <circle class="root" cx="134" cy="217" r="9"/>
             <circle class="root" cx="186" cy="217" r="9"/>
 
-            <!-- Leaves on the arched top: edges low, center high -->
-            <circle class="leaf"       cx="26"  cy="44" r="7"/>
-            <circle class="leaf alert" cx="68"  cy="34" r="9"/>
-            <circle class="leaf"       cx="110" cy="27" r="9"/>
-            <circle class="leaf"       cx="210" cy="27" r="9"/>
-            <circle class="leaf idle"  cx="252" cy="34" r="7"/>
-            <circle class="leaf"       cx="294" cy="44" r="9"/>
+            <!-- Leaves: irregular up/down spread, positions 2 and 4 are red, no gray -->
+            <circle class="leaf"       cx="26"  cy="42" r="9"/>
+            <circle class="leaf alert" cx="68"  cy="22" r="9"/>
+            <circle class="leaf"       cx="110" cy="36" r="9"/>
+            <circle class="leaf alert" cx="210" cy="24" r="9"/>
+            <circle class="leaf"       cx="252" cy="40" r="9"/>
+            <circle class="leaf"       cx="294" cy="28" r="9"/>
           </svg>
         </div>
-        <div class="card-label bright" style="margin-top: 1.5rem;">variation · static · arched top</div>
+        <div class="card-label bright" style="margin-top: 1.5rem;">variation · static · irregular top · 2 alerts</div>
       </div>
     </div>
 
